@@ -7,6 +7,7 @@ from urllib.error import URLError
 from urllib.request import urlopen
 
 from bucephalus.config import settings
+from bucephalus.data.manifest import write_download_metadata
 from bucephalus.data.sample_data import (
     FALLBACK_COMPETITIONS,
     FALLBACK_LINEUPS,
@@ -25,15 +26,18 @@ def download_sample(
     seasons: list[int] | None = None,
     max_matches: int | None = None,
     force_fallback: bool = False,
+    skip_360: bool = False,
+    mode: str | None = None,
 ) -> None:
     paths = paths or settings.paths
     paths.ensure()
     max_matches = max_matches or settings.default_max_matches
     if force_fallback:
         LOGGER.warning("Using bundled fallback sample by request.")
-        write_fallback(paths, max_matches=max_matches)
+        write_fallback(paths, max_matches=max_matches, skip_360=skip_360)
         return
 
+    warnings: list[str] = []
     try:
         competitions_data = _get_json(f"{settings.statsbomb_base_url}/competitions.json")
         _write_json(paths.raw / "competitions.json", competitions_data)
@@ -54,17 +58,33 @@ def download_sample(
                 match_id = int(match["match_id"])
                 _download_optional_json(f"events/{match_id}.json", paths.raw / "events" / f"{match_id}.json")
                 _download_optional_json(f"lineups/{match_id}.json", paths.raw / "lineups" / f"{match_id}.json")
-                _download_optional_json(
-                    f"three-sixty/{match_id}.json", paths.raw / "three-sixty" / f"{match_id}.json"
-                )
+                if not skip_360:
+                    _download_optional_json(
+                        f"three-sixty/{match_id}.json", paths.raw / "three-sixty" / f"{match_id}.json"
+                    )
                 downloaded_matches += 1
+        write_download_metadata(
+            paths=paths,
+            mode=mode or ("research" if competitions or seasons or max_matches > settings.default_max_matches else "sample"),
+            competitions=competitions,
+            seasons=seasons,
+            max_matches=max_matches,
+            actual_matches_downloaded=downloaded_matches,
+            skip_360=skip_360,
+            warnings=warnings,
+        )
         LOGGER.info("Downloaded StatsBomb sample with %s matches.", downloaded_matches)
     except Exception as exc:
         LOGGER.warning("StatsBomb download failed; writing fallback sample. Error: %s", exc)
-        write_fallback(paths, max_matches=max_matches)
+        write_fallback(paths, max_matches=max_matches, skip_360=skip_360, warnings=[str(exc)])
 
 
-def write_fallback(paths: ProjectPaths | None = None, max_matches: int = 2) -> None:
+def write_fallback(
+    paths: ProjectPaths | None = None,
+    max_matches: int = 2,
+    skip_360: bool = False,
+    warnings: list[str] | None = None,
+) -> None:
     paths = paths or settings.paths
     paths.ensure()
     _write_json(paths.raw / "competitions.json", FALLBACK_COMPETITIONS)
@@ -73,7 +93,18 @@ def write_fallback(paths: ProjectPaths | None = None, max_matches: int = 2) -> N
         match_id = int(match["match_id"])
         _write_json(paths.raw / "events" / f"{match_id}.json", fallback_events(match_id))
         _write_json(paths.raw / "lineups" / f"{match_id}.json", FALLBACK_LINEUPS)
-        _write_json(paths.raw / "three-sixty" / f"{match_id}.json", fallback_three_sixty(match_id))
+        if not skip_360:
+            _write_json(paths.raw / "three-sixty" / f"{match_id}.json", fallback_three_sixty(match_id))
+    write_download_metadata(
+        paths=paths,
+        mode="fallback",
+        competitions=[999],
+        seasons=[2024],
+        max_matches=max_matches,
+        actual_matches_downloaded=min(max_matches, len(FALLBACK_MATCHES)),
+        skip_360=skip_360,
+        warnings=warnings,
+    )
     LOGGER.info("Fallback sample written to %s.", paths.raw)
 
 

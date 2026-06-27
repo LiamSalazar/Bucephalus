@@ -4,9 +4,10 @@ import numpy as np
 import polars as pl
 
 
-def fat_tail_summary(metrics: dict[str, list[float]]) -> pl.DataFrame:
+def fat_tail_summary(metrics: dict[str, list[float | None]]) -> pl.DataFrame:
     rows = []
     for name, values in metrics.items():
+        total = len(values)
         arr = np.array([v for v in values if v is not None and np.isfinite(v)], dtype=float)
         if arr.size == 0:
             continue
@@ -27,7 +28,9 @@ def fat_tail_summary(metrics: dict[str, list[float]]) -> pl.DataFrame:
                 "p90": float(np.percentile(arr, 90)),
                 "p95": float(np.percentile(arr, 95)),
                 "p99": float(np.percentile(arr, 99)),
+                "min": float(arr.min()),
                 "max": float(arr.max()),
+                "missing_rate": float((total - arr.size) / total) if total else 0.0,
             }
         )
     return pl.DataFrame(rows)

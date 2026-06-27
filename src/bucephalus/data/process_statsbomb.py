@@ -9,6 +9,7 @@ import polars as pl
 
 from bucephalus.config import settings
 from bucephalus.data.load_raw import iter_json_rows, raw_json_files
+from bucephalus.data.manifest import write_data_manifest
 from bucephalus.utils.paths import ProjectPaths
 
 LOGGER = logging.getLogger(__name__)
@@ -37,6 +38,7 @@ def process_raw_to_parquet(paths: ProjectPaths | None = None) -> None:
     _write(_filter_event(events, "Pressure"), paths.processed / "pressures.parquet")
     _write(_filter_event(events, "Duel"), paths.processed / "duels.parquet")
     _write(_filter_event(events, "Goal Keeper"), paths.processed / "goalkeeper_actions.parquet")
+    write_data_manifest(paths)
     LOGGER.info("Processed Parquet files written to %s.", paths.processed)
 
 
@@ -99,11 +101,13 @@ def _events(paths: ProjectPaths) -> pl.DataFrame:
                     "match_id": match_id,
                     "event_id": row.get("id"),
                     "event_index": _as_int(row.get("index")),
+                    "index": _as_int(row.get("index")),
                     "period": _as_int(row.get("period")),
                     "timestamp": row.get("timestamp"),
                     "minute": _as_int(row.get("minute")),
                     "second": _as_int(row.get("second")),
                     "event_type": _nested(row, "type", "name"),
+                    "type_name": _nested(row, "type", "name"),
                     "possession": _as_int(row.get("possession")),
                     "possession_team_id": _nested(row, "possession_team", "id"),
                     "possession_team_name": _nested(row, "possession_team", "name"),
@@ -120,6 +124,7 @@ def _events(paths: ProjectPaths) -> pl.DataFrame:
                     "carry_end_x": _list_item(carry_end, 0),
                     "carry_end_y": _list_item(carry_end, 1),
                     "shot_xg": _as_float(shot.get("statsbomb_xg")),
+                    "shot_statsbomb_xg": _as_float(shot.get("statsbomb_xg")),
                     "shot_outcome": _nested(row, "shot", "outcome", "name"),
                     "shot_type": _nested(row, "shot", "type", "name"),
                     "duel_type": _nested(row, "duel", "type", "name"),
@@ -127,6 +132,7 @@ def _events(paths: ProjectPaths) -> pl.DataFrame:
                     "goalkeeper_type": _nested(row, "goalkeeper", "type", "name"),
                     "goalkeeper_outcome": _nested(row, "goalkeeper", "outcome", "name"),
                     "play_pattern": _nested(row, "play_pattern", "name"),
+                    "play_pattern_name": _nested(row, "play_pattern", "name"),
                     "under_pressure": bool(row.get("under_pressure", False)),
                     "source_file": _source(path, paths),
                 }
@@ -251,7 +257,12 @@ def _write(df: pl.DataFrame, path: Path) -> None:
 
 
 def _source(path: Path, paths: ProjectPaths) -> str:
-    return str(path.relative_to(paths.root))
+    for base in [paths.root, paths.data]:
+        try:
+            return str(path.relative_to(base))
+        except ValueError:
+            continue
+    return str(path)
 
 
 def _nested(row: dict[str, Any], *keys: str) -> Any:
@@ -308,11 +319,13 @@ EVENTS_SCHEMA = {
     "match_id": pl.Int64,
     "event_id": pl.Utf8,
     "event_index": pl.Int64,
+    "index": pl.Int64,
     "period": pl.Int64,
     "timestamp": pl.Utf8,
     "minute": pl.Int64,
     "second": pl.Int64,
     "event_type": pl.Utf8,
+    "type_name": pl.Utf8,
     "possession": pl.Int64,
     "possession_team_id": pl.Int64,
     "possession_team_name": pl.Utf8,
@@ -329,6 +342,7 @@ EVENTS_SCHEMA = {
     "carry_end_x": pl.Float64,
     "carry_end_y": pl.Float64,
     "shot_xg": pl.Float64,
+    "shot_statsbomb_xg": pl.Float64,
     "shot_outcome": pl.Utf8,
     "shot_type": pl.Utf8,
     "duel_type": pl.Utf8,
@@ -336,6 +350,7 @@ EVENTS_SCHEMA = {
     "goalkeeper_type": pl.Utf8,
     "goalkeeper_outcome": pl.Utf8,
     "play_pattern": pl.Utf8,
+    "play_pattern_name": pl.Utf8,
     "under_pressure": pl.Boolean,
     "source_file": pl.Utf8,
 }

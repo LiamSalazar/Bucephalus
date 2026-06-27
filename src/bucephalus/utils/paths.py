@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -7,9 +8,15 @@ from pathlib import Path
 @dataclass(frozen=True)
 class ProjectPaths:
     root: Path = Path(__file__).resolve().parents[3]
+    data_root: Path | None = None
 
     @property
     def data(self) -> Path:
+        env_root = os.getenv("BUCEPHALUS_DATA_ROOT")
+        if self.data_root is not None:
+            return Path(self.data_root)
+        if env_root:
+            return Path(env_root)
         return self.root / "data"
 
     @property
@@ -48,6 +55,14 @@ class ProjectPaths:
     def eda_figures(self) -> Path:
         return self.eda_outputs / "figures"
 
+    @property
+    def quality_outputs(self) -> Path:
+        return self.outputs / "quality"
+
+    @property
+    def duckdb_path(self) -> Path:
+        return self.processed / "bucephalus.duckdb"
+
     def ensure(self) -> None:
         for path in [
             self.raw,
@@ -57,5 +72,6 @@ class ProjectPaths:
             self.samples,
             self.eda_tables,
             self.eda_figures,
+            self.quality_outputs,
         ]:
             path.mkdir(parents=True, exist_ok=True)
