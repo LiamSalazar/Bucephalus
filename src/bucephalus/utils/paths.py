@@ -72,6 +72,10 @@ class ProjectPaths:
         return self.outputs / "evaluation"
 
     @property
+    def simulations_outputs(self) -> Path:
+        return self.outputs / "simulations"
+
+    @property
     def duckdb_path(self) -> Path:
         return self.processed / "bucephalus.duckdb"
 
@@ -87,5 +91,6 @@ class ProjectPaths:
             self.quality_outputs,
             self.models_outputs,
             self.evaluation_outputs,
+            self.simulations_outputs,
         ]:
             path.mkdir(parents=True, exist_ok=True)

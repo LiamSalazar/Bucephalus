@@ -17,6 +17,7 @@ outputs/eda/*
 outputs/quality/*
 outputs/models/*
 outputs/evaluation/*
+outputs/simulations/*
 !data/raw/.gitkeep
 !data/interim/.gitkeep
 !data/processed/.gitkeep
@@ -25,3 +26,4 @@ outputs/evaluation/*
 !outputs/quality/.gitkeep
 !outputs/models/.gitkeep
 !outputs/evaluation/.gitkeep
+!outputs/simulations/.gitkeep

@@ -1,4 +1,4 @@
-.PHONY: setup data-sample data-research process entities eda duckdb quality features train-baselines evaluate-baselines test phase-check phase-4-5-check all-phase-1-3 all-phase-4-5 full-pipeline
+.PHONY: setup data-sample data-research process entities eda duckdb quality features train-baselines evaluate-baselines tactical-inputs tactical-scenario simulate-match sensitivity test phase-check phase-4-5-check phase-6-7-check all-phase-1-3 all-phase-4-5 all-phase-6-7 full-pipeline
 
 PYTHON ?= .venv/bin/python
 MAX_MATCHES ?= 150
@@ -37,6 +37,18 @@ train-baselines:
 evaluate-baselines:
 	$(PYTHON) scripts/08_evaluate_baselines.py
 
+tactical-inputs:
+	$(PYTHON) scripts/09_build_tactical_engine_inputs.py
+
+tactical-scenario:
+	$(PYTHON) scripts/10_run_tactical_scenario.py --auto-pick-teams
+
+simulate-match:
+	$(PYTHON) scripts/11_run_match_simulation.py --auto-pick-teams --n-simulations 500 --seed 42
+
+sensitivity:
+	$(PYTHON) scripts/12_run_sensitivity_analysis.py --auto-pick-teams --slider pressing --values=-0.2,0,0.2 --n-simulations 300
+
 test:
 	$(PYTHON) -m pytest
 
@@ -46,8 +58,13 @@ phase-check:
 phase-4-5-check:
 	$(PYTHON) scripts/98_run_phase_4_5_check.py
 
+phase-6-7-check:
+	$(PYTHON) scripts/97_run_phase_6_7_check.py
+
 all-phase-1-3: data-sample process entities eda duckdb quality test phase-check
 
 all-phase-4-5: features train-baselines evaluate-baselines phase-4-5-check
 
-full-pipeline: data-research process entities quality eda duckdb features train-baselines evaluate-baselines phase-4-5-check test
+all-phase-6-7: tactical-inputs tactical-scenario simulate-match sensitivity phase-6-7-check
+
+full-pipeline: all-phase-1-3 all-phase-4-5 all-phase-6-7

@@ -1,6 +1,6 @@
 # Bucephalus
 
-Bucephalus es la base de un motor de simulación futbolística basado en datos reales. El objetivo final es soportar Game Mode y Lab Mode, pero este repositorio llega solo hasta Fases 1-5: fundación de datos, entity resolution, EDA inicial, feature store y modelos baseline. La prioridad actual es reproducibilidad, trazabilidad, Parquet/DuckDB eficiente y validación temporal sin leakage. No hay frontend, backend API, simulador, mercado, modelos avanzados ni Deep Learning.
+Bucephalus es la base de un motor de simulación futbolística basado en datos reales. El objetivo final es soportar Game Mode y Lab Mode, pero este repositorio llega hasta Fases 1-7: fundación de datos, entity resolution, EDA inicial, feature store, modelos baseline, motor táctico interpretable y simulación Monte Carlo/Markov simple. La prioridad actual es reproducibilidad, trazabilidad, Parquet/DuckDB eficiente, validación temporal sin leakage y explicabilidad táctica. No hay frontend, backend API productivo, mercado, modelos avanzados ni Deep Learning.
 
 ## Setup
 
@@ -45,6 +45,16 @@ make evaluate-baselines
 make phase-4-5-check
 ```
 
+## Tactical Engine y simulación
+
+```bash
+make tactical-inputs
+make tactical-scenario
+make simulate-match
+make sensitivity
+make phase-6-7-check
+```
+
 ## Research dataset
 
 No es el default. Úsalo para traer más partidos de StatsBomb Open Data de forma controlada:
@@ -71,7 +81,8 @@ BUCEPHALUS_DATA_ROOT=/tmp/bucephalus-data python scripts/01_download_data.py --s
 - `outputs/quality/`: `data_quality_summary.json`.
 - `outputs/models/`: registry de modelos baseline.
 - `outputs/evaluation/`: métricas, predicciones, splits walk-forward y leakage check.
+- `outputs/simulations/`: escenarios tácticos, simulaciones Monte Carlo y sensibilidad de sliders.
 
 ## Siguiente etapa
 
-La siguiente etapa es Fase 6: motor táctico interpretable. Después viene Fase 7: simulación Monte Carlo/Markov. Los modelos actuales son baselines simples para comparación, no modelos definitivos.
+La siguiente etapa es Fase 8: ML avanzado y Deep Learning. El motor táctico y el simulador actuales son interpretables y proxy-driven; no son todavía el modelo final del juego.
