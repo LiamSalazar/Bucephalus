@@ -21,6 +21,9 @@ def process_raw_to_parquet(paths: ProjectPaths | None = None) -> None:
     competitions = _competitions(paths)
     matches = _matches(paths)
     events = _events(paths)
+    if not events.is_empty() and not matches.is_empty():
+        event_match_ids = events["match_id"].unique().to_list()
+        matches = matches.filter(pl.col("match_id").is_in(event_match_ids))
     lineups = _lineups(paths)
     three_sixty = _three_sixty(paths)
 

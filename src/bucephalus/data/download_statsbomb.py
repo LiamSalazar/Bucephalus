@@ -41,7 +41,7 @@ def download_sample(
     try:
         competitions_data = _get_json(f"{settings.statsbomb_base_url}/competitions.json")
         _write_json(paths.raw / "competitions.json", competitions_data)
-        selected = _select_competitions(competitions_data, competitions, seasons)
+        selected = _select_competitions(competitions_data, competitions, seasons, research=mode == "research")
         if not selected:
             raise ValueError("No competitions matched filters.")
 
@@ -109,20 +109,23 @@ def write_fallback(
 
 
 def _select_competitions(
-    rows: list[dict], competitions: list[int] | None, seasons: list[int] | None
+    rows: list[dict], competitions: list[int] | None, seasons: list[int] | None, research: bool = False
 ) -> list[dict]:
     selected = rows
     if competitions:
         selected = [r for r in selected if int(r["competition_id"]) in competitions]
     if seasons:
         selected = [r for r in selected if int(r["season_id"]) in seasons]
-    if not competitions and not seasons:
+    if not competitions and not seasons and not research:
         # Small default: pick one recent competition-season from the public index.
         selected = selected[:1]
     return selected
 
 
 def _download_optional_json(relative_url: str, output_path: Path) -> None:
+    if output_path.exists():
+        LOGGER.debug("Skipping existing raw file: %s", output_path)
+        return
     try:
         data = _get_json(f"{settings.statsbomb_base_url}/{relative_url}")
     except (URLError, FileNotFoundError, ValueError) as exc:

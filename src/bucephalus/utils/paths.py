@@ -41,6 +41,10 @@ class ProjectPaths:
 
     @property
     def outputs(self) -> Path:
+        if self.data_root is not None:
+            return Path(self.data_root).parent / "outputs"
+        if os.getenv("BUCEPHALUS_DATA_ROOT"):
+            return self.data.parent / "outputs"
         return self.root / "outputs"
 
     @property
@@ -60,6 +64,14 @@ class ProjectPaths:
         return self.outputs / "quality"
 
     @property
+    def models_outputs(self) -> Path:
+        return self.outputs / "models"
+
+    @property
+    def evaluation_outputs(self) -> Path:
+        return self.outputs / "evaluation"
+
+    @property
     def duckdb_path(self) -> Path:
         return self.processed / "bucephalus.duckdb"
 
@@ -73,5 +85,7 @@ class ProjectPaths:
             self.eda_tables,
             self.eda_figures,
             self.quality_outputs,
+            self.models_outputs,
+            self.evaluation_outputs,
         ]:
             path.mkdir(parents=True, exist_ok=True)

@@ -12,6 +12,7 @@ from bucephalus.utils.paths import ProjectPaths
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--sample", action="store_true", help="Use smoke-sample mode.")
+    parser.add_argument("--research", action="store_true", help="Use controlled research mode.")
     parser.add_argument("--max-matches", type=int, default=3)
     parser.add_argument("--competition-id", type=int, action="append", dest="competition_ids")
     parser.add_argument("--season-id", type=int, action="append", dest="season_ids")
@@ -29,7 +30,9 @@ def main() -> None:
         shutil.rmtree(paths.raw)
     competition_ids = args.competition_ids or args.competition_ids_legacy
     season_ids = args.season_ids or args.season_ids_legacy
-    if not args.sample and not competition_ids and not season_ids:
+    if args.research:
+        args.sample = False
+    if not args.sample and not args.research and not competition_ids and not season_ids:
         args.sample = True
     download_sample(
         paths=paths,

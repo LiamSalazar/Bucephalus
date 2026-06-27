@@ -1,6 +1,6 @@
 # Bucephalus
 
-Bucephalus es la base de un motor de simulación futbolística basado en datos reales. El objetivo final es soportar Game Mode y Lab Mode, pero este repositorio todavía está en Fases 1-3: fundación de datos, entity resolution y EDA inicial. La prioridad actual es reproducibilidad, trazabilidad, Parquet eficiente y validaciones ligeras. No hay frontend, backend API, simulador, mercado, modelos predictivos pesados ni Deep Learning.
+Bucephalus es la base de un motor de simulación futbolística basado en datos reales. El objetivo final es soportar Game Mode y Lab Mode, pero este repositorio llega solo hasta Fases 1-5: fundación de datos, entity resolution, EDA inicial, feature store y modelos baseline. La prioridad actual es reproducibilidad, trazabilidad, Parquet/DuckDB eficiente y validación temporal sin leakage. No hay frontend, backend API, simulador, mercado, modelos avanzados ni Deep Learning.
 
 ## Setup
 
@@ -36,12 +36,22 @@ python scripts/05_build_duckdb_catalog.py
 python scripts/99_run_phase_1_3_check.py
 ```
 
+## Feature store y baselines
+
+```bash
+make features
+make train-baselines
+make evaluate-baselines
+make phase-4-5-check
+```
+
 ## Research dataset
 
 No es el default. Úsalo para traer más partidos de StatsBomb Open Data de forma controlada:
 
 ```bash
 python scripts/01_download_data.py --competition-id <id> --season-id <id> --max-matches 100
+python scripts/01_download_data.py --research --max-matches 150 --skip-360
 ```
 
 Puedes sobreescribir la raíz de datos con:
@@ -55,10 +65,13 @@ BUCEPHALUS_DATA_ROOT=/tmp/bucephalus-data python scripts/01_download_data.py --s
 - `data/raw/`: JSON crudo o fallback.
 - `data/processed/`: Parquet normalizado, `data_manifest`, entidades maestras y DuckDB catalog.
 - `data/features/`: `team_profiles_baseline` y features básicas trazables.
+- `data/features/`: feature store Fase 4, rolling priors sin leakage y datasets de modelado.
 - `outputs/eda/tables/`: tablas EDA reproducibles, incluido `fat_tail_summary`.
 - `outputs/eda/figures/`: figuras ligeras.
 - `outputs/quality/`: `data_quality_summary.json`.
+- `outputs/models/`: registry de modelos baseline.
+- `outputs/evaluation/`: métricas, predicciones, splits walk-forward y leakage check.
 
 ## Siguiente etapa
 
-Fase 4 debe construir un feature store más serio sobre esta base. Fase 5 debe agregar modelos baseline ligeros. El motor táctico, simulación Monte Carlo/Markov, ML/DL, Game Mode, Lab Mode e interfaz quedan fuera de esta etapa.
+La siguiente etapa es Fase 6: motor táctico interpretable. Después viene Fase 7: simulación Monte Carlo/Markov. Los modelos actuales son baselines simples para comparación, no modelos definitivos.
