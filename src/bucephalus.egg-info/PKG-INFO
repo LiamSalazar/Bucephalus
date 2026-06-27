@@ -1,0 +1,18 @@
+Metadata-Version: 2.4
+Name: bucephalus
+Version: 0.1.0
+Summary: Data-first football simulation foundation.
+Requires-Python: >=3.11
+Requires-Dist: duckdb>=1.0
+Requires-Dist: matplotlib>=3.8
+Requires-Dist: numpy>=1.26
+Requires-Dist: polars>=1.0
+Requires-Dist: pyarrow>=15.0
+Requires-Dist: pydantic>=2.7
+Requires-Dist: rich>=13.7
+Requires-Dist: typer>=0.12
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"
+Requires-Dist: ruff>=0.5; extra == "dev"
+Requires-Dist: mypy>=1.10; extra == "dev"
+Requires-Dist: ipykernel>=6.29; extra == "dev"
