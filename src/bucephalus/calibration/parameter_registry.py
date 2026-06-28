@@ -34,5 +34,12 @@ def build_parameter_registry(paths: ProjectPaths | None = None) -> dict[str, Any
     return payload
 
 
-def get_parameter(name: str, default: Any, config: str = "configs/simulation_engine_v0.yaml") -> Any:
-    return load_engine_config(config).get("parameters", {}).get(name, {}).get("value", default)
+def get_parameter(name: str, default: Any, config: str | None = None) -> Any:
+    configs = [config] if config else CONFIGS
+    for config_path in configs:
+        if config_path is None:
+            continue
+        value = load_engine_config(config_path).get("parameters", {}).get(name, {}).get("value")
+        if value is not None:
+            return value
+    return default

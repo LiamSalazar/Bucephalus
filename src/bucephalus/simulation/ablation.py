@@ -15,6 +15,7 @@ ABLATIONS = [
     ("baseline_full_tactical", {"pressing_delta": 0.2, "tempo_delta": 0.1, "transition_delta": 0.1}),
     ("baseline_markov", {}),
     ("full_calibrated_simulation", {"pressing_delta": 0.1}),
+    ("full_calibrated_team_strength", {"pressing_delta": 0.1}),
 ]
 
 
@@ -32,12 +33,18 @@ def run_ablation_study(paths: ProjectPaths, n_simulations: int = 150) -> dict:
             "expected_home_goals": sim["expected_home_goals"],
             "expected_away_goals": sim["expected_away_goals"],
             "reliability_score": sim["reliability_score"],
+            "interpretation": "inconclusive_without_longitudinal_backtest",
         })
     csv_path = paths.evaluation_outputs / "ablation_study.csv"
     with csv_path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(rows[0].keys()))
         writer.writeheader()
         writer.writerows(rows)
-    payload = {"generated_at": datetime.now(UTC).isoformat(), "ablations": [r["ablation"] for r in rows], "rows": len(rows)}
+    payload = {
+        "generated_at": datetime.now(UTC).isoformat(),
+        "ablations": [r["ablation"] for r in rows],
+        "rows": len(rows),
+        "summary": "components are reported as inconclusive unless validated by simulation backtest metrics",
+    }
     (paths.evaluation_outputs / "ablation_summary.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
     return payload

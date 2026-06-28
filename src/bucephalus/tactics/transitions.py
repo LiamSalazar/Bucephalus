@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+from bucephalus.calibration.parameter_registry import get_parameter
 from bucephalus.tactics.schemas import TacticalState
 
 
 def evaluate_transition(state: TacticalState, opponent: TacticalState) -> dict[str, float]:
+    directness_weight = float(get_parameter("transition_directness_weight", 0.25))
     return {
-        "attacking_transition_boost": _clamp(0.45 * state.transition + 0.25 * state.directness + 0.15 * opponent.defensive_exposure),
+        "attacking_transition_boost": _clamp(0.45 * state.transition + directness_weight * state.directness + 0.15 * opponent.defensive_exposure),
         "defensive_transition_risk": _clamp(0.35 * state.line_height + 0.25 * state.risk_tolerance + 0.30 * opponent.transition - 0.25 * state.defensive_compactness),
         "counter_attack_threat": _clamp(0.45 * state.transition + 0.30 * state.directness + 0.10 * state.tempo),
         "vulnerability_to_direct_play": _clamp(0.35 * state.line_height + 0.30 * state.defensive_exposure + 0.25 * opponent.directness),

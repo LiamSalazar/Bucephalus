@@ -24,4 +24,14 @@ class SimulationResult(BaseModel):
     random_seed: int | None = None
     home_goals_ci: dict | None = None
     away_goals_ci: dict | None = None
+    home_xg_ci: dict | None = None
+    away_xg_ci: dict | None = None
     result_probability_standard_error: dict | None = None
+    simulation_mode: str | None = None
+    anchor_source: str | None = None
+    reliability_score: float | None = None
+    markov_source: str | None = None
+    markov_reliability_score: float | None = None
+    transition_coverage: dict | None = None
+    calibrated_parameters_used: list[str] | None = None
+    heuristic_parameters_used: list[str] | None = None

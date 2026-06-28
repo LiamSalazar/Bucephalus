@@ -1,6 +1,6 @@
 # Bucephalus
 
-Bucephalus es la base de un motor de simulación futbolística basado en datos reales. El objetivo final es soportar Game Mode y Lab Mode, pero este repositorio llega hasta Fase 7.5: datos, entity resolution, EDA, feature store, modelos baseline, motor táctico, simulación Monte Carlo/Markov y hardening científico/calibración. La prioridad actual es reproducibilidad, trazabilidad, Parquet/DuckDB eficiente, validación temporal sin leakage, calibración empírica y explicabilidad táctica. No hay frontend, backend API productivo, mercado, modelos avanzados ni Deep Learning.
+Bucephalus es la base de un motor de simulación futbolística basado en datos reales. El objetivo final es soportar Game Mode y Lab Mode, pero este repositorio llega hasta Fase 7.7: datos, entity resolution, EDA, feature store, modelos baseline, motor táctico, simulación Monte Carlo/Markov, hardening científico/calibración, motor probabilístico-temporal e incremental/MLOps foundation. La prioridad actual es reproducibilidad, trazabilidad, Parquet/DuckDB eficiente, validación temporal sin leakage, calibración empírica, incertidumbre y explicabilidad táctica. No hay frontend, backend API productivo, mercado, modelos avanzados ni Deep Learning.
 
 ## Setup
 
@@ -55,17 +55,25 @@ make sensitivity
 make phase-6-7-check
 ```
 
-## Scientific Hardening 7.5
+## Scientific Hardening 7.5-7.7
 
 ```bash
-make calibration-registry
+make parameter-registry
 make leakage-audit
 make train-xg
 make evaluate-xg
 make calibrate-markov
+make team-strength
+make bootstrap-tactical
 make validate-simulation
 make ablation
 make phase-7-5-check
+make incremental-manifest
+make incremental-features
+make performance-benchmark
+make model-registry
+make pre-phase-8-check
+make pre-phase-8
 ```
 
 ## Research dataset
@@ -95,8 +103,12 @@ BUCEPHALUS_DATA_ROOT=/tmp/bucephalus-data python scripts/01_download_data.py --s
 - `outputs/models/`: registry de modelos baseline.
 - `outputs/evaluation/`: métricas, predicciones, splits walk-forward y leakage check.
 - `outputs/simulations/`: escenarios tácticos, simulaciones Monte Carlo y sensibilidad de sliders.
-- `outputs/calibration/`: registry de parámetros y reportes de calibración.
+- `outputs/calibration/`: registry de parámetros, bootstrap uncertainty y reportes de calibración.
+- `outputs/models/model_registry.json`: registry local de modelos/configuraciones.
+- `data/processed/ingestion_manifest.parquet`: manifest incremental por partido.
+- `outputs/quality/incremental_feature_update_report.json`: reporte de actualización incremental.
+- `outputs/quality/performance_benchmark.json`: benchmark ligero de pipeline.
 
 ## Siguiente etapa
 
-La siguiente etapa es Fase 8: ML avanzado y Deep Learning. Algunos componentes siguen siendo proxy o heuristic fallback cuando no hay cobertura suficiente, pero el motor ya separa `heuristic` vs `calibrated` y registra sus fuentes.
+La siguiente etapa es Fase 8: ML avanzado y Deep Learning. Algunos componentes siguen siendo proxy o `heuristic_fallback` cuando no hay cobertura suficiente, pero el motor separa `heuristic` vs `calibrated`, usa anclas empíricas, Markov calibrado, incertidumbre vía bootstrap, team strength temporal y registry local.

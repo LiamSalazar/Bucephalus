@@ -1,4 +1,4 @@
-.PHONY: setup data-sample data-research process entities eda duckdb quality features train-baselines evaluate-baselines tactical-inputs tactical-scenario simulate-match sensitivity calibration-registry train-xg evaluate-xg calibrate-markov validate-simulation ablation leakage-audit test phase-check phase-4-5-check phase-6-7-check phase-7-5-check all-phase-1-3 all-phase-4-5 all-phase-6-7 all-phase-7-5 full-pipeline
+.PHONY: setup data-sample data-research process entities eda duckdb quality features train-baselines evaluate-baselines tactical-inputs tactical-scenario simulate-match sensitivity parameter-registry calibration-registry train-xg evaluate-xg calibrate-markov team-strength bootstrap-tactical validate-simulation ablation leakage-audit incremental-manifest incremental-features performance-benchmark model-registry pre-phase-8-audit test phase-check phase-4-5-check phase-6-7-check phase-7-5-check pre-phase-8-check all-phase-1-3 all-phase-4-5 all-phase-6-7 all-phase-7-5 all-phase-7-7 pre-phase-8 full-pipeline
 
 PYTHON ?= .venv/bin/python
 MAX_MATCHES ?= 150
@@ -52,6 +52,8 @@ sensitivity:
 calibration-registry:
 	$(PYTHON) scripts/13_build_parameter_registry.py
 
+parameter-registry: calibration-registry
+
 train-xg:
 	$(PYTHON) scripts/13_train_xg_model.py
 
@@ -61,6 +63,12 @@ evaluate-xg:
 calibrate-markov:
 	$(PYTHON) scripts/15_calibrate_markov_matrix.py
 
+team-strength:
+	$(PYTHON) scripts/21_build_team_strength.py
+
+bootstrap-tactical:
+	$(PYTHON) scripts/19_bootstrap_tactical_parameters.py
+
 validate-simulation:
 	$(PYTHON) scripts/16_validate_simulation_backtest.py
 
@@ -69,6 +77,21 @@ ablation:
 
 leakage-audit:
 	$(PYTHON) scripts/18_run_leakage_audit.py
+
+incremental-manifest:
+	$(PYTHON) scripts/22_build_ingestion_manifest.py
+
+incremental-features:
+	$(PYTHON) scripts/23_update_incremental_features.py
+
+performance-benchmark:
+	$(PYTHON) scripts/20_run_performance_benchmark.py
+
+model-registry:
+	$(PYTHON) scripts/24_build_model_registry.py
+
+pre-phase-8-audit:
+	$(PYTHON) scripts/25_write_pre_phase_8_gap_audit.py
 
 test:
 	$(PYTHON) -m pytest
@@ -85,12 +108,19 @@ phase-6-7-check:
 phase-7-5-check:
 	$(PYTHON) scripts/96_run_phase_7_5_check.py
 
+pre-phase-8-check:
+	$(PYTHON) scripts/95_run_pre_phase_8_check.py
+
 all-phase-1-3: data-sample process entities eda duckdb quality test phase-check
 
 all-phase-4-5: features train-baselines evaluate-baselines phase-4-5-check
 
 all-phase-6-7: tactical-inputs tactical-scenario simulate-match sensitivity phase-6-7-check
 
-all-phase-7-5: calibration-registry leakage-audit train-xg evaluate-xg calibrate-markov validate-simulation ablation phase-7-5-check
+all-phase-7-5: parameter-registry leakage-audit train-xg evaluate-xg calibrate-markov team-strength bootstrap-tactical validate-simulation ablation phase-7-5-check
 
-full-pipeline: all-phase-1-3 all-phase-4-5 all-phase-6-7 all-phase-7-5
+all-phase-7-7: incremental-manifest incremental-features performance-benchmark model-registry
+
+pre-phase-8: pre-phase-8-audit all-phase-7-5 all-phase-7-7 pre-phase-8-check
+
+full-pipeline: all-phase-1-3 all-phase-4-5 all-phase-6-7 pre-phase-8

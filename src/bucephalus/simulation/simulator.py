@@ -17,11 +17,19 @@ def simulate_match(home_team: str | None = None, away_team: str | None = None, h
     home, home_report = apply_tactical_sliders(home, **(home_sliders or {}))
     away, away_report = apply_tactical_sliders(away, **(away_sliders or {}))
     anchor = build_empirical_anchor(home, away, paths) if simulation_mode == "calibrated" else None
-    result = simulate_states(home, away, n_simulations=n_simulations, seed=random_seed, anchor=anchor)
+    result = simulate_states(
+        home,
+        away,
+        n_simulations=n_simulations,
+        seed=random_seed,
+        anchor=anchor,
+        paths=paths,
+        simulation_mode=simulation_mode,
+    )
     payload = result.model_dump(mode="json")
     payload["simulation_mode"] = simulation_mode
     payload["anchor_source"] = anchor["anchor_source"] if anchor else "heuristic_state_formula"
-    payload["calibrated_parameters_used"] = ["team_match_empirical_means"] if anchor and anchor["anchor_source"] != "heuristic_fallback" else []
+    payload["calibrated_parameters_used"] = [anchor["anchor_source"], payload.get("markov_source")] if anchor and anchor["anchor_source"] != "heuristic_fallback" else []
     payload["heuristic_parameters_used"] = [] if anchor and anchor["anchor_source"] != "heuristic_fallback" else ["heuristic_base_xg", "tactical_proxy_modifiers"]
     payload["reliability_score"] = anchor["reliability_score"] if anchor else min(home.reliability_score, away.reliability_score)
     if anchor:

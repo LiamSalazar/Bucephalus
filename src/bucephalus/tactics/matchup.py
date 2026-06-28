@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from bucephalus.calibration.parameter_registry import get_parameter
 from bucephalus.tactics.explanations import tactical_bullets
 from bucephalus.tactics.fatigue import evaluate_fatigue
 from bucephalus.tactics.pressure import evaluate_pressure
@@ -14,8 +15,9 @@ def evaluate_matchup(home: TacticalState, away: TacticalState) -> MatchupReport:
     hpos, apos = evaluate_possession(home), evaluate_possession(away)
     hblock, ablock = evaluate_low_block(home, away), evaluate_low_block(away, home)
 
-    home_attack = _mod(0.12 * hp["shot_creation_boost"] + 0.12 * ht["attacking_transition_boost"] + 0.08 * hpos["chance_creation_stability"] - 0.10 * ablock["space_behind_reduction"])
-    away_attack = _mod(0.12 * ap["shot_creation_boost"] + 0.12 * at["attacking_transition_boost"] + 0.08 * apos["chance_creation_stability"] - 0.10 * hblock["space_behind_reduction"])
+    pressure_xg_weight = float(get_parameter("matchup_pressure_xg_weight", 0.12))
+    home_attack = _mod(pressure_xg_weight * hp["shot_creation_boost"] + 0.12 * ht["attacking_transition_boost"] + 0.08 * hpos["chance_creation_stability"] - 0.10 * ablock["space_behind_reduction"])
+    away_attack = _mod(pressure_xg_weight * ap["shot_creation_boost"] + 0.12 * at["attacking_transition_boost"] + 0.08 * apos["chance_creation_stability"] - 0.10 * hblock["space_behind_reduction"])
     home_def = _mod(0.10 * home.defensive_compactness - 0.12 * ht["defensive_transition_risk"] - 0.08 * hp["transition_exposure_cost"])
     away_def = _mod(0.10 * away.defensive_compactness - 0.12 * at["defensive_transition_risk"] - 0.08 * ap["transition_exposure_cost"])
     key_advantages, key_risks = [], []

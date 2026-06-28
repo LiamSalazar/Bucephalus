@@ -70,6 +70,18 @@ def calibrate_markov_matrix(paths: ProjectPaths) -> dict:
             })
     matrix = pl.DataFrame(rows)
     matrix.write_parquet(paths.features / "markov_transition_matrix_global.parquet")
+    pl.DataFrame(
+        [
+            {
+                "from_state": from_state,
+                "to_state": to_state,
+                "transition_count": count,
+                "updated_at": datetime.now(UTC).isoformat(),
+                "matrix_version": "markov_global_v0",
+            }
+            for (from_state, to_state), count in counts.items()
+        ]
+    ).write_parquet(paths.features / "markov_transition_counts.parquet")
     pl.DataFrame(schema=matrix.schema).write_parquet(paths.features / "markov_transition_matrix_by_style.parquet")
     report = {
         "generated_at": datetime.now(UTC).isoformat(),
@@ -81,6 +93,19 @@ def calibrate_markov_matrix(paths: ProjectPaths) -> dict:
         "warnings": ["by-style matrix omitted unless style coverage is sufficient"],
     }
     (paths.calibration_outputs / "markov_calibration_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    (paths.calibration_outputs / "markov_incremental_update_report.json").write_text(
+        json.dumps(
+            {
+                "generated_at": datetime.now(UTC).isoformat(),
+                "status": "completed",
+                "counts_rows": len(counts),
+                "matrix_version": "markov_global_v0",
+                "update_policy": "counts are persisted and probabilities are recalculated from cumulative counts",
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
     return report
 
 
@@ -91,9 +116,19 @@ def _fallback(paths: ProjectPaths, reason: str) -> dict:
             rows.append({"scope": "global", "from_state": from_state.value, "to_state": to_state.value, "transition_count": 0, "probability": probability})
     matrix = pl.DataFrame(rows)
     matrix.write_parquet(paths.features / "markov_transition_matrix_global.parquet")
+    pl.DataFrame(
+        schema={
+            "from_state": pl.Utf8,
+            "to_state": pl.Utf8,
+            "transition_count": pl.Int64,
+            "updated_at": pl.Utf8,
+            "matrix_version": pl.Utf8,
+        }
+    ).write_parquet(paths.features / "markov_transition_counts.parquet")
     pl.DataFrame(schema=matrix.schema).write_parquet(paths.features / "markov_transition_matrix_by_style.parquet")
     report = {"generated_at": datetime.now(UTC).isoformat(), "status": "heuristic_fallback", "reason": reason, "rows_sum_to_one": True, "warnings": [reason]}
     (paths.calibration_outputs / "markov_calibration_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    (paths.calibration_outputs / "markov_incremental_update_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     return report
 
 

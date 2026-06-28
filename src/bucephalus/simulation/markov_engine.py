@@ -23,8 +23,12 @@ def base_transition_matrix() -> dict[MatchState, dict[MatchState, float]]:
     return {state: _normalize(row) for state, row in matrix.items()}
 
 
-def adjusted_transition_matrix(team: TacticalState, opponent: TacticalState) -> dict[MatchState, dict[MatchState, float]]:
-    matrix = {s: dict(row) for s, row in base_transition_matrix().items()}
+def adjusted_transition_matrix(
+    team: TacticalState,
+    opponent: TacticalState,
+    base_matrix: dict[MatchState, dict[MatchState, float]] | None = None,
+) -> dict[MatchState, dict[MatchState, float]]:
+    matrix = {s: dict(row) for s, row in (base_matrix or base_transition_matrix()).items()}
     progression = 0.08 * team.directness + 0.06 * team.tempo + 0.05 * team.centrality
     press_disruption = 0.10 * opponent.pressing * (1 - team.possession)
     matrix[MatchState.BUILD_UP][MatchState.FINAL_THIRD] += progression
@@ -37,8 +41,14 @@ def adjusted_transition_matrix(team: TacticalState, opponent: TacticalState) -> 
     return {state: _normalize(row) for state, row in matrix.items()}
 
 
-def simulate_possession(team: TacticalState, opponent: TacticalState, rng: random.Random, max_steps: int = 12) -> dict:
-    matrix = adjusted_transition_matrix(team, opponent)
+def simulate_possession(
+    team: TacticalState,
+    opponent: TacticalState,
+    rng: random.Random,
+    max_steps: int = 12,
+    base_matrix: dict[MatchState, dict[MatchState, float]] | None = None,
+) -> dict:
+    matrix = adjusted_transition_matrix(team, opponent, base_matrix=base_matrix)
     state = MatchState.OWN_THIRD
     sequence = [state.value]
     shot = goal = turnover = counter = False

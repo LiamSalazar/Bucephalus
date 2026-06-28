@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+from bucephalus.calibration.parameter_registry import get_parameter
 from bucephalus.tactics.schemas import TacticalState
 
 
 def evaluate_fatigue(state: TacticalState) -> dict[str, float]:
-    load = _clamp(0.35 * state.pressing + 0.25 * state.tempo + 0.20 * state.line_height + 0.20 * state.risk_tolerance)
+    pressing_weight = float(get_parameter("fatigue_pressing_weight", 0.35))
+    tempo_weight = float(get_parameter("fatigue_tempo_weight", 0.25))
+    load = _clamp(pressing_weight * state.pressing + tempo_weight * state.tempo + 0.20 * state.line_height + 0.20 * state.risk_tolerance)
     sustainable = _clamp(0.6 * state.fatigue_resistance + 0.4 * state.second_half_intensity)
     second_half_modifier = _clamp(1 - 0.35 * max(0, load - sustainable))
     after_70_risk = _clamp(load * (1 - sustainable) + 0.15 * (1 - state.defensive_compactness))
