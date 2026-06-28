@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 
 from bucephalus.calibration.parameter_registry import build_parameter_registry
+from bucephalus.features.feature_store import build_feature_store
 from bucephalus.models.xg_model import evaluate_xg_model
 from bucephalus.simulation.ablation import run_ablation_study
 from bucephalus.simulation.markov_calibration import calibrate_markov_matrix
@@ -26,6 +27,7 @@ def main() -> None:
     failures = []
     try:
         build_parameter_registry(paths)
+        build_feature_store(paths)
         leakage = run_leakage_audit(paths)
         if not leakage["passed"]:
             failures.append("leakage audit failed")

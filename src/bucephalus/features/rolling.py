@@ -10,7 +10,12 @@ def rolling_prior_features(df: pl.DataFrame, group_col: str, date_col: str, valu
     for _, group in df.sort([group_col, date_col, "statsbomb_match_id"]).group_by(group_col, maintain_order=True):
         history: list[dict] = []
         for row in group.to_dicts():
-            out = {group_col: row[group_col], "statsbomb_match_id": row["statsbomb_match_id"], "historical_matches_available": len(history)}
+            out = {
+                group_col: row[group_col],
+                "statsbomb_match_id": row["statsbomb_match_id"],
+                "feature_cutoff_date": history[-1].get(date_col) if history else None,
+                "historical_matches_available": len(history),
+            }
             for col in value_cols:
                 vals = [h.get(col) for h in history if h.get(col) is not None]
                 for window in windows:

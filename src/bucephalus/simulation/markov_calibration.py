@@ -24,6 +24,8 @@ def event_to_state(row: dict) -> str:
         return MatchState.SET_PIECE.value
     if event_type in {"Duel", "Interception", "Pressure"}:
         return MatchState.TURNOVER.value if event_type == "Interception" else MatchState.MIDDLE_THIRD.value
+    if play_pattern and "Counter" in str(play_pattern):
+        return MatchState.COUNTER_ATTACK.value
     if x is None:
         return MatchState.BUILD_UP.value
     if x < 40:

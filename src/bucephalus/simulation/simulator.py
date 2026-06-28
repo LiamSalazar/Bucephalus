@@ -32,6 +32,20 @@ def simulate_match(home_team: str | None = None, away_team: str | None = None, h
     payload["calibrated_parameters_used"] = [anchor["anchor_source"], payload.get("markov_source")] if anchor and anchor["anchor_source"] != "heuristic_fallback" else []
     payload["heuristic_parameters_used"] = [] if anchor and anchor["anchor_source"] != "heuristic_fallback" else ["heuristic_base_xg", "tactical_proxy_modifiers"]
     payload["reliability_score"] = anchor["reliability_score"] if anchor else min(home.reliability_score, away.reliability_score)
+    payload["uncertainty_sources"] = [
+        "simulation_uncertainty",
+        "team_strength_uncertainty" if anchor and anchor.get("anchor_source") == "team_strength_timeseries" else "anchor_uncertainty",
+        "tactical_parameter_uncertainty",
+    ]
+    payload["model_uncertainty_std"] = float(1 - payload["reliability_score"]) * 0.25
+    payload["parameter_uncertainty_std"] = 0.05
+    payload["simulation_uncertainty_std"] = max(payload["result_probability_standard_error"].values()) if payload.get("result_probability_standard_error") else None
+    payload["combined_interval"] = {
+        "home_goals_p5": payload["home_goals_ci"]["p5"],
+        "home_goals_p95": payload["home_goals_ci"]["p95"],
+        "away_goals_p5": payload["away_goals_ci"]["p5"],
+        "away_goals_p95": payload["away_goals_ci"]["p95"],
+    }
     if anchor:
         payload["warnings"].extend(anchor["warnings"])
     payload["home_slider_warnings"] = home_report.warnings

@@ -1,6 +1,6 @@
 # Bucephalus
 
-Bucephalus es la base de un motor de simulación futbolística basado en datos reales. El objetivo final es soportar Game Mode y Lab Mode, pero este repositorio llega hasta Fase 7.7: datos, entity resolution, EDA, feature store, modelos baseline, motor táctico, simulación Monte Carlo/Markov, hardening científico/calibración, motor probabilístico-temporal e incremental/MLOps foundation. La prioridad actual es reproducibilidad, trazabilidad, Parquet/DuckDB eficiente, validación temporal sin leakage, calibración empírica, incertidumbre y explicabilidad táctica. No hay frontend, backend API productivo, mercado, modelos avanzados ni Deep Learning.
+Bucephalus es la base de un motor de simulación futbolística basado en datos reales. El objetivo final es soportar Game Mode y Lab Mode, pero este repositorio llega hasta Fase 8: datos, entity resolution, EDA, feature store, modelos baseline, motor táctico, simulación Monte Carlo/Markov, hardening estadístico, motor probabilístico-temporal, incremental/MLOps foundation y ML avanzado inicial. La prioridad actual es reproducibilidad, trazabilidad, validación temporal sin leakage, calibración empírica, incertidumbre y explicabilidad. No hay frontend, backend API productivo, mercado, Game Mode completo ni chatbot/LLM.
 
 ## Setup
 
@@ -76,6 +76,24 @@ make pre-phase-8-check
 make pre-phase-8
 ```
 
+## Fase 8 ML Avanzado
+
+```bash
+make train-tabular
+make evaluate-tabular
+make train-hazard
+make evaluate-hazard
+make train-sequence
+make evaluate-sequence
+make mc-dropout
+make vectorized-simulation
+make explainability
+make phase-8-check
+make all-phase-8
+```
+
+Fase 8 incluye modelos tabulares avanzados, hazard model para controlar survival/look-ahead bias, EPV, sequence encoder inicial, MC Dropout, Monte Carlo vectorizado y explicabilidad ligera. Los modelos deep son iniciales y no definitivos; PyTorch/GRU queda reservado para una iteración posterior si se decide añadir esa dependencia.
+
 ## Research dataset
 
 No es el default. Úsalo para traer más partidos de StatsBomb Open Data de forma controlada:
@@ -105,10 +123,15 @@ BUCEPHALUS_DATA_ROOT=/tmp/bucephalus-data python scripts/01_download_data.py --s
 - `outputs/simulations/`: escenarios tácticos, simulaciones Monte Carlo y sensibilidad de sliders.
 - `outputs/calibration/`: registry de parámetros, bootstrap uncertainty y reportes de calibración.
 - `outputs/models/model_registry.json`: registry local de modelos/configuraciones.
+- `outputs/models/*_model_registry.json`: registries de modelos Fase 8.
+- `outputs/evaluation/hazard_metrics.json`, `sequence_model_metrics.json`, `possession_value_metrics.json`: métricas ML Fase 8.
+- `outputs/evaluation/mc_dropout_summary.json`: incertidumbre por MC Dropout.
+- `outputs/quality/vectorized_simulation_benchmark.json`: benchmark Monte Carlo vectorizado.
+- `outputs/explainability/`: muestras de explicabilidad.
 - `data/processed/ingestion_manifest.parquet`: manifest incremental por partido.
 - `outputs/quality/incremental_feature_update_report.json`: reporte de actualización incremental.
 - `outputs/quality/performance_benchmark.json`: benchmark ligero de pipeline.
 
 ## Siguiente etapa
 
-La siguiente etapa es Fase 8: ML avanzado y Deep Learning. Algunos componentes siguen siendo proxy o `heuristic_fallback` cuando no hay cobertura suficiente, pero el motor separa `heuristic` vs `calibrated`, usa anclas empíricas, Markov calibrado, incertidumbre vía bootstrap, team strength temporal y registry local.
+La siguiente etapa son Fases 9-11: Game Mode, Lab Mode operativo, interfaz, reportes y asistente IA. Algunos componentes siguen siendo proxy o `heuristic_fallback` cuando no hay cobertura suficiente, pero el motor separa `heuristic` vs `calibrated`, usa anclas empíricas, Markov calibrado, incertidumbre vía bootstrap, team strength temporal, registry local y ML inicial trazable.

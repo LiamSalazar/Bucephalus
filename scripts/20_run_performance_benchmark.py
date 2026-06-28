@@ -9,7 +9,9 @@ from pathlib import Path
 import polars as pl
 
 from bucephalus.calibration.bootstrap import bootstrap_tactical_parameters
+from bucephalus.features.feature_store import build_feature_store
 from bucephalus.models.team_strength import build_team_strength_timeseries
+from bucephalus.models.xg_model import train_xg_model
 from bucephalus.simulation.markov_calibration import calibrate_markov_matrix
 from bucephalus.simulation.simulation_validation import validate_simulation_backtest
 from bucephalus.utils.paths import ProjectPaths
@@ -23,6 +25,8 @@ def main() -> None:
     paths.ensure()
     timings = []
     for name, fn in [
+        ("feature_build", lambda: build_feature_store(paths)),
+        ("xg_training", lambda: train_xg_model(paths)),
         ("markov_calibration", lambda: calibrate_markov_matrix(paths)),
         ("team_strength", lambda: build_team_strength_timeseries(paths)),
         ("bootstrap_tactical", lambda: bootstrap_tactical_parameters(paths, n_bootstraps=30)),

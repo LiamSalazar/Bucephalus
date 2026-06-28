@@ -19,6 +19,7 @@ outputs/models/*
 outputs/evaluation/*
 outputs/simulations/*
 outputs/calibration/*
+outputs/explainability/*
 !data/raw/.gitkeep
 !data/interim/.gitkeep
 !data/processed/.gitkeep
@@ -29,3 +30,4 @@ outputs/calibration/*
 !outputs/evaluation/.gitkeep
 !outputs/simulations/.gitkeep
 !outputs/calibration/.gitkeep
+!outputs/explainability/.gitkeep

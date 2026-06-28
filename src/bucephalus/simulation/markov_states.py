@@ -17,4 +17,4 @@ class MatchState(StrEnum):
     END_POSSESSION = "END_POSSESSION"
 
 
-TERMINAL_STATES = {MatchState.GOAL, MatchState.TURNOVER, MatchState.END_POSSESSION}
+TERMINAL_STATES = {MatchState.GOAL, MatchState.END_POSSESSION}

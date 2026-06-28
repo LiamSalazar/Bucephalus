@@ -63,19 +63,29 @@ def _model_dataset_matches(match_features: pl.DataFrame, team_rolling: pl.DataFr
         return pl.DataFrame()
     ids = team_match.select("statsbomb_match_id", "team_id", "bucephalus_team_id", "is_home")
     rolling = team_rolling.join(ids, on=["statsbomb_match_id", "bucephalus_team_id"], how="left")
-    home = rolling.filter(pl.col("is_home")).drop(["is_home", "team_id"]).rename({c: f"home_{c}" for c in rolling.columns if c.startswith("rolling_") or c == "historical_matches_available"})
-    away = rolling.filter(~pl.col("is_home")).drop(["is_home", "team_id"]).rename({c: f"away_{c}" for c in rolling.columns if c.startswith("rolling_") or c == "historical_matches_available"})
+    rename_home = {c: f"home_{c}" for c in rolling.columns if c.startswith("rolling_") or c in {"historical_matches_available", "feature_cutoff_date"}}
+    rename_away = {c: f"away_{c}" for c in rolling.columns if c.startswith("rolling_") or c in {"historical_matches_available", "feature_cutoff_date"}}
+    home = rolling.filter(pl.col("is_home")).drop(["is_home", "team_id"]).rename(rename_home)
+    away = rolling.filter(~pl.col("is_home")).drop(["is_home", "team_id"]).rename(rename_away)
     out = match_features.join(home, on="statsbomb_match_id", how="left").join(away, on="statsbomb_match_id", how="left", suffix="_awayrow")
     for col in list(out.columns):
         if col.startswith("home_rolling_") and col.replace("home_", "away_") in out.columns:
             out = out.with_columns((pl.col(col) - pl.col(col.replace("home_", "away_"))).alias(col.replace("home_", "diff_")))
+    out = out.with_columns(
+        pl.col("match_date").alias("target_match_date"),
+        pl.max_horizontal("home_feature_cutoff_date", "away_feature_cutoff_date").alias("feature_cutoff_date"),
+        pl.min_horizontal("home_historical_matches_available", "away_historical_matches_available").alias("feature_history_matches_available"),
+    )
     return out.sort("match_date")
 
 
 def _model_dataset_team_matches(team_match: pl.DataFrame, team_rolling: pl.DataFrame) -> pl.DataFrame:
     if team_match.is_empty():
         return pl.DataFrame()
-    return team_match.join(team_rolling, on=["statsbomb_match_id", "bucephalus_team_id"], how="left").sort("match_date")
+    return team_match.join(team_rolling, on=["statsbomb_match_id", "bucephalus_team_id"], how="left").with_columns(
+        pl.col("match_date").alias("target_match_date"),
+        pl.col("historical_matches_available").alias("feature_history_matches_available"),
+    ).sort("match_date")
 
 
 def _write_manifest(paths: ProjectPaths, tables: dict[str, pl.DataFrame]) -> dict:

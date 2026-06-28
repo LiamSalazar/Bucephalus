@@ -12,6 +12,7 @@ from bucephalus.models.walk_forward import temporal_split
 from bucephalus.utils.paths import ProjectPaths
 
 POST_MATCH_PREFIXES = ("shots_", "xg_", "goals_", "total_goals", "home_score", "away_score")
+REQUIRED_CUTOFF_COLUMNS = {"target_match_date", "feature_cutoff_date", "feature_history_matches_available"}
 
 
 def run_leakage_audit(paths: ProjectPaths | None = None) -> dict[str, Any]:
@@ -43,6 +44,14 @@ def run_leakage_audit(paths: ProjectPaths | None = None) -> dict[str, Any]:
         if same_match_cols:
             failures.append(f"post-match columns detected as pre-match features: {same_match_cols}")
         examples = df.head(5).select([c for c in ["statsbomb_match_id", "match_date"] if c in df.columns]).to_dicts()
+        missing_cutoff = sorted(REQUIRED_CUTOFF_COLUMNS - set(df.columns))
+        if missing_cutoff:
+            failures.append(f"missing cutoff columns: {missing_cutoff}")
+        elif df.filter(
+            pl.col("feature_cutoff_date").is_not_null()
+            & (pl.col("feature_cutoff_date") >= pl.col("target_match_date"))
+        ).height:
+            failures.append("feature_cutoff_date >= target_match_date detected")
     rolling_ok = True
     if team_rolling_path.exists():
         rolling = pl.read_parquet(team_rolling_path)
@@ -80,7 +89,7 @@ def _split_info(df: pl.DataFrame) -> dict[str, Any]:
         rows[name] = {
             "rows": part.height,
             "min_target_match_date": part["match_date"].min() if part.height else None,
-            "max_feature_date": part["match_date"].max() if part.height else None,
+            "max_feature_date": part["feature_cutoff_date"].max() if part.height and "feature_cutoff_date" in part.columns else None,
         }
     train_max = rows.get("train", {}).get("max_feature_date")
     val_min = rows.get("validation", {}).get("min_target_match_date")
@@ -88,9 +97,9 @@ def _split_info(df: pl.DataFrame) -> dict[str, Any]:
     test_min = rows.get("test", {}).get("min_target_match_date")
     order_passed = True
     if train_max and val_min:
-        order_passed = order_passed and train_max <= val_min
+        order_passed = order_passed and train_max < val_min
     if val_max and test_min:
-        order_passed = order_passed and val_max <= test_min
+        order_passed = order_passed and val_max < test_min
     rows["temporal_order_passed"] = order_passed
     rows["no_split_overlap"] = len(set().union(*[set(v) for v in splits.values()])) == sum(len(v) for v in splits.values())
     return rows

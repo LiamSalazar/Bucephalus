@@ -17,7 +17,7 @@ def base_transition_matrix() -> dict[MatchState, dict[MatchState, float]]:
         MatchState.COUNTER_ATTACK: {MatchState.FINAL_THIRD: 0.35, MatchState.BOX: 0.20, MatchState.SHOT: 0.16, MatchState.TURNOVER: 0.20, MatchState.END_POSSESSION: 0.09},
         MatchState.SET_PIECE: {MatchState.SHOT: 0.18, MatchState.BOX: 0.15, MatchState.TURNOVER: 0.25, MatchState.END_POSSESSION: 0.42},
         MatchState.GOAL: {MatchState.GOAL: 1.0},
-        MatchState.TURNOVER: {MatchState.TURNOVER: 1.0},
+        MatchState.TURNOVER: {MatchState.COUNTER_ATTACK: 0.42, MatchState.END_POSSESSION: 0.58},
         MatchState.END_POSSESSION: {MatchState.END_POSSESSION: 1.0},
     }
     return {state: _normalize(row) for state, row in matrix.items()}
@@ -37,7 +37,10 @@ def adjusted_transition_matrix(
     matrix[MatchState.FINAL_THIRD][MatchState.SHOT] += 0.08 * team.risk_tolerance + 0.05 * team.centrality
     matrix[MatchState.BOX][MatchState.SHOT] += 0.08 * team.risk_tolerance
     matrix[MatchState.SHOT][MatchState.GOAL] += 0.04 * team.set_piece_dependency + 0.04 * team.late_goal_threat
-    matrix[MatchState.TURNOVER] = {MatchState.TURNOVER: 1.0}
+    matrix[MatchState.TURNOVER] = {
+        MatchState.COUNTER_ATTACK: 0.35 + 0.35 * opponent.transition,
+        MatchState.END_POSSESSION: 0.65 - 0.35 * opponent.transition,
+    }
     return {state: _normalize(row) for state, row in matrix.items()}
 
 

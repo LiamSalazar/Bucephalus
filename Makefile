@@ -1,4 +1,4 @@
-.PHONY: setup data-sample data-research process entities eda duckdb quality features train-baselines evaluate-baselines tactical-inputs tactical-scenario simulate-match sensitivity parameter-registry calibration-registry train-xg evaluate-xg calibrate-markov team-strength bootstrap-tactical validate-simulation ablation leakage-audit incremental-manifest incremental-features performance-benchmark model-registry pre-phase-8-audit test phase-check phase-4-5-check phase-6-7-check phase-7-5-check pre-phase-8-check all-phase-1-3 all-phase-4-5 all-phase-6-7 all-phase-7-5 all-phase-7-7 pre-phase-8 full-pipeline
+.PHONY: setup data-sample data-research process entities eda duckdb quality features train-baselines evaluate-baselines tactical-inputs tactical-scenario simulate-match sensitivity parameter-registry calibration-registry train-xg evaluate-xg calibrate-markov team-strength bootstrap-tactical validate-simulation ablation leakage-audit incremental-manifest incremental-features performance-benchmark model-registry pre-phase-8-audit train-tabular evaluate-tabular train-hazard evaluate-hazard train-sequence evaluate-sequence mc-dropout vectorized-simulation explainability phase-8-check test phase-check phase-4-5-check phase-6-7-check phase-7-5-check pre-phase-8-check all-phase-1-3 all-phase-4-5 all-phase-6-7 all-phase-7-5 all-phase-7-7 pre-phase-8 all-phase-8 full-pipeline
 
 PYTHON ?= .venv/bin/python
 MAX_MATCHES ?= 150
@@ -93,6 +93,36 @@ model-registry:
 pre-phase-8-audit:
 	$(PYTHON) scripts/25_write_pre_phase_8_gap_audit.py
 
+train-tabular:
+	$(PYTHON) scripts/27_train_tabular_models.py
+
+evaluate-tabular:
+	$(PYTHON) scripts/28_evaluate_tabular_models.py
+
+train-hazard:
+	$(PYTHON) scripts/29_train_hazard_model.py
+
+evaluate-hazard:
+	$(PYTHON) scripts/30_evaluate_hazard_model.py
+
+train-sequence:
+	$(PYTHON) scripts/25_train_sequence_model.py
+
+evaluate-sequence:
+	$(PYTHON) scripts/26_evaluate_sequence_model.py
+
+mc-dropout:
+	$(PYTHON) scripts/31_run_mc_dropout_inference.py
+
+vectorized-simulation:
+	$(PYTHON) scripts/32_run_vectorized_simulation.py
+
+explainability:
+	$(PYTHON) scripts/33_run_explainability_samples.py
+
+phase-8-check:
+	$(PYTHON) scripts/94_run_phase_8_check.py
+
 test:
 	$(PYTHON) -m pytest
 
@@ -117,10 +147,12 @@ all-phase-4-5: features train-baselines evaluate-baselines phase-4-5-check
 
 all-phase-6-7: tactical-inputs tactical-scenario simulate-match sensitivity phase-6-7-check
 
-all-phase-7-5: parameter-registry leakage-audit train-xg evaluate-xg calibrate-markov team-strength bootstrap-tactical validate-simulation ablation phase-7-5-check
+all-phase-7-5: features parameter-registry leakage-audit train-xg evaluate-xg calibrate-markov team-strength bootstrap-tactical validate-simulation ablation phase-7-5-check
 
 all-phase-7-7: incremental-manifest incremental-features performance-benchmark model-registry
 
 pre-phase-8: pre-phase-8-audit all-phase-7-5 all-phase-7-7 pre-phase-8-check
 
-full-pipeline: all-phase-1-3 all-phase-4-5 all-phase-6-7 pre-phase-8
+all-phase-8: train-tabular evaluate-tabular train-hazard evaluate-hazard train-sequence evaluate-sequence mc-dropout vectorized-simulation explainability phase-8-check
+
+full-pipeline: all-phase-1-3 all-phase-4-5 all-phase-6-7 pre-phase-8 all-phase-8

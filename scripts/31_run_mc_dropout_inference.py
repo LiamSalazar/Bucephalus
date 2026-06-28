@@ -3,18 +3,16 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from bucephalus.simulation.markov_calibration import calibrate_markov_matrix
-from bucephalus.simulation.markov_validation import validate_markov_against_events
+from bucephalus.deep.inference import run_mc_dropout
 from bucephalus.utils.paths import ProjectPaths
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--data-root", type=Path)
+    parser.add_argument("--n-mc-samples", type=int, default=50)
     args = parser.parse_args()
-    paths = ProjectPaths(data_root=args.data_root)
-    print(calibrate_markov_matrix(paths))
-    print(validate_markov_against_events(paths))
+    print(run_mc_dropout(ProjectPaths(data_root=args.data_root), n_mc_samples=args.n_mc_samples))
 
 
 if __name__ == "__main__":
