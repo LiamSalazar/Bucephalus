@@ -12,11 +12,12 @@ from bucephalus.tactics.matchup import evaluate_matchup
 from bucephalus.tactics.schemas import TacticalState
 
 
-def simulate_states(home: TacticalState, away: TacticalState, n_simulations: int, seed: int) -> SimulationResult:
+def simulate_states(home: TacticalState, away: TacticalState, n_simulations: int, seed: int, anchor: dict | None = None) -> SimulationResult:
     matchup = evaluate_matchup(home, away)
     hf, af = evaluate_fatigue(home), evaluate_fatigue(away)
-    base_home_xg = max(0.2, 0.9 + home.late_goal_threat + home.transition * 0.5)
-    base_away_xg = max(0.2, 0.9 + away.late_goal_threat + away.transition * 0.5)
+    anchor = anchor or {}
+    base_home_xg = max(0.2, float(anchor.get("base_home_xg", 0.9 + home.late_goal_threat + home.transition * 0.5)))
+    base_away_xg = max(0.2, float(anchor.get("base_away_xg", 0.9 + away.late_goal_threat + away.transition * 0.5)))
     lam_home = max(0.05, base_home_xg * matchup.home_xg_modifier * matchup.away_defense_modifier)
     lam_away = max(0.05, base_away_xg * matchup.away_xg_modifier * matchup.home_defense_modifier)
     rng = random.Random(seed)
@@ -41,12 +42,15 @@ def simulate_states(home: TacticalState, away: TacticalState, n_simulations: int
         home_late_goal += int(rng.random() < _late_goal_probability(home, hf))
         away_late_goal += int(rng.random() < _late_goal_probability(away, af))
     n = max(1, n_simulations)
+    hw = sum(h > a for h, a in zip(home_goals, away_goals, strict=False)) / n
+    dr = sum(h == a for h, a in zip(home_goals, away_goals, strict=False)) / n
+    aw = sum(h < a for h, a in zip(home_goals, away_goals, strict=False)) / n
     return SimulationResult(
         home_team=home.team_name,
         away_team=away.team_name,
-        home_win_probability=sum(h > a for h, a in zip(home_goals, away_goals, strict=False)) / n,
-        draw_probability=sum(h == a for h, a in zip(home_goals, away_goals, strict=False)) / n,
-        away_win_probability=sum(h < a for h, a in zip(home_goals, away_goals, strict=False)) / n,
+        home_win_probability=hw,
+        draw_probability=dr,
+        away_win_probability=aw,
         expected_home_goals=float(np.mean(home_goals)),
         expected_away_goals=float(np.mean(away_goals)),
         expected_home_xg_proxy=float(np.mean(home_xg_proxy)),
@@ -58,8 +62,25 @@ def simulate_states(home: TacticalState, away: TacticalState, n_simulations: int
         away_fatigue_risk=af["after_70_defensive_risk"],
         key_tactical_drivers=matchup.explanation_bullets,
         warnings=[] if min(home.reliability_score, away.reliability_score) >= 0.35 else ["low tactical baseline reliability; outputs are proxy-driven"],
+        n_simulations=n_simulations,
+        random_seed=seed,
+        home_goals_ci=_ci(home_goals),
+        away_goals_ci=_ci(away_goals),
+        result_probability_standard_error={
+            "home_win": float((hw * (1 - hw) / n) ** 0.5),
+            "draw": float((dr * (1 - dr) / n) ** 0.5),
+            "away_win": float((aw * (1 - aw) / n) ** 0.5),
+        },
     )
 
 
 def _late_goal_probability(state: TacticalState, fatigue: dict) -> float:
     return max(0.02, min(0.55, 0.08 + 0.25 * state.late_goal_threat - 0.12 * fatigue["after_70_attacking_drop"]))
+
+
+def _ci(values: list[int]) -> dict:
+    return {
+        "p5": float(np.percentile(values, 5)),
+        "p50": float(np.percentile(values, 50)),
+        "p95": float(np.percentile(values, 95)),
+    }

@@ -64,36 +64,26 @@ def _master_players(players: pl.DataFrame) -> pl.DataFrame:
     }
     if players.is_empty():
         return pl.DataFrame(schema=schema)
-    grouped = (
-        players.with_columns(
-            pl.col("player_name").map_elements(normalize_name, return_dtype=pl.Utf8).alias("normalized_player_name")
+    rows = []
+    for (player_id,), group in players.group_by("player_id"):
+        records = group.to_dicts()
+        names = [r.get("player_name") for r in records if r.get("player_name")]
+        canonical = _canonical_name(names)
+        rows.append(
+            {
+                "bucephalus_player_id": stable_entity_id("ply", player_id, normalize_name(canonical)),
+                "canonical_player_name": canonical,
+                "normalized_player_name": normalize_name(canonical),
+                "statsbomb_player_id": player_id,
+                "known_team_ids_json": _json_list(sorted({r.get("team_id") for r in records if r.get("team_id") is not None})),
+                "known_team_names_json": _json_list(sorted({r.get("team_name") for r in records if r.get("team_name")})),
+                "known_position_names_json": _json_list(sorted({r.get("position_names") for r in records if r.get("position_names")})),
+                "country_name": next((r.get("country_name") for r in records if r.get("country_name")), None),
+                "aliases_json": _json_list(sorted(set(names))),
+                "future_role_eligibility_basis": ROLE_BASIS,
+            }
         )
-        .group_by("player_id")
-        .agg(
-            pl.col("player_name").drop_nulls().sort().first().alias("canonical_player_name"),
-            pl.col("normalized_player_name").drop_nulls().sort().first(),
-            pl.col("player_name").drop_nulls().unique().sort().alias("aliases"),
-            pl.col("team_id").drop_nulls().unique().sort().alias("team_ids"),
-            pl.col("team_name").drop_nulls().unique().sort().alias("team_names"),
-            pl.col("country_name").drop_nulls().first(),
-            pl.col("position_names").drop_nulls().unique().sort().alias("positions"),
-        )
-    )
-    return grouped.select(
-        pl.struct(["player_id", "canonical_player_name"]).map_elements(
-            lambda r: stable_entity_id("ply", r["player_id"], normalize_name(r["canonical_player_name"])),
-            return_dtype=pl.Utf8,
-        ).alias("bucephalus_player_id"),
-        "canonical_player_name",
-        "normalized_player_name",
-        pl.col("player_id").alias("statsbomb_player_id"),
-        pl.col("team_ids").map_elements(_json_list, return_dtype=pl.Utf8).alias("known_team_ids_json"),
-        pl.col("team_names").map_elements(_json_list, return_dtype=pl.Utf8).alias("known_team_names_json"),
-        pl.col("positions").map_elements(_json_list, return_dtype=pl.Utf8).alias("known_position_names_json"),
-        "country_name",
-        pl.col("aliases").map_elements(_json_list, return_dtype=pl.Utf8).alias("aliases_json"),
-        pl.lit(ROLE_BASIS).alias("future_role_eligibility_basis"),
-    ).sort("bucephalus_player_id")
+    return pl.DataFrame(rows, schema=schema).sort("bucephalus_player_id")
 
 
 def _master_teams(teams: pl.DataFrame) -> pl.DataFrame:
@@ -254,6 +244,7 @@ def _resolution_report(players: pl.DataFrame, teams: pl.DataFrame) -> dict[str, 
             "players": players.height,
             "teams": teams.height,
         },
+        "canonical_selection_method": "frequency_desc_then_completeness_length_desc_then_lexicographic",
         "potential_duplicate_players": player_collisions,
         "potential_duplicate_teams": team_collisions,
         "normalized_name_collisions": {
@@ -284,6 +275,15 @@ def _read(path: Path) -> pl.DataFrame:
 
 def _json_list(values: object) -> str:
     return json.dumps(_series_or_list(values), ensure_ascii=False)
+
+
+def _canonical_name(names: list[str]) -> str:
+    if not names:
+        return ""
+    counts: dict[str, int] = {}
+    for name in names:
+        counts[name] = counts.get(name, 0) + 1
+    return sorted(counts, key=lambda n: (-counts[n], -len(normalize_name(n).split()), -len(n), normalize_name(n)))[0]
 
 
 def _series_or_list(values: object) -> list[Any]:

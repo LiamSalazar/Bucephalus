@@ -1,4 +1,4 @@
-.PHONY: setup data-sample data-research process entities eda duckdb quality features train-baselines evaluate-baselines tactical-inputs tactical-scenario simulate-match sensitivity test phase-check phase-4-5-check phase-6-7-check all-phase-1-3 all-phase-4-5 all-phase-6-7 full-pipeline
+.PHONY: setup data-sample data-research process entities eda duckdb quality features train-baselines evaluate-baselines tactical-inputs tactical-scenario simulate-match sensitivity calibration-registry train-xg evaluate-xg calibrate-markov validate-simulation ablation leakage-audit test phase-check phase-4-5-check phase-6-7-check phase-7-5-check all-phase-1-3 all-phase-4-5 all-phase-6-7 all-phase-7-5 full-pipeline
 
 PYTHON ?= .venv/bin/python
 MAX_MATCHES ?= 150
@@ -49,6 +49,27 @@ simulate-match:
 sensitivity:
 	$(PYTHON) scripts/12_run_sensitivity_analysis.py --auto-pick-teams --slider pressing --values=-0.2,0,0.2 --n-simulations 300
 
+calibration-registry:
+	$(PYTHON) scripts/13_build_parameter_registry.py
+
+train-xg:
+	$(PYTHON) scripts/13_train_xg_model.py
+
+evaluate-xg:
+	$(PYTHON) scripts/14_evaluate_xg_model.py
+
+calibrate-markov:
+	$(PYTHON) scripts/15_calibrate_markov_matrix.py
+
+validate-simulation:
+	$(PYTHON) scripts/16_validate_simulation_backtest.py
+
+ablation:
+	$(PYTHON) scripts/17_run_ablation_study.py
+
+leakage-audit:
+	$(PYTHON) scripts/18_run_leakage_audit.py
+
 test:
 	$(PYTHON) -m pytest
 
@@ -61,10 +82,15 @@ phase-4-5-check:
 phase-6-7-check:
 	$(PYTHON) scripts/97_run_phase_6_7_check.py
 
+phase-7-5-check:
+	$(PYTHON) scripts/96_run_phase_7_5_check.py
+
 all-phase-1-3: data-sample process entities eda duckdb quality test phase-check
 
 all-phase-4-5: features train-baselines evaluate-baselines phase-4-5-check
 
 all-phase-6-7: tactical-inputs tactical-scenario simulate-match sensitivity phase-6-7-check
 
-full-pipeline: all-phase-1-3 all-phase-4-5 all-phase-6-7
+all-phase-7-5: calibration-registry leakage-audit train-xg evaluate-xg calibrate-markov validate-simulation ablation phase-7-5-check
+
+full-pipeline: all-phase-1-3 all-phase-4-5 all-phase-6-7 all-phase-7-5

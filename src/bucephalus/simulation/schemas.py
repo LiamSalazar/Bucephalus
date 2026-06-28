@@ -20,3 +20,8 @@ class SimulationResult(BaseModel):
     away_fatigue_risk: float
     key_tactical_drivers: list[str]
     warnings: list[str]
+    n_simulations: int | None = None
+    random_seed: int | None = None
+    home_goals_ci: dict | None = None
+    away_goals_ci: dict | None = None
+    result_probability_standard_error: dict | None = None

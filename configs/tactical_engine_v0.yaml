@@ -1,0 +1,37 @@
+parameters:
+  pressure_effective_press_resistance_weight:
+    value: 0.55
+    source: heuristic_fallback
+    description: Dampens pressing effect against press-resistance proxy.
+    valid_range: [0.0, 1.0]
+    last_calibrated_at: null
+  pressure_recovery_weight:
+    value: 0.45
+    source: heuristic_fallback
+    description: Converts effective pressing into high recovery boost.
+    valid_range: [0.0, 1.0]
+    last_calibrated_at: null
+  fatigue_pressing_weight:
+    value: 0.35
+    source: heuristic_fallback
+    description: Pressing contribution to fatigue load.
+    valid_range: [0.0, 1.0]
+    last_calibrated_at: null
+  fatigue_tempo_weight:
+    value: 0.25
+    source: heuristic_fallback
+    description: Tempo contribution to fatigue load.
+    valid_range: [0.0, 1.0]
+    last_calibrated_at: null
+  transition_directness_weight:
+    value: 0.25
+    source: heuristic_fallback
+    description: Directness contribution to attacking transition boost.
+    valid_range: [0.0, 1.0]
+    last_calibrated_at: null
+  matchup_pressure_xg_weight:
+    value: 0.12
+    source: heuristic_fallback
+    description: Pressure shot-creation impact on xG modifier.
+    valid_range: [0.0, 1.0]
+    last_calibrated_at: null

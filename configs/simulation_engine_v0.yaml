@@ -1,0 +1,31 @@
+parameters:
+  markov_laplace_alpha:
+    value: 1.0
+    source: estimated
+    description: Dirichlet/Laplace smoothing for empirical Markov transitions.
+    valid_range: [0.0, 10.0]
+    last_calibrated_at: null
+  heuristic_base_home_xg:
+    value: 1.15
+    source: heuristic_fallback
+    description: Fallback home xG if no empirical anchor is available.
+    valid_range: [0.05, 5.0]
+    last_calibrated_at: null
+  heuristic_base_away_xg:
+    value: 1.00
+    source: heuristic_fallback
+    description: Fallback away xG if no empirical anchor is available.
+    valid_range: [0.05, 5.0]
+    last_calibrated_at: null
+  monte_carlo_default_possessions:
+    value: 55
+    source: heuristic_fallback
+    description: Baseline possession count proxy for Markov-driven xG.
+    valid_range: [10, 120]
+    last_calibrated_at: null
+  poisson_max_goal_ci_percentiles:
+    value: [5, 50, 95]
+    source: estimated
+    description: Percentiles emitted from Monte Carlo score distributions.
+    valid_range: [0, 100]
+    last_calibrated_at: null
