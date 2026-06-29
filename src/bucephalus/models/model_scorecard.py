@@ -25,7 +25,7 @@ def build_phase8_scorecard(paths: ProjectPaths) -> dict:
     rows.append(_row("MC Dropout", "point_prediction", "mc_dropout", "mean_epistemic_uncertainty", None, mc.get("mean_epistemic_uncertainty"), paths.evaluation_outputs / "mc_dropout_summary.json"))
     rows.append(_row("vectorized Monte Carlo", "loop", "numpy_vectorized", "simulations_per_second", None, vec.get("simulations_per_second"), paths.quality_outputs / "vectorized_simulation_benchmark.json", higher=True))
     rows.append(_row("pass network", "none", "pass_network_proxy", "graphs", None, _read_json(paths.quality_outputs / "pass_network_report.json").get("graphs"), paths.quality_outputs / "pass_network_report.json", higher=True))
-    gnn_baselines = [gnn.get("baseline_mae"), gnn.get("no_edge_mae"), gnn.get("permuted_edge_mae")]
+    gnn_baselines = [gnn.get("baseline_mae"), gnn.get("tabular_graph_mae"), gnn.get("no_edge_mae"), gnn.get("permuted_edge_mae")]
     gnn_valid_baselines = [value for value in gnn_baselines if value is not None]
     best_gnn_baseline = min(gnn_valid_baselines) if gnn_valid_baselines else None
     rows.append(_row("GNN", "best_non_graph_baseline", "manual_gcn", "mae", best_gnn_baseline, gnn.get("gnn_mae"), paths.evaluation_outputs / "gnn_metrics.json"))

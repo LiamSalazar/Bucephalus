@@ -1,4 +1,4 @@
-.PHONY: setup data-sample data-research process entities eda duckdb quality features train-baselines evaluate-baselines tactical-inputs tactical-scenario simulate-match sensitivity parameter-registry calibration-registry train-xg evaluate-xg calibrate-markov team-strength bootstrap-tactical validate-simulation ablation leakage-audit incremental-manifest incremental-features performance-benchmark model-registry pre-phase-8-audit train-tabular evaluate-tabular train-hazard evaluate-hazard train-sequence evaluate-sequence mc-dropout vectorized-simulation explainability phase-8-check test phase-check phase-4-5-check phase-6-7-check phase-7-5-check pre-phase-8-check all-phase-1-3 all-phase-4-5 all-phase-6-7 all-phase-7-5 all-phase-7-7 pre-phase-8 all-phase-8 full-pipeline
+.PHONY: setup data-sample data-research process entities eda duckdb quality features train-baselines evaluate-baselines tactical-inputs tactical-scenario simulate-match sensitivity parameter-registry calibration-registry train-xg evaluate-xg calibrate-markov team-strength bootstrap-tactical validate-simulation ablation leakage-audit incremental-manifest incremental-features performance-benchmark model-registry pre-phase-8-audit train-tabular evaluate-tabular train-hazard evaluate-hazard train-sequence evaluate-sequence mc-dropout vectorized-simulation explainability final-model-report phase-8-check test phase-check phase-4-5-check phase-6-7-check phase-7-5-check pre-phase-8-check all-phase-1-3 all-phase-4-5 all-phase-6-7 all-phase-7-5 all-phase-7-7 pre-phase-8 all-phase-8 full-pipeline
 
 PYTHON ?= .venv/bin/python
 MAX_MATCHES ?= 150
@@ -135,6 +135,9 @@ phase8-scorecard:
 phase8-summary:
 	$(PYTHON) scripts/38_write_phase8_results_summary.py
 
+final-model-report:
+	$(PYTHON) scripts/39_write_final_model_audit_report.py
+
 phase-8-check:
 	$(PYTHON) scripts/94_run_phase_8_check.py
 
@@ -168,6 +171,6 @@ all-phase-7-7: incremental-manifest incremental-features performance-benchmark m
 
 pre-phase-8: pre-phase-8-audit all-phase-7-5 all-phase-7-7 pre-phase-8-check
 
-all-phase-8: train-tabular evaluate-tabular train-hazard evaluate-hazard train-sequence evaluate-sequence mc-dropout vectorized-simulation pass-network train-gnn evaluate-gnn explainability phase8-scorecard phase8-summary phase-8-check
+all-phase-8: train-tabular evaluate-tabular train-hazard evaluate-hazard train-sequence evaluate-sequence mc-dropout vectorized-simulation pass-network train-gnn evaluate-gnn explainability phase8-scorecard phase8-summary final-model-report phase-8-check
 
 full-pipeline: all-phase-1-3 all-phase-4-5 all-phase-6-7 pre-phase-8 all-phase-8

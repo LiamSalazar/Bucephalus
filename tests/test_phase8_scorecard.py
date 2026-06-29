@@ -9,4 +9,10 @@ def test_scorecard_components_if_present():
     except FileNotFoundError:
         return
     components = {row["component"] for row in payload["rows"]}
-    assert {"xG", "hazard", "sequence", "GNN"}.issubset(components)
+    assert {"xG", "hazard", "EPV", "sequence", "MC Dropout", "vectorized Monte Carlo", "pass network", "GNN", "explainability"}.issubset(components)
+    valid = {"champion", "candidate", "experimental", "rejected", "insufficient_data"}
+    for row in payload["rows"]:
+        assert row["status"] in valid
+        if row["status"] == "champion":
+            assert row["improvement_pct"] is not None
+            assert row["improvement_pct"] > 0

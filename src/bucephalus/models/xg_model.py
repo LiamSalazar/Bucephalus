@@ -8,7 +8,6 @@ import numpy as np
 import polars as pl
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import brier_score_loss, log_loss, roc_auc_score
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 from bucephalus.models.calibration_curves import calibration_summary
@@ -29,7 +28,8 @@ def train_xg_model(paths: ProjectPaths) -> dict:
     features = feature_columns(df)
     x = df.select(features).fill_null(0).to_numpy()
     y = np.array(df["is_goal"].to_list())
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25, shuffle=False)
+    split = int(df.height * 0.75)
+    x_train, x_test, y_train, y_test = x[:split], x[split:], y[:split], y[split:]
     scaler = StandardScaler()
     x_train_s = scaler.fit_transform(x_train)
     x_test_s = scaler.transform(x_test)
@@ -49,13 +49,38 @@ def train_xg_model(paths: ProjectPaths) -> dict:
         "actual_goal_rate": float(y_test.mean()),
         "baseline_global_log_loss": float(log_loss(y_test, baseline_prob, labels=[0, 1])),
     }
-    predictions = pl.DataFrame({"actual_goal": y_test, "predicted_xg": prob})
+    meta_cols = [c for c in ["match_id", "event_id", "possession", "team_id", "player_id", "event_index", "minute", "second"] if c in df.columns]
+    predictions = df.slice(split).select(meta_cols).with_columns(
+        pl.Series("actual_goal", y_test),
+        pl.Series("predicted_xg", prob),
+        pl.Series("conditional_xg", prob),
+        pl.lit("xg_logistic_v1").alias("model_id"),
+    )
     predictions.write_parquet(paths.evaluation_outputs / "xg_predictions.parquet")
     cal = calibration_summary(y_test.tolist(), prob.tolist())
     cal.write_csv(paths.evaluation_outputs / "xg_calibration_summary.csv")
     _plot_reliability(cal, paths.evaluation_outputs / "figures" / "xg_reliability_curve.png")
     (paths.evaluation_outputs / "xg_metrics.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")
-    registry = {"generated_at": datetime.now(UTC).isoformat(), "models": [{"model_name": "logistic_regression_xg", "status": "trained", "features": features}]}
+    registry = {
+        "generated_at": datetime.now(UTC).isoformat(),
+        "models": [
+            {
+                "model_id": "xg_logistic_v1",
+                "model_name": "logistic_regression_xg",
+                "model_type": "LogisticRegression",
+                "status": "candidate",
+                "training_data_hash": _hash_frame(df.select(features + ["is_goal"])),
+                "feature_set_version": "xg_event_features_v1",
+                "train_period": None,
+                "validation_period": None,
+                "model_hyperparameters": {"max_iter": 500},
+                "metrics": metrics,
+                "created_at": datetime.now(UTC).isoformat(),
+                "artifact_path": str(paths.evaluation_outputs / "xg_predictions.parquet"),
+                "limitations": ["event-only xG; no tracking velocities"],
+            }
+        ],
+    }
     (paths.models_outputs / "xg_model_registry.json").write_text(json.dumps(registry, indent=2), encoding="utf-8")
     return metrics
 
@@ -72,7 +97,7 @@ def _write_insufficient(paths: ProjectPaths, reason: str) -> dict:
     metrics = {"status": "skipped", "reason": reason, "log_loss": None, "brier_score": None, "roc_auc": None}
     (paths.evaluation_outputs / "xg_metrics.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")
     (paths.models_outputs / "xg_model_registry.json").write_text(json.dumps({"models": [{"model_name": "xg_logistic", "status": "skipped", "reason": reason}]}, indent=2), encoding="utf-8")
-    pl.DataFrame(schema={"actual_goal": pl.Int8, "predicted_xg": pl.Float64}).write_parquet(paths.evaluation_outputs / "xg_predictions.parquet")
+    pl.DataFrame(schema={"match_id": pl.Int64, "event_id": pl.Utf8, "possession": pl.Int64, "team_id": pl.Int64, "player_id": pl.Int64, "event_index": pl.Int64, "minute": pl.Int64, "second": pl.Int64, "actual_goal": pl.Int8, "predicted_xg": pl.Float64, "conditional_xg": pl.Float64, "model_id": pl.Utf8}).write_parquet(paths.evaluation_outputs / "xg_predictions.parquet")
     pl.DataFrame(schema={"bin_lower": pl.Float64, "bin_upper": pl.Float64, "count": pl.Int64, "mean_prediction": pl.Float64, "actual_rate": pl.Float64}).write_csv(paths.evaluation_outputs / "xg_calibration_summary.csv")
     return metrics
 
@@ -88,3 +113,9 @@ def _plot_reliability(cal: pl.DataFrame, path) -> None:
     plt.tight_layout()
     plt.savefig(path)
     plt.close()
+
+
+def _hash_frame(df: pl.DataFrame) -> str:
+    import hashlib
+
+    return hashlib.sha256(df.write_csv().encode("utf-8")).hexdigest()

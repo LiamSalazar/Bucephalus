@@ -7,6 +7,7 @@ from datetime import UTC, datetime
 import numpy as np
 
 from bucephalus.simulation.simulator import simulate_match
+from bucephalus.simulation.uncertainty_propagation import combine_uncertainty
 from bucephalus.utils.paths import ProjectPaths
 
 
@@ -32,6 +33,11 @@ def run_vectorized_simulation_benchmark(paths: ProjectPaths, n_simulations: int 
     home = rng.poisson(np.clip(home_lambda + model_noise, 0.05, 6.0))
     away = rng.poisson(np.clip(away_lambda - model_noise, 0.05, 6.0))
     seconds = time.perf_counter() - start
+    model_uncertainty_std = float(loop.get("model_uncertainty_std") or 0.05)
+    parameter_uncertainty_std = float(loop.get("parameter_uncertainty_std") or 0.03)
+    simulation_uncertainty_std = float(np.std(home - away) / max(n_simulations ** 0.5, 1.0))
+    combined_std = combine_uncertainty(model_uncertainty_std, parameter_uncertainty_std, simulation_uncertainty_std)
+    total_goals = home + away
     payload = {
         "generated_at": datetime.now(UTC).isoformat(),
         "n_simulations": n_simulations,
@@ -50,7 +56,16 @@ def run_vectorized_simulation_benchmark(paths: ProjectPaths, n_simulations: int 
         "away_probability_difference": float(abs(np.mean(home < away) - loop["away_win_probability"])),
         "speedup_proxy_vs_loop_500": float((n_simulations / max(seconds, 1e-9)) / 500),
         "memory_estimate_mb": float((home.nbytes + away.nbytes + model_noise.nbytes) / 1_000_000),
-        "uncertainty_sources": loop.get("uncertainty_sources", []),
+        "uncertainty_sources": sorted(set([*loop.get("uncertainty_sources", []), "model_uncertainty", "parameter_uncertainty", "simulation_uncertainty", "data_uncertainty"])),
+        "model_uncertainty_std": model_uncertainty_std,
+        "parameter_uncertainty_std": parameter_uncertainty_std,
+        "simulation_uncertainty_std": simulation_uncertainty_std,
+        "data_uncertainty_flag": bool(loop.get("data_uncertainty_flag", True)),
+        "combined_interval": {
+            "p5": float(np.percentile(total_goals, 5) - combined_std),
+            "p50": float(np.percentile(total_goals, 50)),
+            "p95": float(np.percentile(total_goals, 95) + combined_std),
+        },
         "mode": "numpy_vectorized_empirical_anchor_poisson",
     }
     (paths.quality_outputs / "vectorized_simulation_benchmark.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")

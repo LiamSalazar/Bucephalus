@@ -36,7 +36,13 @@ def train_tabular_models(paths: ProjectPaths) -> dict:
         "brier_score": float(brier_score_loss(y[split:], prob)),
         "roc_auc": float(roc_auc_score(y[split:], prob)) if len(set(y[split:])) > 1 else None,
     }
-    pl.DataFrame({"actual": y[split:], "prediction": prob}).write_parquet(paths.evaluation_outputs / "tabular_predictions.parquet")
+    meta_cols = [c for c in ["match_id", "event_id", "possession", "team_id", "player_id", "event_index", "minute", "second"] if c in df.columns]
+    df.slice(split).select(meta_cols).with_columns(
+        pl.Series("actual", y[split:]),
+        pl.Series("prediction", prob),
+        pl.Series("conditional_xg", prob),
+        pl.lit("tabular_xg_v2_hgb").alias("model_id"),
+    ).write_parquet(paths.evaluation_outputs / "tabular_predictions.parquet")
     (paths.evaluation_outputs / "tabular_model_metrics.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")
     comparison = pl.DataFrame([{"model": "hist_gradient_boosting_xg_v2", **{k: v for k, v in metrics.items() if isinstance(v, int | float | str | type(None))}}])
     comparison.write_csv(paths.evaluation_outputs / "tabular_model_comparison.csv")
@@ -50,9 +56,12 @@ def train_tabular_models(paths: ProjectPaths) -> dict:
                 "feature_set_version": "xg_v1_features_plus_categoricals",
                 "train_period": None,
                 "validation_period": None,
-                "hyperparameters": {"max_iter": 80, "learning_rate": 0.05},
+                "model_hyperparameters": {"max_iter": 80, "learning_rate": 0.05},
                 "metrics": metrics,
                 "created_at": datetime.now(UTC).isoformat(),
+                "artifact_path": str(paths.evaluation_outputs / "tabular_predictions.parquet"),
+                "status": "candidate",
+                "limitations": ["advanced tabular xG must beat baseline before champion promotion"],
             }
         ],
     }

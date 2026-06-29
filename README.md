@@ -1,6 +1,6 @@
 # Bucephalus
 
-Bucephalus es la base de un motor de simulación futbolística basado en datos reales. El objetivo final es soportar Game Mode y Lab Mode, pero este repositorio llega hasta Fase 8: Advanced ML, Deep Learning, Graph Learning, Uncertainty & Explainability. La prioridad actual es reproducibilidad, trazabilidad, validación temporal sin leakage, calibración empírica, incertidumbre y explicabilidad. No hay frontend, backend API productivo, mercado, Game Mode completo ni chatbot/LLM.
+Bucephalus es la base de un motor de simulación futbolística basado en datos reales. El objetivo final es soportar Game Mode y Lab Mode, pero este repositorio llega hasta Fase 8: Advanced ML, Deep Learning, Graph Learning, Uncertainty, Explainability & Final Audit. La prioridad actual es reproducibilidad, trazabilidad, validación temporal sin leakage, calibración empírica, incertidumbre, explicabilidad y auditoría centralizada. No hay frontend, backend API productivo, mercado, Game Mode completo ni chatbot/LLM.
 
 ## Setup
 
@@ -93,11 +93,12 @@ make evaluate-gnn
 make explainability
 make phase8-scorecard
 make phase8-summary
+make final-model-report
 make phase-8-check
 make all-phase-8
 ```
 
-Fase 8 incluye modelos tabulares avanzados, hazard model para controlar survival/look-ahead bias, EPV alineado por claves, PyTorch GRU sequence model, MC Dropout real, Monte Carlo vectorizado, pass networks y GCN manual en PyTorch. Los modelos deep/GNN son iniciales y pueden quedar `experimental`, `candidate` o `champion` según scorecard.
+Fase 8 incluye modelos tabulares avanzados, hazard model para controlar survival/look-ahead bias, EPV alineado por claves reales usando `P(shot) x conditional_xG`, PyTorch GRU sequence model con split temporal, MC Dropout real, Monte Carlo vectorizado, pass networks, GCN manual en PyTorch y reporte final centralizado. Los modelos deep/GNN son iniciales y pueden quedar `experimental`, `candidate`, `champion` o `insufficient_data` según scorecard.
 
 ## Research dataset
 
@@ -136,6 +137,7 @@ BUCEPHALUS_DATA_ROOT=/tmp/bucephalus-data python scripts/01_download_data.py --s
 - `outputs/evaluation/gnn_metrics.json`: evaluación de GNN manual PyTorch.
 - `outputs/evaluation/phase8_model_scorecard.*`: scorecard de modelos.
 - `outputs/reports/phase8_results_summary.md`: resumen humano de Fase 8.
+- `outputs/reports/final_model_audit_report.md`: auditoría final central con leakage, calibración, overfitting, scorecard y dictamen para Fase 9.
 - `outputs/explainability/`: muestras de explicabilidad.
 - `data/processed/ingestion_manifest.parquet`: manifest incremental por partido.
 - `outputs/quality/incremental_feature_update_report.json`: reporte de actualización incremental.

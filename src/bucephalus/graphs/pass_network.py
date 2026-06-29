@@ -17,6 +17,7 @@ def build_pass_networks(paths: ProjectPaths) -> dict:
         return _write_empty(paths, "events.parquet missing")
     events = pl.read_parquet(events_path).sort(["match_id", "possession", "event_index"])
     passes = events.filter(pl.col("type_name") == "Pass")
+    has_real_receiver = any(col in passes.columns for col in ["pass_recipient_id", "pass_recipient", "pass_recipient_name"])
     rows = events.to_dicts()
     next_player = {}
     for idx, row in enumerate(rows[:-1]):
@@ -25,7 +26,10 @@ def build_pass_networks(paths: ProjectPaths) -> dict:
             next_player[row["event_id"]] = (nxt.get("player_id"), nxt.get("player_name"))
     edge_rows = []
     for row in passes.to_dicts():
-        receiver_id, receiver_name = next_player.get(row["event_id"], (None, None))
+        receiver_id, receiver_name = _real_receiver(row) if has_real_receiver else (None, None)
+        receiver_policy = "statsbomb_pass_recipient" if receiver_id is not None else "next_same_team_event_proxy"
+        if receiver_id is None:
+            receiver_id, receiver_name = next_player.get(row["event_id"], (None, None))
         if row.get("player_id") is None or receiver_id is None or row.get("player_id") == receiver_id:
             continue
         length = math.dist([row.get("location_x") or 0, row.get("location_y") or 0], [row.get("pass_end_x") or row.get("location_x") or 0, row.get("pass_end_y") or row.get("location_y") or 0])
@@ -37,6 +41,7 @@ def build_pass_networks(paths: ProjectPaths) -> dict:
             "final_third_entry_count": int((row.get("location_x") or 0) < 80 <= (row.get("pass_end_x") or 0)),
             "pass_length": length, "start_x": row.get("location_x"), "start_y": row.get("location_y"),
             "end_x": row.get("pass_end_x"), "end_y": row.get("pass_end_y"), "under_pressure_count": int(bool(row.get("under_pressure"))),
+            "receiver_policy": receiver_policy,
         })
     edges = pl.DataFrame(edge_rows)
     if edges.is_empty():
@@ -52,6 +57,7 @@ def build_pass_networks(paths: ProjectPaths) -> dict:
         pl.col("end_x").mean().alias("average_end_x"),
         pl.col("end_y").mean().alias("average_end_y"),
         pl.col("under_pressure_count").sum(),
+        pl.col("receiver_policy").first(),
     ).with_columns(
         (pl.col("completed_count") / pl.col("pass_count")).alias("completion_rate"),
         ((pl.col("average_end_x") - pl.col("average_start_x")).clip(0, 120) / 120).alias("expected_threat_proxy"),
@@ -77,7 +83,17 @@ def build_pass_networks(paths: ProjectPaths) -> dict:
     metrics.write_parquet(paths.features / "pass_network_metrics.parquet")
     if team_match_path.exists():
         metrics.join(pl.read_parquet(team_match_path).select(["statsbomb_match_id", "team_id", "xg_for", "shots_for", "possession_proxy"]), left_on=["match_id", "team_id"], right_on=["statsbomb_match_id", "team_id"], how="left").write_parquet(paths.features / "graph_model_dataset.parquet")
-    payload = {"generated_at": datetime.now(UTC).isoformat(), "status": "completed", "nodes": nodes.height, "edges": edges.height, "graphs": graphs.height, "receiver_policy": "next_same_team_event_proxy"}
+    receiver_policies = sorted(set(edges["receiver_policy"].to_list())) if "receiver_policy" in edges.columns else ["unknown"]
+    payload = {
+        "generated_at": datetime.now(UTC).isoformat(),
+        "status": "completed",
+        "nodes": nodes.height,
+        "edges": edges.height,
+        "graphs": graphs.height,
+        "receiver_policy": receiver_policies[0] if len(receiver_policies) == 1 else "mixed",
+        "receiver_policies": receiver_policies,
+        "warnings": [] if "statsbomb_pass_recipient" in receiver_policies else ["real pass recipient not available; using next_same_team_event_proxy"],
+    }
     (paths.quality_outputs / "pass_network_report.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
     return payload
 
@@ -105,6 +121,18 @@ def _graph_metrics(edges: pl.DataFrame) -> pl.DataFrame:
             "circulation_proxy": float(1 - weights.max() / max(1, weights.sum())),
         })
     return pl.DataFrame(rows)
+
+
+def _real_receiver(row: dict) -> tuple[object | None, object | None]:
+    receiver_id = row.get("pass_recipient_id")
+    receiver_name = row.get("pass_recipient_name") or row.get("pass_recipient")
+    if isinstance(receiver_id, dict):
+        receiver_name = receiver_id.get("name") or receiver_name
+        receiver_id = receiver_id.get("id")
+    if receiver_id is None and isinstance(row.get("pass_recipient"), dict):
+        receiver_id = row["pass_recipient"].get("id")
+        receiver_name = row["pass_recipient"].get("name") or receiver_name
+    return receiver_id, receiver_name
 
 
 def _write_empty(paths: ProjectPaths, reason: str) -> dict:

@@ -15,3 +15,4 @@ def test_hazard_frame_uses_forward_horizon_only():
     )
     frame = build_hazard_frame(events, horizon_events=1)
     assert frame["shot_in_next_5_events"].to_list() == [0, 1]
+    assert {"match_id", "possession", "team_id", "event_id", "event_index", "minute", "second"} & set(frame.columns)

@@ -73,6 +73,7 @@ def train_hazard_model(paths: ProjectPaths) -> dict:
         "pr_auc": float(average_precision_score(y[split:], prob)),
         "brier_score": float(brier_score_loss(y[split:], prob)),
         "log_loss": float(log_loss(y[split:], prob, labels=[0, 1])),
+        "calibration_error": _calibration_error(y[split:], prob),
         "horizon": "next_5_events_proxy",
         "hazard_time_mode": "event_horizon_proxy",
         "targets": ["shot_in_next_5_events", "turnover_in_next_5_events", "box_entry_in_next_5_events", "final_third_entry_in_next_5_events"],
@@ -97,9 +98,12 @@ def train_hazard_model(paths: ProjectPaths) -> dict:
                 "feature_set_version": "event_hazard_v0",
                 "train_period": None,
                 "validation_period": None,
-                "hyperparameters": {"class_weight": "balanced"},
+                "model_hyperparameters": {"class_weight": "balanced"},
                 "metrics": metrics,
                 "created_at": datetime.now(UTC).isoformat(),
+                "artifact_path": str(paths.evaluation_outputs / "hazard_predictions.parquet"),
+                "status": "candidate",
+                "limitations": ["event horizon proxy used when reliable seconds horizon is unavailable"],
             }
         ],
     }
@@ -140,3 +144,14 @@ def _calibration(pred: pl.DataFrame, paths: ProjectPaths) -> None:
         part = pred.filter((pl.col("shot_probability") >= lo) & (pl.col("shot_probability") < hi))
         rows.append({"bin": i, "count": part.height, "mean_prediction": float(part["shot_probability"].mean() or 0), "actual_rate": float(part["actual"].mean() or 0)})
     pl.DataFrame(rows).write_csv(paths.evaluation_outputs / "hazard_calibration_summary.csv")
+
+
+def _calibration_error(y_true: np.ndarray, prob: np.ndarray) -> float:
+    error = 0.0
+    total = len(prob)
+    for i in range(10):
+        lo, hi = i / 10, (i + 1) / 10
+        mask = (prob >= lo) & (prob < hi)
+        if mask.any():
+            error += float(mask.mean()) * abs(float(prob[mask].mean()) - float(y_true[mask].mean()))
+    return float(error if total else 0.0)
