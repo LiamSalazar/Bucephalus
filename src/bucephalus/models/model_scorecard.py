@@ -39,12 +39,26 @@ def build_phase8_scorecard(paths: ProjectPaths) -> dict:
 
 def _row(component, baseline, advanced, metric, base_score, adv_score, artifact, higher=False):
     if base_score is None or adv_score is None:
-        status = "candidate" if adv_score is not None else "insufficient_data"
+        status = "experimental" if adv_score is not None else "insufficient_data"
         improvement = None
     else:
         improvement = ((adv_score - base_score) / max(abs(base_score), 1e-9) * 100) if higher else ((base_score - adv_score) / max(abs(base_score), 1e-9) * 100)
-        status = "champion" if improvement > 0 else "experimental"
-    return {"component": component, "baseline_model": baseline, "advanced_model": advanced, "primary_metric": metric, "baseline_score": base_score, "advanced_score": adv_score, "improvement_pct": improvement, "validation_method": "temporal_or_holdout", "status": status, "reason": "improves baseline" if status == "champion" else "does not clearly improve or baseline unavailable", "artifact_path": str(artifact)}
+        if improvement > 5:
+            status = "champion"
+        elif improvement > 0:
+            status = "candidate"
+        else:
+            status = "experimental"
+    reason = (
+        "clearly improves baseline"
+        if status == "champion"
+        else "improves baseline but needs more robustness"
+        if status == "candidate"
+        else "baseline unavailable or no clear improvement"
+        if status == "experimental"
+        else "insufficient data"
+    )
+    return {"component": component, "baseline_model": baseline, "advanced_model": advanced, "primary_metric": metric, "baseline_score": base_score, "advanced_score": adv_score, "improvement_pct": improvement, "validation_method": "temporal_or_holdout", "status": status, "reason": reason, "artifact_path": str(artifact)}
 
 
 def _read_json(path):

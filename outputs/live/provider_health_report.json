@@ -1,0 +1,13 @@
+{
+  "generated_at": "2026-06-29T02:40:11.443913+00:00",
+  "providers": [
+    {
+      "provider": "mock_provider",
+      "status": "ok",
+      "fixtures": 1
+    }
+  ],
+  "warnings": [
+    "commercial live providers require API keys; mock provider used for tests"
+  ]
+}

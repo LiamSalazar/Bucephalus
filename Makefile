@@ -1,4 +1,4 @@
-.PHONY: setup data-sample data-research process entities eda duckdb quality features train-baselines evaluate-baselines tactical-inputs tactical-scenario simulate-match sensitivity parameter-registry calibration-registry train-xg evaluate-xg calibrate-markov team-strength bootstrap-tactical validate-simulation ablation leakage-audit incremental-manifest incremental-features performance-benchmark model-registry pre-phase-8-audit train-tabular evaluate-tabular train-hazard evaluate-hazard train-sequence evaluate-sequence mc-dropout vectorized-simulation explainability final-model-report phase-8-check test phase-check phase-4-5-check phase-6-7-check phase-7-5-check pre-phase-8-check all-phase-1-3 all-phase-4-5 all-phase-6-7 all-phase-7-5 all-phase-7-7 pre-phase-8 all-phase-8 full-pipeline
+.PHONY: setup data-sample data-research process entities eda duckdb quality features train-baselines evaluate-baselines tactical-inputs tactical-scenario simulate-match sensitivity parameter-registry calibration-registry train-xg evaluate-xg calibrate-markov team-strength bootstrap-tactical validate-simulation ablation leakage-audit incremental-manifest incremental-features performance-benchmark model-registry pre-phase-8-audit train-tabular evaluate-tabular train-hazard evaluate-hazard train-sequence evaluate-sequence mc-dropout vectorized-simulation explainability final-model-report data-expansion recalibrate-models game-db sample-league sample-draft sample-lineup simulate-game-match lab-scenario transfer-demo phase-9-check phase-8-check test phase-check phase-4-5-check phase-6-7-check phase-7-5-check pre-phase-8-check all-phase-1-3 all-phase-4-5 all-phase-6-7 all-phase-7-5 all-phase-7-7 pre-phase-8 all-phase-8 all-phase-9 full-pipeline
 
 PYTHON ?= .venv/bin/python
 MAX_MATCHES ?= 150
@@ -138,6 +138,39 @@ phase8-summary:
 final-model-report:
 	$(PYTHON) scripts/39_write_final_model_audit_report.py
 
+data-expansion:
+	$(PYTHON) scripts/48_expand_research_dataset.py
+
+recalibrate-models:
+	$(PYTHON) scripts/49_recalibration_report.py
+	$(MAKE) pre-phase-8
+	$(MAKE) all-phase-8
+	$(MAKE) final-model-report
+
+game-db:
+	$(PYTHON) scripts/40_init_game_db.py
+
+sample-league:
+	$(PYTHON) scripts/41_create_sample_league.py
+
+sample-draft:
+	$(PYTHON) scripts/42_run_sample_draft.py
+
+sample-lineup:
+	$(PYTHON) scripts/43_create_lineup.py
+
+simulate-game-match:
+	$(PYTHON) scripts/44_simulate_game_match.py
+
+lab-scenario:
+	$(PYTHON) scripts/45_run_lab_scenario.py
+
+transfer-demo:
+	$(PYTHON) scripts/46_run_transfer_market_demo.py
+
+phase-9-check:
+	$(PYTHON) scripts/47_run_phase_9_check.py
+
 phase-8-check:
 	$(PYTHON) scripts/94_run_phase_8_check.py
 
@@ -173,4 +206,6 @@ pre-phase-8: pre-phase-8-audit all-phase-7-5 all-phase-7-7 pre-phase-8-check
 
 all-phase-8: train-tabular evaluate-tabular train-hazard evaluate-hazard train-sequence evaluate-sequence mc-dropout vectorized-simulation pass-network train-gnn evaluate-gnn explainability phase8-scorecard phase8-summary final-model-report phase-8-check
 
-full-pipeline: all-phase-1-3 all-phase-4-5 all-phase-6-7 pre-phase-8 all-phase-8
+all-phase-9: game-db sample-league sample-draft sample-lineup simulate-game-match lab-scenario transfer-demo phase-9-check
+
+full-pipeline: all-phase-1-3 all-phase-4-5 all-phase-6-7 pre-phase-8 all-phase-8 all-phase-9

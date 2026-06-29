@@ -1,19 +1,19 @@
 # Phase 8 Results Summary
 
-Dataset: 36 matches, 137785 events, 922 shots.
+Dataset: 52 matches, 191299 events, 1332 shots.
 
 Models trained: xG v2 tabular, hazard, EPV, PyTorch GRU sequence, pass network GCN, MC Dropout, vectorized Monte Carlo.
 
 Scorecard:
-- xG: experimental (log_loss=0.4061930560730603)
-- hazard: champion (roc_auc=0.725123832413023)
-- EPV: candidate (mean_epv=0.056780930018417115)
-- sequence: champion (brier_score=0.20323404669761658)
-- MC Dropout: candidate (mean_epistemic_uncertainty=0.05379996013827622)
-- vectorized Monte Carlo: candidate (simulations_per_second=4594891.409108099)
-- pass network: candidate (graphs=70)
-- GNN: experimental (mae=0.6758408546447754)
-- explainability: candidate (artifacts=1.0)
+- xG: experimental (log_loss=0.383800111537472)
+- hazard: champion (roc_auc=0.7222124199105082)
+- EPV: experimental (mean_epv=0.056327305438857625)
+- sequence: candidate (brier_score=0.21254341304302216)
+- MC Dropout: experimental (mean_epistemic_uncertainty=0.04935392519459128)
+- vectorized Monte Carlo: experimental (simulations_per_second=4810092.738867187)
+- pass network: experimental (graphs=102)
+- GNN: experimental (mae=0.7448492050170898)
+- explainability: experimental (artifacts=1.0)
 
 Limitations: small research dataset, pass receiver uses next-event proxy, no tracking-speed data, GNN remains experimental unless it improves baseline.
 

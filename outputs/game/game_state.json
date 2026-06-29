@@ -1,0 +1,1924 @@
+{
+  "users": [
+    {
+      "id": "1a5b94c4-aa21-46df-94aa-0cbfc15cf401",
+      "name": "Liam Manager",
+      "roles": [
+        "league_creator",
+        "manager"
+      ]
+    },
+    {
+      "id": "fac059ca-4235-4d33-b751-d4eb9183950d",
+      "name": "Alex Analyst",
+      "roles": [
+        "manager",
+        "analyst"
+      ]
+    }
+  ],
+  "leagues": [
+    {
+      "id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "name": "Bucephalus Friends League",
+      "creator_user_id": "1a5b94c4-aa21-46df-94aa-0cbfc15cf401",
+      "competition_type": "simulation_league",
+      "settings": {
+        "initial_budget": 300000000.0,
+        "squad_size_min": 11,
+        "squad_size_max": 25,
+        "max_players_per_real_team": 4,
+        "formation_rules": [
+          "4-3-3",
+          "4-2-3-1",
+          "4-4-2",
+          "3-5-2"
+        ],
+        "transfer_rules": {},
+        "eliminated_player_policy": "simulated_degraded",
+        "scoring_mode": "simulation_points",
+        "resolution_mode": "simulated",
+        "market_mode": "draft",
+        "season_reset_policy": "seasonal_redraft",
+        "keeper_rights_policy": "optional_discount",
+        "confidence_policy": "show_model_confidence"
+      }
+    }
+  ],
+  "clubs": [
+    {
+      "id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "name": "Bucephalus Royals",
+      "manager_user_id": "1a5b94c4-aa21-46df-94aa-0cbfc15cf401",
+      "budget": 245000000.0,
+      "points": 0,
+      "goals_for": 0,
+      "goals_against": 0
+    },
+    {
+      "id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "name": "Alexandria Analysts",
+      "manager_user_id": "fac059ca-4235-4d33-b751-d4eb9183950d",
+      "budget": 245000000.0,
+      "points": 0,
+      "goals_for": 0,
+      "goals_against": 0
+    }
+  ],
+  "players": [
+    {
+      "id": "haaland",
+      "name": "Erling Haaland",
+      "canonical_position": "CF",
+      "real_team": null,
+      "value": 120000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "finishing": 0.98,
+        "pressing": 0.48,
+        "pace": 0.78,
+        "association": 0.55,
+        "aerial": 0.95
+      }
+    },
+    {
+      "id": "mbappe",
+      "name": "Kylian Mbappe",
+      "canonical_position": "LW",
+      "real_team": null,
+      "value": 130000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "finishing": 0.92,
+        "pressing": 0.5,
+        "pace": 0.98,
+        "association": 0.66,
+        "transition": 0.96
+      }
+    },
+    {
+      "id": "vinicius",
+      "name": "Vinicius Junior",
+      "canonical_position": "LW",
+      "real_team": null,
+      "value": 110000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "dribbling": 0.96,
+        "creation": 0.86,
+        "pressing": 0.62,
+        "pace": 0.96,
+        "association": 0.74
+      }
+    },
+    {
+      "id": "rodri",
+      "name": "Rodri",
+      "canonical_position": "DM",
+      "real_team": null,
+      "value": 105000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "control": 0.97,
+        "press_resistance": 0.96,
+        "defense": 0.88,
+        "compactness": 0.92,
+        "fatigue": 0.88
+      }
+    },
+    {
+      "id": "valverde",
+      "name": "Federico Valverde",
+      "canonical_position": "CM",
+      "real_team": null,
+      "value": 95000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "pressing": 0.9,
+        "transition": 0.84,
+        "coverage": 0.92,
+        "fatigue": 0.94,
+        "progression": 0.82
+      }
+    },
+    {
+      "id": "bellingham",
+      "name": "Jude Bellingham",
+      "canonical_position": "AM",
+      "real_team": null,
+      "value": 115000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "box_arrival": 0.9,
+        "control": 0.82,
+        "pressing": 0.78,
+        "association": 0.8,
+        "transition": 0.8
+      }
+    },
+    {
+      "id": "pedri",
+      "name": "Pedri",
+      "canonical_position": "CM",
+      "real_team": null,
+      "value": 90000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "control": 0.94,
+        "association": 0.92,
+        "press_resistance": 0.9,
+        "progression": 0.82
+      }
+    },
+    {
+      "id": "vitinha",
+      "name": "Vitinha",
+      "canonical_position": "CM",
+      "real_team": null,
+      "value": 80000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "control": 0.91,
+        "association": 0.9,
+        "press_resistance": 0.88,
+        "centrality": 0.88
+      }
+    },
+    {
+      "id": "dias",
+      "name": "Ruben Dias",
+      "canonical_position": "CB",
+      "real_team": null,
+      "value": 75000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "defense": 0.92,
+        "compactness": 0.9,
+        "aerial": 0.86
+      }
+    },
+    {
+      "id": "courtois",
+      "name": "Thibaut Courtois",
+      "canonical_position": "GK",
+      "real_team": null,
+      "value": 55000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "goalkeeping": 0.94,
+        "aerial": 0.82
+      }
+    },
+    {
+      "id": "carvajal",
+      "name": "Dani Carvajal",
+      "canonical_position": "RB",
+      "real_team": null,
+      "value": 35000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "defense": 0.78,
+        "width": 0.78,
+        "pressing": 0.74
+      }
+    },
+    {
+      "id": "grimaldo",
+      "name": "Alex Grimaldo",
+      "canonical_position": "LB",
+      "real_team": null,
+      "value": 45000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "width": 0.88,
+        "creation": 0.8,
+        "progression": 0.82
+      }
+    },
+    {
+      "id": "alisson",
+      "name": "Alisson Becker",
+      "canonical_position": "GK",
+      "real_team": null,
+      "value": 50000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "goalkeeping": 0.92
+      }
+    },
+    {
+      "id": "saliba",
+      "name": "William Saliba",
+      "canonical_position": "CB",
+      "real_team": null,
+      "value": 70000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "defense": 0.88,
+        "compactness": 0.84
+      }
+    },
+    {
+      "id": "ake",
+      "name": "Nathan Ake",
+      "canonical_position": "CB",
+      "real_team": null,
+      "value": 42000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "defense": 0.8,
+        "compactness": 0.82
+      }
+    },
+    {
+      "id": "hakimi",
+      "name": "Achraf Hakimi",
+      "canonical_position": "RB",
+      "real_team": null,
+      "value": 65000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "width": 0.9,
+        "pace": 0.9,
+        "transition": 0.82
+      }
+    },
+    {
+      "id": "camavinga",
+      "name": "Eduardo Camavinga",
+      "canonical_position": "DM",
+      "real_team": null,
+      "value": 70000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "pressing": 0.82,
+        "coverage": 0.86,
+        "progression": 0.8
+      }
+    },
+    {
+      "id": "odegaard",
+      "name": "Martin Odegaard",
+      "canonical_position": "AM",
+      "real_team": null,
+      "value": 85000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "creation": 0.88,
+        "association": 0.86,
+        "control": 0.84
+      }
+    },
+    {
+      "id": "saka",
+      "name": "Bukayo Saka",
+      "canonical_position": "RW",
+      "real_team": null,
+      "value": 105000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "creation": 0.84,
+        "pressing": 0.72,
+        "width": 0.84
+      }
+    },
+    {
+      "id": "kane",
+      "name": "Harry Kane",
+      "canonical_position": "ST",
+      "real_team": null,
+      "value": 95000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "finishing": 0.92,
+        "association": 0.82,
+        "creation": 0.74
+      }
+    },
+    {
+      "id": "tchouameni",
+      "name": "Aurelien Tchouameni",
+      "canonical_position": "DM",
+      "real_team": null,
+      "value": 75000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "defense": 0.84,
+        "coverage": 0.84,
+        "compactness": 0.82
+      }
+    },
+    {
+      "id": "gvardiol",
+      "name": "Josko Gvardiol",
+      "canonical_position": "LB",
+      "real_team": null,
+      "value": 80000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "defense": 0.84,
+        "width": 0.76,
+        "progression": 0.76
+      }
+    },
+    {
+      "id": "lautaro",
+      "name": "Lautaro Martinez",
+      "canonical_position": "ST",
+      "real_team": null,
+      "value": 90000000.0,
+      "status": "active_real_tournament",
+      "attributes": {
+        "finishing": 0.88,
+        "pressing": 0.78,
+        "association": 0.72
+      }
+    }
+  ],
+  "squad_players": [
+    {
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "courtois",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.289269+00:00"
+    },
+    {
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "carvajal",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.296902+00:00"
+    },
+    {
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "dias",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.303205+00:00"
+    },
+    {
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "saliba",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.309497+00:00"
+    },
+    {
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "grimaldo",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.316247+00:00"
+    },
+    {
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "rodri",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.322848+00:00"
+    },
+    {
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "valverde",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.330026+00:00"
+    },
+    {
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "bellingham",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.337072+00:00"
+    },
+    {
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "vinicius",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.344670+00:00"
+    },
+    {
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "haaland",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.352325+00:00"
+    },
+    {
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "saka",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.359982+00:00"
+    },
+    {
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "alisson",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.368076+00:00"
+    },
+    {
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "hakimi",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.378141+00:00"
+    },
+    {
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "ake",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.386372+00:00"
+    },
+    {
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "gvardiol",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.394768+00:00"
+    },
+    {
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "tchouameni",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.403704+00:00"
+    },
+    {
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "camavinga",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.413100+00:00"
+    },
+    {
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "pedri",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.421699+00:00"
+    },
+    {
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "vitinha",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.432318+00:00"
+    },
+    {
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "odegaard",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.441880+00:00"
+    },
+    {
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "mbappe",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.450916+00:00"
+    },
+    {
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "kane",
+      "acquisition_value": 5000000.0,
+      "acquired_at": "2026-06-29T02:40:12.460864+00:00"
+    }
+  ],
+  "lineups": [
+    {
+      "id": "d51feb05-58ee-40d6-939b-5002fac2b99d",
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "formation": "4-3-3",
+      "slots": [
+        {
+          "player_id": "courtois",
+          "role": "GK",
+          "position": "GK"
+        },
+        {
+          "player_id": "carvajal",
+          "role": "DEF",
+          "position": "RB"
+        },
+        {
+          "player_id": "dias",
+          "role": "DEF",
+          "position": "CB"
+        },
+        {
+          "player_id": "saliba",
+          "role": "DEF",
+          "position": "CB"
+        },
+        {
+          "player_id": "grimaldo",
+          "role": "DEF",
+          "position": "LB"
+        },
+        {
+          "player_id": "rodri",
+          "role": "MID",
+          "position": "DM"
+        },
+        {
+          "player_id": "valverde",
+          "role": "MID",
+          "position": "CM"
+        },
+        {
+          "player_id": "bellingham",
+          "role": "MID",
+          "position": "AM"
+        },
+        {
+          "player_id": "vinicius",
+          "role": "FWD",
+          "position": "LW"
+        },
+        {
+          "player_id": "haaland",
+          "role": "FWD",
+          "position": "CF"
+        },
+        {
+          "player_id": "saka",
+          "role": "FWD",
+          "position": "RW"
+        }
+      ]
+    },
+    {
+      "id": "d1aa1efc-1b67-4000-8220-3dbdb187b4ad",
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "formation": "4-3-3",
+      "slots": [
+        {
+          "player_id": "alisson",
+          "role": "GK",
+          "position": "GK"
+        },
+        {
+          "player_id": "hakimi",
+          "role": "DEF",
+          "position": "RB"
+        },
+        {
+          "player_id": "ake",
+          "role": "DEF",
+          "position": "CB"
+        },
+        {
+          "player_id": "gvardiol",
+          "role": "DEF",
+          "position": "LB"
+        },
+        {
+          "player_id": "tchouameni",
+          "role": "MID",
+          "position": "DM"
+        },
+        {
+          "player_id": "camavinga",
+          "role": "MID",
+          "position": "DM"
+        },
+        {
+          "player_id": "pedri",
+          "role": "MID",
+          "position": "CM"
+        },
+        {
+          "player_id": "vitinha",
+          "role": "MID",
+          "position": "CM"
+        },
+        {
+          "player_id": "odegaard",
+          "role": "MID",
+          "position": "AM"
+        },
+        {
+          "player_id": "mbappe",
+          "role": "FWD",
+          "position": "LW"
+        },
+        {
+          "player_id": "kane",
+          "role": "FWD",
+          "position": "ST"
+        }
+      ]
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "8ce75ce6-4637-4510-901a-8c3c16257118",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "home_club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "away_club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "status": "scheduled"
+    }
+  ],
+  "transfer_bids": [
+    {
+      "id": "a1f68e92-7b8f-4d33-ac06-a6a1e75201d6",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "courtois",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.291775+00:00"
+    },
+    {
+      "id": "519b79be-602c-4d08-a239-d18c0b49e974",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "carvajal",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.298242+00:00"
+    },
+    {
+      "id": "e596126e-4f01-4a9a-aa45-bb703ab861ad",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "dias",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.304542+00:00"
+    },
+    {
+      "id": "041e80f6-458e-414b-b59d-bb36debae6b0",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "saliba",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.311134+00:00"
+    },
+    {
+      "id": "d541314d-8fe5-40b0-932d-5bd2f1dd7644",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "grimaldo",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.317727+00:00"
+    },
+    {
+      "id": "e13a5ca8-6934-4269-a20c-91e747b26941",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "rodri",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.324210+00:00"
+    },
+    {
+      "id": "10af03f5-0f2f-409c-81d7-eaa9a14ac2d8",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "valverde",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.331429+00:00"
+    },
+    {
+      "id": "8f0bfcd8-d0c0-4197-b3e6-d73d6bd31429",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "bellingham",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.338849+00:00"
+    },
+    {
+      "id": "923c6cd7-4a99-4f9a-a47e-312caff3036a",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "vinicius",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.346214+00:00"
+    },
+    {
+      "id": "0e473b21-44b2-4582-9e4e-2a5cc3123997",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "haaland",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.353986+00:00"
+    },
+    {
+      "id": "df8bc7de-6ae7-482d-9b84-e4d3d514a7ce",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+      "player_id": "saka",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.361665+00:00"
+    },
+    {
+      "id": "26de5c72-8630-432e-8383-c2cc0d6015b2",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "alisson",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.369820+00:00"
+    },
+    {
+      "id": "bb60b0cb-132c-4bdf-ba7b-abf4eef4151e",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "hakimi",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.379997+00:00"
+    },
+    {
+      "id": "5ba6336e-62a6-4b83-b4b2-ab69007c6822",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "ake",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.388345+00:00"
+    },
+    {
+      "id": "78f58dd9-09d6-4ff8-a8a5-1799efd5ec8d",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "gvardiol",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.396491+00:00"
+    },
+    {
+      "id": "e998032f-bf51-47c1-bd53-e25eace853e0",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "tchouameni",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.405660+00:00"
+    },
+    {
+      "id": "2e62285f-8da5-4946-9733-4cd3de17fcd8",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "camavinga",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.414896+00:00"
+    },
+    {
+      "id": "7f48bb9f-2ebd-4764-a0b0-91429f455db8",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "pedri",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.423492+00:00"
+    },
+    {
+      "id": "34f45717-fa91-4b36-a055-7fb26414792b",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "vitinha",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.434410+00:00"
+    },
+    {
+      "id": "b769f8a3-400c-423c-bf0b-0fa6f5367ff1",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "odegaard",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.443769+00:00"
+    },
+    {
+      "id": "0e3f48e9-0e7d-4069-9799-2409a32b6755",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "mbappe",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.453154+00:00"
+    },
+    {
+      "id": "776856b0-c602-424b-abdf-bc14f6d12160",
+      "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+      "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+      "player_id": "kane",
+      "amount": 5000000.0,
+      "status": "accepted",
+      "created_at": "2026-06-29T02:40:12.462834+00:00"
+    }
+  ],
+  "simulation_runs": [
+    {
+      "id": "037b1cea-c1d2-4673-a9d3-23f01bb27d1f",
+      "fixture_id": "8ce75ce6-4637-4510-901a-8c3c16257118",
+      "payload": {
+        "fixture_id": "8ce75ce6-4637-4510-901a-8c3c16257118",
+        "resolution_source": "simulated",
+        "model_confidence": "low",
+        "win_draw_loss_probabilities": {
+          "home": 0.252,
+          "draw": 0.442,
+          "away": 0.306
+        },
+        "expected_goals": {
+          "home": 0.556,
+          "away": 0.608
+        },
+        "expected_xg": {
+          "home": 0.5609109612798534,
+          "away": 0.5776151796731996
+        },
+        "top_scorelines": [
+          {
+            "scoreline": "0-0",
+            "probability": 0.324
+          },
+          {
+            "scoreline": "0-1",
+            "probability": 0.19
+          },
+          {
+            "scoreline": "1-0",
+            "probability": 0.14
+          },
+          {
+            "scoreline": "1-1",
+            "probability": 0.112
+          },
+          {
+            "scoreline": "0-2",
+            "probability": 0.062
+          }
+        ],
+        "lineups": {
+          "home": {
+            "lineup_validity": true,
+            "formation": "4-3-3",
+            "counts": {
+              "GK": 1,
+              "DEF": 4,
+              "MID": 3,
+              "FWD": 3
+            },
+            "role_fit_scores": {
+              "courtois": 0.85,
+              "carvajal": 0.85,
+              "dias": 0.85,
+              "saliba": 0.85,
+              "grimaldo": 0.85,
+              "rodri": 0.85,
+              "valverde": 0.85,
+              "bellingham": 0.89,
+              "vinicius": 0.887,
+              "haaland": 0.8775,
+              "saka": 0.85
+            },
+            "formation_balance": 0.925,
+            "coverage_map_proxy": {
+              "GK": 1,
+              "DEF": 4,
+              "MID": 3,
+              "FWD": 3
+            },
+            "warnings": []
+          },
+          "away": {
+            "lineup_validity": true,
+            "formation": "4-3-3",
+            "counts": {
+              "GK": 1,
+              "DEF": 3,
+              "MID": 5,
+              "FWD": 2
+            },
+            "role_fit_scores": {
+              "alisson": 0.85,
+              "hakimi": 0.85,
+              "ake": 0.85,
+              "gvardiol": 0.85,
+              "tchouameni": 0.85,
+              "camavinga": 0.85,
+              "pedri": 0.896,
+              "vitinha": 0.895,
+              "odegaard": 0.893,
+              "mbappe": 0.883,
+              "kane": 0.891
+            },
+            "formation_balance": 0.8749999999999999,
+            "coverage_map_proxy": {
+              "GK": 1,
+              "DEF": 3,
+              "MID": 5,
+              "FWD": 2
+            },
+            "warnings": []
+          }
+        },
+        "chemistry": {
+          "home": {
+            "chemistry_score": 0.8869616402116401,
+            "attack_chemistry": 0.8879999999999999,
+            "midfield_control": 0.8699999999999999,
+            "defensive_balance": 0.8825000000000001,
+            "pressing_cohesion": 0.7755555555555556,
+            "progression_synergy": 0.9057142857142857,
+            "role_overlap_penalty": 0.0,
+            "zone_coverage_score": 1.0,
+            "warnings": [
+              "Vinicius + Haaland projects strong creator-finisher complementarity."
+            ]
+          },
+          "away": {
+            "chemistry_score": 0.844606227106227,
+            "attack_chemistry": 0.865,
+            "midfield_control": 0.9069230769230769,
+            "defensive_balance": 0.84,
+            "pressing_cohesion": 0.755,
+            "progression_synergy": 0.8257142857142857,
+            "role_overlap_penalty": 0.0,
+            "zone_coverage_score": 0.8749999999999999,
+            "warnings": []
+          }
+        },
+        "tactical_drivers": {
+          "home": {
+            "pressing_predicted": 0.7755555555555556,
+            "possession_predicted": 0.8066666666666666,
+            "directness_predicted": 0.8720000000000001,
+            "transition_predicted": 0.8366666666666666,
+            "width_predicted": 0.8514285714285714,
+            "centrality_predicted": 0.776,
+            "compactness_predicted": 0.88,
+            "fatigue_resistance_predicted": 0.9133333333333334,
+            "defensive_exposure_predicted": 0.43025,
+            "chemistry_score": 0.8869616402116401,
+            "role_balance_score": 1.0,
+            "tactical_feasibility_score": 0.8934316578483245,
+            "chemistry": {
+              "chemistry_score": 0.8869616402116401,
+              "attack_chemistry": 0.8879999999999999,
+              "midfield_control": 0.8699999999999999,
+              "defensive_balance": 0.8825000000000001,
+              "pressing_cohesion": 0.7755555555555556,
+              "progression_synergy": 0.9057142857142857,
+              "role_overlap_penalty": 0.0,
+              "zone_coverage_score": 1.0,
+              "warnings": [
+                "Vinicius + Haaland projects strong creator-finisher complementarity."
+              ]
+            },
+            "manual_override": false,
+            "realism_warning": false,
+            "warnings": [
+              "Vinicius + Haaland projects strong creator-finisher complementarity."
+            ]
+          },
+          "away": {
+            "pressing_predicted": 0.755,
+            "possession_predicted": 0.8630000000000001,
+            "directness_predicted": 0.9166666666666666,
+            "transition_predicted": 0.8628571428571429,
+            "width_predicted": 0.8200000000000001,
+            "centrality_predicted": 0.8588888888888889,
+            "compactness_predicted": 0.8314285714285715,
+            "fatigue_resistance_predicted": 0.85,
+            "defensive_exposure_predicted": 0.4641666666666666,
+            "chemistry_score": 0.844606227106227,
+            "role_balance_score": 1.0,
+            "tactical_feasibility_score": 0.8420115995115994,
+            "chemistry": {
+              "chemistry_score": 0.844606227106227,
+              "attack_chemistry": 0.865,
+              "midfield_control": 0.9069230769230769,
+              "defensive_balance": 0.84,
+              "pressing_cohesion": 0.755,
+              "progression_synergy": 0.8257142857142857,
+              "role_overlap_penalty": 0.0,
+              "zone_coverage_score": 0.8749999999999999,
+              "warnings": []
+            },
+            "manual_override": false,
+            "realism_warning": false,
+            "warnings": []
+          }
+        },
+        "chemistry_drivers": {
+          "home": [
+            "Vinicius + Haaland projects strong creator-finisher complementarity."
+          ],
+          "away": []
+        },
+        "lineup_warnings": [],
+        "model_status_used": {
+          "xG": "experimental",
+          "hazard": "champion",
+          "EPV": "experimental",
+          "sequence": "candidate",
+          "MC Dropout": "experimental",
+          "vectorized Monte Carlo": "experimental",
+          "pass network": "experimental",
+          "GNN": "experimental",
+          "explainability": "experimental"
+        },
+        "warnings": [
+          "empirical anchor uses latest sequential team strength state",
+          "Vinicius + Haaland projects strong creator-finisher complementarity."
+        ],
+        "report_json": "/home/liam/Bucephalus/outputs/game/match_report_8ce75ce6-4637-4510-901a-8c3c16257118.json",
+        "report_markdown": "/home/liam/Bucephalus/outputs/game/match_report_8ce75ce6-4637-4510-901a-8c3c16257118.md"
+      },
+      "created_at": "2026-06-29T02:40:17.225198+00:00"
+    },
+    {
+      "id": "ceb4c4c7-6e25-42e0-80f2-697c881d3d42",
+      "fixture_id": null,
+      "payload": {
+        "fixture_id": null,
+        "resolution_source": "simulated",
+        "model_confidence": "low",
+        "win_draw_loss_probabilities": {
+          "home": 0.295,
+          "draw": 0.421,
+          "away": 0.284
+        },
+        "expected_goals": {
+          "home": 0.6,
+          "away": 0.575
+        },
+        "expected_xg": {
+          "home": 0.560931108338677,
+          "away": 0.5778645014387637
+        },
+        "top_scorelines": [
+          {
+            "scoreline": "0-0",
+            "probability": 0.312
+          },
+          {
+            "scoreline": "1-0",
+            "probability": 0.18
+          },
+          {
+            "scoreline": "0-1",
+            "probability": 0.178
+          },
+          {
+            "scoreline": "1-1",
+            "probability": 0.102
+          },
+          {
+            "scoreline": "2-0",
+            "probability": 0.065
+          }
+        ],
+        "lineups": {
+          "home": {
+            "lineup_validity": true,
+            "formation": "4-3-3",
+            "counts": {
+              "GK": 1,
+              "DEF": 4,
+              "MID": 3,
+              "FWD": 3
+            },
+            "role_fit_scores": {
+              "courtois": 0.85,
+              "carvajal": 0.85,
+              "dias": 0.85,
+              "saliba": 0.85,
+              "grimaldo": 0.85,
+              "rodri": 0.85,
+              "valverde": 0.85,
+              "bellingham": 0.89,
+              "vinicius": 0.887,
+              "haaland": 0.8775,
+              "saka": 0.85
+            },
+            "formation_balance": 0.925,
+            "coverage_map_proxy": {
+              "GK": 1,
+              "DEF": 4,
+              "MID": 3,
+              "FWD": 3
+            },
+            "warnings": []
+          },
+          "away": {
+            "lineup_validity": true,
+            "formation": "4-3-3",
+            "counts": {
+              "GK": 1,
+              "DEF": 3,
+              "MID": 5,
+              "FWD": 2
+            },
+            "role_fit_scores": {
+              "alisson": 0.85,
+              "hakimi": 0.85,
+              "ake": 0.85,
+              "gvardiol": 0.85,
+              "tchouameni": 0.85,
+              "camavinga": 0.85,
+              "pedri": 0.896,
+              "vitinha": 0.895,
+              "odegaard": 0.893,
+              "mbappe": 0.883,
+              "kane": 0.891
+            },
+            "formation_balance": 0.8749999999999999,
+            "coverage_map_proxy": {
+              "GK": 1,
+              "DEF": 3,
+              "MID": 5,
+              "FWD": 2
+            },
+            "warnings": []
+          }
+        },
+        "chemistry": {
+          "home": {
+            "chemistry_score": 0.8869616402116401,
+            "attack_chemistry": 0.8879999999999999,
+            "midfield_control": 0.8699999999999999,
+            "defensive_balance": 0.8825000000000001,
+            "pressing_cohesion": 0.7755555555555556,
+            "progression_synergy": 0.9057142857142857,
+            "role_overlap_penalty": 0.0,
+            "zone_coverage_score": 1.0,
+            "warnings": [
+              "Vinicius + Haaland projects strong creator-finisher complementarity."
+            ]
+          },
+          "away": {
+            "chemistry_score": 0.844606227106227,
+            "attack_chemistry": 0.865,
+            "midfield_control": 0.9069230769230769,
+            "defensive_balance": 0.84,
+            "pressing_cohesion": 0.755,
+            "progression_synergy": 0.8257142857142857,
+            "role_overlap_penalty": 0.0,
+            "zone_coverage_score": 0.8749999999999999,
+            "warnings": []
+          }
+        },
+        "tactical_drivers": {
+          "home": {
+            "pressing_predicted": 0.7755555555555556,
+            "possession_predicted": 0.8066666666666666,
+            "directness_predicted": 0.8720000000000001,
+            "transition_predicted": 0.8366666666666666,
+            "width_predicted": 0.8514285714285714,
+            "centrality_predicted": 0.776,
+            "compactness_predicted": 0.88,
+            "fatigue_resistance_predicted": 0.9133333333333334,
+            "defensive_exposure_predicted": 0.43025,
+            "chemistry_score": 0.8869616402116401,
+            "role_balance_score": 1.0,
+            "tactical_feasibility_score": 0.8934316578483245,
+            "chemistry": {
+              "chemistry_score": 0.8869616402116401,
+              "attack_chemistry": 0.8879999999999999,
+              "midfield_control": 0.8699999999999999,
+              "defensive_balance": 0.8825000000000001,
+              "pressing_cohesion": 0.7755555555555556,
+              "progression_synergy": 0.9057142857142857,
+              "role_overlap_penalty": 0.0,
+              "zone_coverage_score": 1.0,
+              "warnings": [
+                "Vinicius + Haaland projects strong creator-finisher complementarity."
+              ]
+            },
+            "manual_override": false,
+            "realism_warning": false,
+            "warnings": [
+              "Vinicius + Haaland projects strong creator-finisher complementarity."
+            ]
+          },
+          "away": {
+            "pressing_predicted": 0.755,
+            "possession_predicted": 0.8630000000000001,
+            "directness_predicted": 0.9166666666666666,
+            "transition_predicted": 0.8628571428571429,
+            "width_predicted": 0.8200000000000001,
+            "centrality_predicted": 0.8588888888888889,
+            "compactness_predicted": 0.8314285714285715,
+            "fatigue_resistance_predicted": 0.85,
+            "defensive_exposure_predicted": 0.4641666666666666,
+            "chemistry_score": 0.844606227106227,
+            "role_balance_score": 1.0,
+            "tactical_feasibility_score": 0.8420115995115994,
+            "chemistry": {
+              "chemistry_score": 0.844606227106227,
+              "attack_chemistry": 0.865,
+              "midfield_control": 0.9069230769230769,
+              "defensive_balance": 0.84,
+              "pressing_cohesion": 0.755,
+              "progression_synergy": 0.8257142857142857,
+              "role_overlap_penalty": 0.0,
+              "zone_coverage_score": 0.8749999999999999,
+              "warnings": []
+            },
+            "manual_override": false,
+            "realism_warning": false,
+            "warnings": []
+          }
+        },
+        "chemistry_drivers": {
+          "home": [
+            "Vinicius + Haaland projects strong creator-finisher complementarity."
+          ],
+          "away": []
+        },
+        "lineup_warnings": [],
+        "model_status_used": {
+          "xG": "experimental",
+          "hazard": "champion",
+          "EPV": "experimental",
+          "sequence": "candidate",
+          "MC Dropout": "experimental",
+          "vectorized Monte Carlo": "experimental",
+          "pass network": "experimental",
+          "GNN": "experimental",
+          "explainability": "experimental"
+        },
+        "warnings": [
+          "empirical anchor uses latest sequential team strength state",
+          "Vinicius + Haaland projects strong creator-finisher complementarity."
+        ],
+        "report_json": "/home/liam/Bucephalus/outputs/game/match_report_13dbdaaf-27ce-4db4-9cb8-4722621df5d8.json",
+        "report_markdown": "/home/liam/Bucephalus/outputs/game/match_report_13dbdaaf-27ce-4db4-9cb8-4722621df5d8.md"
+      },
+      "created_at": "2026-06-29T02:40:25.361419+00:00"
+    }
+  ],
+  "audit_logs": [
+    {
+      "id": "55eb4b58-2263-4a21-a5f4-52d481a1d77e",
+      "action": "create_user",
+      "payload": {
+        "id": "1a5b94c4-aa21-46df-94aa-0cbfc15cf401",
+        "name": "Liam Manager",
+        "roles": [
+          "league_creator",
+          "manager"
+        ]
+      },
+      "created_at": "2026-06-29T02:40:11.846426+00:00"
+    },
+    {
+      "id": "d77da614-6e2b-4630-84c0-5ad1c1eafa36",
+      "action": "create_user",
+      "payload": {
+        "id": "fac059ca-4235-4d33-b751-d4eb9183950d",
+        "name": "Alex Analyst",
+        "roles": [
+          "manager",
+          "analyst"
+        ]
+      },
+      "created_at": "2026-06-29T02:40:11.849413+00:00"
+    },
+    {
+      "id": "62ad7ab0-601d-4656-99b0-ccb48fbd4679",
+      "action": "create_league",
+      "payload": {
+        "id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "name": "Bucephalus Friends League",
+        "creator_user_id": "1a5b94c4-aa21-46df-94aa-0cbfc15cf401",
+        "competition_type": "simulation_league",
+        "settings": {
+          "initial_budget": 300000000.0,
+          "squad_size_min": 11,
+          "squad_size_max": 25,
+          "max_players_per_real_team": 4,
+          "formation_rules": [
+            "4-3-3",
+            "4-2-3-1",
+            "4-4-2",
+            "3-5-2"
+          ],
+          "transfer_rules": {},
+          "eliminated_player_policy": "simulated_degraded",
+          "scoring_mode": "simulation_points",
+          "resolution_mode": "simulated",
+          "market_mode": "draft",
+          "season_reset_policy": "seasonal_redraft",
+          "keeper_rights_policy": "optional_discount",
+          "confidence_policy": "show_model_confidence"
+        }
+      },
+      "created_at": "2026-06-29T02:40:11.850360+00:00"
+    },
+    {
+      "id": "8bb710ce-5172-470a-b522-ac6a33159580",
+      "action": "create_club",
+      "payload": {
+        "id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "name": "Bucephalus Royals",
+        "manager_user_id": "1a5b94c4-aa21-46df-94aa-0cbfc15cf401",
+        "budget": 300000000.0,
+        "points": 0,
+        "goals_for": 0,
+        "goals_against": 0
+      },
+      "created_at": "2026-06-29T02:40:11.851511+00:00"
+    },
+    {
+      "id": "91ae86df-8921-4741-8151-ef0d33782e4e",
+      "action": "create_club",
+      "payload": {
+        "id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "name": "Alexandria Analysts",
+        "manager_user_id": "fac059ca-4235-4d33-b751-d4eb9183950d",
+        "budget": 300000000.0,
+        "points": 0,
+        "goals_for": 0,
+        "goals_against": 0
+      },
+      "created_at": "2026-06-29T02:40:11.852697+00:00"
+    },
+    {
+      "id": "44e8112d-b652-4fd4-a93d-2c2e438b1d11",
+      "action": "load_default_player_pool",
+      "payload": {
+        "players": 23
+      },
+      "created_at": "2026-06-29T02:40:11.877121+00:00"
+    },
+    {
+      "id": "b3b80c95-2b04-468f-9d4d-c9e676c4c6ae",
+      "action": "sign_player",
+      "payload": {
+        "id": "a1f68e92-7b8f-4d33-ac06-a6a1e75201d6",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+        "player_id": "courtois",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.291775+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.293456+00:00"
+    },
+    {
+      "id": "f2710ba6-c6be-4eca-9461-7f29000a8a89",
+      "action": "sign_player",
+      "payload": {
+        "id": "519b79be-602c-4d08-a239-d18c0b49e974",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+        "player_id": "carvajal",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.298242+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.299676+00:00"
+    },
+    {
+      "id": "c2898432-4fb0-45dd-b22d-a6c73809dd17",
+      "action": "sign_player",
+      "payload": {
+        "id": "e596126e-4f01-4a9a-aa45-bb703ab861ad",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+        "player_id": "dias",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.304542+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.305917+00:00"
+    },
+    {
+      "id": "a6578a6a-c109-41c4-aae9-6d15c851c4f1",
+      "action": "sign_player",
+      "payload": {
+        "id": "041e80f6-458e-414b-b59d-bb36debae6b0",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+        "player_id": "saliba",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.311134+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.312550+00:00"
+    },
+    {
+      "id": "9cc4e568-1f9c-4313-b52d-48bac9c72d2c",
+      "action": "sign_player",
+      "payload": {
+        "id": "d541314d-8fe5-40b0-932d-5bd2f1dd7644",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+        "player_id": "grimaldo",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.317727+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.319081+00:00"
+    },
+    {
+      "id": "ad4ea963-4ff0-477f-98df-df937ecd8ab9",
+      "action": "sign_player",
+      "payload": {
+        "id": "e13a5ca8-6934-4269-a20c-91e747b26941",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+        "player_id": "rodri",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.324210+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.326173+00:00"
+    },
+    {
+      "id": "4131e85c-087f-4f94-8d78-5f32bde21d9f",
+      "action": "sign_player",
+      "payload": {
+        "id": "10af03f5-0f2f-409c-81d7-eaa9a14ac2d8",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+        "player_id": "valverde",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.331429+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.332935+00:00"
+    },
+    {
+      "id": "dfe77e39-90d7-4db9-a63c-82c72e5234d2",
+      "action": "sign_player",
+      "payload": {
+        "id": "8f0bfcd8-d0c0-4197-b3e6-d73d6bd31429",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+        "player_id": "bellingham",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.338849+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.340413+00:00"
+    },
+    {
+      "id": "eb1bdec0-08b1-4408-8a3c-ece06f54ca45",
+      "action": "sign_player",
+      "payload": {
+        "id": "923c6cd7-4a99-4f9a-a47e-312caff3036a",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+        "player_id": "vinicius",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.346214+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.347868+00:00"
+    },
+    {
+      "id": "5b66dd3c-45da-4f55-93f4-cba9cb7c3813",
+      "action": "sign_player",
+      "payload": {
+        "id": "0e473b21-44b2-4582-9e4e-2a5cc3123997",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+        "player_id": "haaland",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.353986+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.355603+00:00"
+    },
+    {
+      "id": "ee57e042-367a-4742-8f5f-d233c31aec74",
+      "action": "sign_player",
+      "payload": {
+        "id": "df8bc7de-6ae7-482d-9b84-e4d3d514a7ce",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+        "player_id": "saka",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.361665+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.363404+00:00"
+    },
+    {
+      "id": "8011bd69-c2af-4a2a-9983-3dccd3fc7dac",
+      "action": "sign_player",
+      "payload": {
+        "id": "26de5c72-8630-432e-8383-c2cc0d6015b2",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+        "player_id": "alisson",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.369820+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.371648+00:00"
+    },
+    {
+      "id": "505ce23a-04b1-45f4-9ead-5d18fa054c1a",
+      "action": "sign_player",
+      "payload": {
+        "id": "bb60b0cb-132c-4bdf-ba7b-abf4eef4151e",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+        "player_id": "hakimi",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.379997+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.381871+00:00"
+    },
+    {
+      "id": "04564833-6fff-425f-b83b-962fe5e3daae",
+      "action": "sign_player",
+      "payload": {
+        "id": "5ba6336e-62a6-4b83-b4b2-ab69007c6822",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+        "player_id": "ake",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.388345+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.390064+00:00"
+    },
+    {
+      "id": "a327e2f2-ec58-40f3-9f89-570f6b4127a6",
+      "action": "sign_player",
+      "payload": {
+        "id": "78f58dd9-09d6-4ff8-a8a5-1799efd5ec8d",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+        "player_id": "gvardiol",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.396491+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.398306+00:00"
+    },
+    {
+      "id": "74b471c9-948a-4c0d-90ab-70bea9ebea1d",
+      "action": "sign_player",
+      "payload": {
+        "id": "e998032f-bf51-47c1-bd53-e25eace853e0",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+        "player_id": "tchouameni",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.405660+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.407903+00:00"
+    },
+    {
+      "id": "2c8bedcc-1b36-4ce6-a805-e26b2f02617a",
+      "action": "sign_player",
+      "payload": {
+        "id": "2e62285f-8da5-4946-9733-4cd3de17fcd8",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+        "player_id": "camavinga",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.414896+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.416699+00:00"
+    },
+    {
+      "id": "d87dc1b1-2e48-4386-a64a-b17f3878ce2a",
+      "action": "sign_player",
+      "payload": {
+        "id": "7f48bb9f-2ebd-4764-a0b0-91429f455db8",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+        "player_id": "pedri",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.423492+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.425383+00:00"
+    },
+    {
+      "id": "150c5b84-dea1-47f3-90cc-c8f62f3d4e86",
+      "action": "sign_player",
+      "payload": {
+        "id": "34f45717-fa91-4b36-a055-7fb26414792b",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+        "player_id": "vitinha",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.434410+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.436366+00:00"
+    },
+    {
+      "id": "de6108fd-6225-4cd9-bd80-0871e24b34e3",
+      "action": "sign_player",
+      "payload": {
+        "id": "b769f8a3-400c-423c-bf0b-0fa6f5367ff1",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+        "player_id": "odegaard",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.443769+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.445656+00:00"
+    },
+    {
+      "id": "ce3e6767-0832-4bbd-9165-6252cf5b7c6f",
+      "action": "sign_player",
+      "payload": {
+        "id": "0e3f48e9-0e7d-4069-9799-2409a32b6755",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+        "player_id": "mbappe",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.453154+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.455139+00:00"
+    },
+    {
+      "id": "cf26ed5c-0a91-4071-b80c-2d5f5bcb3ba5",
+      "action": "sign_player",
+      "payload": {
+        "id": "776856b0-c602-424b-abdf-bc14f6d12160",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+        "player_id": "kane",
+        "amount": 5000000.0,
+        "status": "accepted",
+        "created_at": "2026-06-29T02:40:12.462834+00:00"
+      },
+      "created_at": "2026-06-29T02:40:12.465039+00:00"
+    },
+    {
+      "id": "e1879604-35b4-42f3-8959-2f7c9197846b",
+      "action": "create_lineup",
+      "payload": {
+        "id": "d51feb05-58ee-40d6-939b-5002fac2b99d",
+        "club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+        "formation": "4-3-3",
+        "slots": [
+          {
+            "player_id": "courtois",
+            "role": "GK",
+            "position": "GK"
+          },
+          {
+            "player_id": "carvajal",
+            "role": "DEF",
+            "position": "RB"
+          },
+          {
+            "player_id": "dias",
+            "role": "DEF",
+            "position": "CB"
+          },
+          {
+            "player_id": "saliba",
+            "role": "DEF",
+            "position": "CB"
+          },
+          {
+            "player_id": "grimaldo",
+            "role": "DEF",
+            "position": "LB"
+          },
+          {
+            "player_id": "rodri",
+            "role": "MID",
+            "position": "DM"
+          },
+          {
+            "player_id": "valverde",
+            "role": "MID",
+            "position": "CM"
+          },
+          {
+            "player_id": "bellingham",
+            "role": "MID",
+            "position": "AM"
+          },
+          {
+            "player_id": "vinicius",
+            "role": "FWD",
+            "position": "LW"
+          },
+          {
+            "player_id": "haaland",
+            "role": "FWD",
+            "position": "CF"
+          },
+          {
+            "player_id": "saka",
+            "role": "FWD",
+            "position": "RW"
+          }
+        ],
+        "validation": {
+          "lineup_validity": true,
+          "formation": "4-3-3",
+          "counts": {
+            "GK": 1,
+            "DEF": 4,
+            "MID": 3,
+            "FWD": 3
+          },
+          "role_fit_scores": {
+            "courtois": 0.85,
+            "carvajal": 0.85,
+            "dias": 0.85,
+            "saliba": 0.85,
+            "grimaldo": 0.85,
+            "rodri": 0.85,
+            "valverde": 0.85,
+            "bellingham": 0.89,
+            "vinicius": 0.887,
+            "haaland": 0.8775,
+            "saka": 0.85
+          },
+          "formation_balance": 0.925,
+          "coverage_map_proxy": {
+            "GK": 1,
+            "DEF": 4,
+            "MID": 3,
+            "FWD": 3
+          },
+          "warnings": []
+        }
+      },
+      "created_at": "2026-06-29T02:40:12.885421+00:00"
+    },
+    {
+      "id": "ea9af7d4-53c1-42e4-a1ce-dc5cb29e5350",
+      "action": "create_lineup",
+      "payload": {
+        "id": "d1aa1efc-1b67-4000-8220-3dbdb187b4ad",
+        "club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+        "formation": "4-3-3",
+        "slots": [
+          {
+            "player_id": "alisson",
+            "role": "GK",
+            "position": "GK"
+          },
+          {
+            "player_id": "hakimi",
+            "role": "DEF",
+            "position": "RB"
+          },
+          {
+            "player_id": "ake",
+            "role": "DEF",
+            "position": "CB"
+          },
+          {
+            "player_id": "gvardiol",
+            "role": "DEF",
+            "position": "LB"
+          },
+          {
+            "player_id": "tchouameni",
+            "role": "MID",
+            "position": "DM"
+          },
+          {
+            "player_id": "camavinga",
+            "role": "MID",
+            "position": "DM"
+          },
+          {
+            "player_id": "pedri",
+            "role": "MID",
+            "position": "CM"
+          },
+          {
+            "player_id": "vitinha",
+            "role": "MID",
+            "position": "CM"
+          },
+          {
+            "player_id": "odegaard",
+            "role": "MID",
+            "position": "AM"
+          },
+          {
+            "player_id": "mbappe",
+            "role": "FWD",
+            "position": "LW"
+          },
+          {
+            "player_id": "kane",
+            "role": "FWD",
+            "position": "ST"
+          }
+        ],
+        "validation": {
+          "lineup_validity": true,
+          "formation": "4-3-3",
+          "counts": {
+            "GK": 1,
+            "DEF": 3,
+            "MID": 5,
+            "FWD": 2
+          },
+          "role_fit_scores": {
+            "alisson": 0.85,
+            "hakimi": 0.85,
+            "ake": 0.85,
+            "gvardiol": 0.85,
+            "tchouameni": 0.85,
+            "camavinga": 0.85,
+            "pedri": 0.896,
+            "vitinha": 0.895,
+            "odegaard": 0.893,
+            "mbappe": 0.883,
+            "kane": 0.891
+          },
+          "formation_balance": 0.8749999999999999,
+          "coverage_map_proxy": {
+            "GK": 1,
+            "DEF": 3,
+            "MID": 5,
+            "FWD": 2
+          },
+          "warnings": []
+        }
+      },
+      "created_at": "2026-06-29T02:40:12.902457+00:00"
+    },
+    {
+      "id": "109f9a9c-843f-4a3a-81ff-8b656326409d",
+      "action": "create_fixture",
+      "payload": {
+        "id": "8ce75ce6-4637-4510-901a-8c3c16257118",
+        "league_id": "121f6570-55ef-4b03-99a1-d868cc6de678",
+        "home_club_id": "0a8c475c-2087-444d-83c1-a5bb5e1226b6",
+        "away_club_id": "4fb0f764-ad03-4710-bed1-5d9450033b91",
+        "status": "scheduled"
+      },
+      "created_at": "2026-06-29T02:40:13.647339+00:00"
+    },
+    {
+      "id": "24dafcd3-2f08-4775-bc42-9e620535b09a",
+      "action": "simulate_match",
+      "payload": {
+        "fixture_id": "8ce75ce6-4637-4510-901a-8c3c16257118",
+        "report": "/home/liam/Bucephalus/outputs/game/match_report_8ce75ce6-4637-4510-901a-8c3c16257118.json"
+      },
+      "created_at": "2026-06-29T02:40:17.229173+00:00"
+    },
+    {
+      "id": "67fdaf69-8014-46cd-b28d-63c8bd3cef29",
+      "action": "simulate_match",
+      "payload": {
+        "fixture_id": null,
+        "report": "/home/liam/Bucephalus/outputs/game/match_report_13dbdaaf-27ce-4db4-9cb8-4722621df5d8.json"
+      },
+      "created_at": "2026-06-29T02:40:25.366055+00:00"
+    }
+  ]
+}

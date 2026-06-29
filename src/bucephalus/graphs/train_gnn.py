@@ -42,13 +42,19 @@ def train_gnn_model(paths: ProjectPaths) -> dict:
     tabular_graph_pred = _tabular_graph_predictions(paths, meta, y, split)
     metrics = _metrics(y[split:], pred, baseline, no_edge, perm, tabular_graph_pred)
     validation_report = _validation_report(y, pred, no_edge, perm, tabular_graph_pred, split)
-    status = "champion" if (
+    improves_all_baselines = (
         metrics["gnn_mae"] < metrics["baseline_mae"]
         and metrics["gnn_mae"] <= metrics["no_edge_mae"]
         and metrics["gnn_mae"] <= metrics["permuted_edge_mae"]
         and metrics["gnn_mae"] <= metrics["tabular_graph_mae"]
         and validation_report["random_labels_test"] == "passed"
-    ) else ("candidate" if metrics["gnn_mae"] < metrics["baseline_mae"] else "experimental")
+    )
+    improves_tabular_graph = (
+        metrics["gnn_mae"] < metrics["tabular_graph_mae"]
+        and metrics["gnn_mae"] <= metrics["no_edge_mae"]
+        and metrics["gnn_mae"] <= metrics["permuted_edge_mae"]
+    )
+    status = "champion" if improves_all_baselines else ("candidate" if improves_tabular_graph else "experimental")
     metrics["status"] = status
     artifact = paths.models_outputs / "gnn_model.pt"
     torch.save({"state_dict": model.state_dict(), "input_dim": x.shape[-1], "hidden_dim": 16}, artifact)

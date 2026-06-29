@@ -1,0 +1,214 @@
+{
+  "fixture_id": "8ce75ce6-4637-4510-901a-8c3c16257118",
+  "resolution_source": "simulated",
+  "model_confidence": "low",
+  "win_draw_loss_probabilities": {
+    "home": 0.252,
+    "draw": 0.442,
+    "away": 0.306
+  },
+  "expected_goals": {
+    "home": 0.556,
+    "away": 0.608
+  },
+  "expected_xg": {
+    "home": 0.5609109612798534,
+    "away": 0.5776151796731996
+  },
+  "top_scorelines": [
+    {
+      "scoreline": "0-0",
+      "probability": 0.324
+    },
+    {
+      "scoreline": "0-1",
+      "probability": 0.19
+    },
+    {
+      "scoreline": "1-0",
+      "probability": 0.14
+    },
+    {
+      "scoreline": "1-1",
+      "probability": 0.112
+    },
+    {
+      "scoreline": "0-2",
+      "probability": 0.062
+    }
+  ],
+  "lineups": {
+    "home": {
+      "lineup_validity": true,
+      "formation": "4-3-3",
+      "counts": {
+        "GK": 1,
+        "DEF": 4,
+        "MID": 3,
+        "FWD": 3
+      },
+      "role_fit_scores": {
+        "courtois": 0.85,
+        "carvajal": 0.85,
+        "dias": 0.85,
+        "saliba": 0.85,
+        "grimaldo": 0.85,
+        "rodri": 0.85,
+        "valverde": 0.85,
+        "bellingham": 0.89,
+        "vinicius": 0.887,
+        "haaland": 0.8775,
+        "saka": 0.85
+      },
+      "formation_balance": 0.925,
+      "coverage_map_proxy": {
+        "GK": 1,
+        "DEF": 4,
+        "MID": 3,
+        "FWD": 3
+      },
+      "warnings": []
+    },
+    "away": {
+      "lineup_validity": true,
+      "formation": "4-3-3",
+      "counts": {
+        "GK": 1,
+        "DEF": 3,
+        "MID": 5,
+        "FWD": 2
+      },
+      "role_fit_scores": {
+        "alisson": 0.85,
+        "hakimi": 0.85,
+        "ake": 0.85,
+        "gvardiol": 0.85,
+        "tchouameni": 0.85,
+        "camavinga": 0.85,
+        "pedri": 0.896,
+        "vitinha": 0.895,
+        "odegaard": 0.893,
+        "mbappe": 0.883,
+        "kane": 0.891
+      },
+      "formation_balance": 0.8749999999999999,
+      "coverage_map_proxy": {
+        "GK": 1,
+        "DEF": 3,
+        "MID": 5,
+        "FWD": 2
+      },
+      "warnings": []
+    }
+  },
+  "chemistry": {
+    "home": {
+      "chemistry_score": 0.8869616402116401,
+      "attack_chemistry": 0.8879999999999999,
+      "midfield_control": 0.8699999999999999,
+      "defensive_balance": 0.8825000000000001,
+      "pressing_cohesion": 0.7755555555555556,
+      "progression_synergy": 0.9057142857142857,
+      "role_overlap_penalty": 0.0,
+      "zone_coverage_score": 1.0,
+      "warnings": [
+        "Vinicius + Haaland projects strong creator-finisher complementarity."
+      ]
+    },
+    "away": {
+      "chemistry_score": 0.844606227106227,
+      "attack_chemistry": 0.865,
+      "midfield_control": 0.9069230769230769,
+      "defensive_balance": 0.84,
+      "pressing_cohesion": 0.755,
+      "progression_synergy": 0.8257142857142857,
+      "role_overlap_penalty": 0.0,
+      "zone_coverage_score": 0.8749999999999999,
+      "warnings": []
+    }
+  },
+  "tactical_drivers": {
+    "home": {
+      "pressing_predicted": 0.7755555555555556,
+      "possession_predicted": 0.8066666666666666,
+      "directness_predicted": 0.8720000000000001,
+      "transition_predicted": 0.8366666666666666,
+      "width_predicted": 0.8514285714285714,
+      "centrality_predicted": 0.776,
+      "compactness_predicted": 0.88,
+      "fatigue_resistance_predicted": 0.9133333333333334,
+      "defensive_exposure_predicted": 0.43025,
+      "chemistry_score": 0.8869616402116401,
+      "role_balance_score": 1.0,
+      "tactical_feasibility_score": 0.8934316578483245,
+      "chemistry": {
+        "chemistry_score": 0.8869616402116401,
+        "attack_chemistry": 0.8879999999999999,
+        "midfield_control": 0.8699999999999999,
+        "defensive_balance": 0.8825000000000001,
+        "pressing_cohesion": 0.7755555555555556,
+        "progression_synergy": 0.9057142857142857,
+        "role_overlap_penalty": 0.0,
+        "zone_coverage_score": 1.0,
+        "warnings": [
+          "Vinicius + Haaland projects strong creator-finisher complementarity."
+        ]
+      },
+      "manual_override": false,
+      "realism_warning": false,
+      "warnings": [
+        "Vinicius + Haaland projects strong creator-finisher complementarity."
+      ]
+    },
+    "away": {
+      "pressing_predicted": 0.755,
+      "possession_predicted": 0.8630000000000001,
+      "directness_predicted": 0.9166666666666666,
+      "transition_predicted": 0.8628571428571429,
+      "width_predicted": 0.8200000000000001,
+      "centrality_predicted": 0.8588888888888889,
+      "compactness_predicted": 0.8314285714285715,
+      "fatigue_resistance_predicted": 0.85,
+      "defensive_exposure_predicted": 0.4641666666666666,
+      "chemistry_score": 0.844606227106227,
+      "role_balance_score": 1.0,
+      "tactical_feasibility_score": 0.8420115995115994,
+      "chemistry": {
+        "chemistry_score": 0.844606227106227,
+        "attack_chemistry": 0.865,
+        "midfield_control": 0.9069230769230769,
+        "defensive_balance": 0.84,
+        "pressing_cohesion": 0.755,
+        "progression_synergy": 0.8257142857142857,
+        "role_overlap_penalty": 0.0,
+        "zone_coverage_score": 0.8749999999999999,
+        "warnings": []
+      },
+      "manual_override": false,
+      "realism_warning": false,
+      "warnings": []
+    }
+  },
+  "chemistry_drivers": {
+    "home": [
+      "Vinicius + Haaland projects strong creator-finisher complementarity."
+    ],
+    "away": []
+  },
+  "lineup_warnings": [],
+  "model_status_used": {
+    "xG": "experimental",
+    "hazard": "champion",
+    "EPV": "experimental",
+    "sequence": "candidate",
+    "MC Dropout": "experimental",
+    "vectorized Monte Carlo": "experimental",
+    "pass network": "experimental",
+    "GNN": "experimental",
+    "explainability": "experimental"
+  },
+  "warnings": [
+    "empirical anchor uses latest sequential team strength state",
+    "Vinicius + Haaland projects strong creator-finisher complementarity."
+  ]
+}

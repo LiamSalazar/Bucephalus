@@ -1,6 +1,6 @@
 # Bucephalus
 
-Bucephalus es la base de un motor de simulación futbolística basado en datos reales. El objetivo final es soportar Game Mode y Lab Mode, pero este repositorio llega hasta Fase 8: Advanced ML, Deep Learning, Graph Learning, Uncertainty, Explainability & Final Audit. La prioridad actual es reproducibilidad, trazabilidad, validación temporal sin leakage, calibración empírica, incertidumbre, explicabilidad y auditoría centralizada. No hay frontend, backend API productivo, mercado, Game Mode completo ni chatbot/LLM.
+Bucephalus es la base de una plataforma de simulación futbolística y juego tipo Fantasy/Director Deportivo basada en datos reales. El repositorio llega hasta Fase 8.2 y Fase 9: expansión/recalibración de datos, ML/DL inicial, Game Mode, Lab Mode y sistema de ligas por CLI/servicios. La prioridad actual es reproducibilidad, validación temporal sin leakage, calibración empírica, incertidumbre, táctica inferida desde alineaciones, química, mercado básico y flujo jugable mínimo. No hay frontend avanzado, backend API productivo, deploy final ni chatbot/LLM.
 
 ## Setup
 
@@ -100,6 +100,31 @@ make all-phase-8
 
 Fase 8 incluye modelos tabulares avanzados, hazard model para controlar survival/look-ahead bias, EPV alineado por claves reales usando `P(shot) x conditional_xG`, PyTorch GRU sequence model con split temporal, MC Dropout real, Monte Carlo vectorizado, pass networks, GCN manual en PyTorch y reporte final centralizado. Los modelos deep/GNN son iniciales y pueden quedar `experimental`, `candidate`, `champion` o `insufficient_data` según scorecard.
 
+## Fase 8.2 y Fase 9
+
+Fase 8.2 intenta ampliar datos, recalibra modelos y actualiza el reporte final. Los adapters comerciales no descargan nada sin API keys.
+
+```bash
+make data-expansion
+make recalibrate-models
+```
+
+Fase 9 agrega un flujo jugable local por CLI/servicios:
+
+```bash
+make game-db
+make sample-league
+make sample-draft
+make sample-lineup
+make simulate-game-match
+make lab-scenario
+make transfer-demo
+make phase-9-check
+make all-phase-9
+```
+
+Incluye dominio de usuarios, ligas, clubes, plantillas, mercado básico, alineaciones, química, táctica inferida desde XI, mock live provider, SimulationService, LabScenarioService y reportes de partido. Los sliders/manual overrides quedan como Lab Mode experimental y generan warnings si contradicen el perfil de la alineación.
+
 ## Research dataset
 
 No es el default. Úsalo para traer más partidos de StatsBomb Open Data de forma controlada:
@@ -142,7 +167,12 @@ BUCEPHALUS_DATA_ROOT=/tmp/bucephalus-data python scripts/01_download_data.py --s
 - `data/processed/ingestion_manifest.parquet`: manifest incremental por partido.
 - `outputs/quality/incremental_feature_update_report.json`: reporte de actualización incremental.
 - `outputs/quality/performance_benchmark.json`: benchmark ligero de pipeline.
+- `outputs/quality/data_expansion_report.*`: cobertura de datos y adapters disponibles.
+- `outputs/game/game_state.json`: estado local del Game Mode.
+- `outputs/game/match_report_<id>.*`: reporte de partido simulado.
+- `outputs/lab/scenario_report.json`: escenario Lab Mode.
+- `outputs/reports/phase9_game_system_report.md`: reporte operativo Fase 9.
 
 ## Siguiente etapa
 
-La siguiente etapa son Fases 9-11: Game Mode, Lab Mode operativo, interfaz, reportes y asistente IA. Algunos componentes siguen siendo proxy o `heuristic_fallback` cuando no hay cobertura suficiente, pero el motor separa `heuristic` vs `calibrated`, usa anclas empíricas, Markov calibrado, incertidumbre vía bootstrap, team strength temporal, registry local y ML inicial trazable.
+La siguiente etapa son Fases 10-12: API/productización, interfaz, experiencia social completa, reportes avanzados y asistente IA. Algunos componentes siguen siendo proxy o `heuristic_fallback` cuando no hay cobertura suficiente, pero el motor separa `heuristic` vs `calibrated`, usa anclas empíricas, Markov calibrado, incertidumbre vía bootstrap, team strength temporal, registry local, ML inicial trazable y un flujo Game/Lab funcional.

@@ -1,6 +1,6 @@
 # Bucephalus Final Model Audit Report
 
-Generated at: 2026-06-29T00:48:15.290625+00:00
+Generated at: 2026-06-29T02:39:42.668970+00:00
 
 ## 1. Executive Summary
 Overall status: WARNING
@@ -11,7 +11,7 @@ Objective compliance: PARTIALLY
 ```json
 {
   "manifest": {
-    "generated_at": "2026-06-27T18:23:09.166136+00:00",
+    "generated_at": "2026-06-29T02:31:43.682346+00:00",
     "source_name": "StatsBomb Open Data",
     "source_url": "https://raw.githubusercontent.com/statsbomb/open-data/master/data",
     "mode": "fallback",
@@ -26,7 +26,7 @@ Objective compliance: PARTIALLY
     "has_events": true,
     "has_lineups": true,
     "has_360": true,
-    "raw_files_count": 80,
+    "raw_files_count": 112,
     "processed_tables": [
       "carries",
       "competitions",
@@ -35,6 +35,7 @@ Objective compliance: PARTIALLY
       "events",
       "external_entity_links",
       "goalkeeper_actions",
+      "ingestion_manifest",
       "lineups",
       "master_competitions",
       "master_matches",
@@ -49,28 +50,29 @@ Objective compliance: PARTIALLY
       "three_sixty"
     ],
     "rows_by_table": {
-      "carries": 32371,
+      "carries": 42489,
       "competitions": 80,
       "data_manifest": 1,
-      "duels": 2024,
-      "events": 137785,
-      "external_entity_links": 10,
-      "goalkeeper_actions": 1104,
-      "lineups": 1363,
-      "master_competitions": 1,
-      "master_matches": 2,
-      "master_players": 5,
-      "master_teams": 2,
-      "matches": 36,
-      "passes": 39218,
-      "players": 1571,
-      "pressures": 11423,
-      "shots": 922,
-      "teams": 20,
+      "duels": 3519,
+      "events": 191299,
+      "external_entity_links": 601,
+      "goalkeeper_actions": 1613,
+      "ingestion_manifest": 36,
+      "lineups": 1933,
+      "master_competitions": 80,
+      "master_matches": 36,
+      "master_players": 465,
+      "master_teams": 20,
+      "matches": 52,
+      "passes": 53643,
+      "players": 2379,
+      "pressures": 17088,
+      "shots": 1332,
+      "teams": 25,
       "three_sixty": 2
     },
     "pipeline_version": "0.1.0",
-    "git_commit": "423a45d27049cda945a1c6f900170c9c608c9419",
+    "git_commit": "dad4c15b9755f814315865a5d29deb43bcffddb4",
     "warnings": [
       "<urlopen error [Errno -2] Name or service not known>"
     ],
@@ -79,6 +81,22 @@ Objective compliance: PARTIALLY
       "data/raw/.gitkeep": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
       "data/raw/_download_metadata.json": "99129eaff6bc080ca75859b3e1650e290ab540d55e43f78f94660745bfdcb196",
       "data/raw/competitions.json": "db01377fcbf26abe73a397f649fa03fe685ba7e1fd70b239c9aa2b88f37d1146",
+      "data/raw/events/3890427.json": "32deecd0d98196f9307861829844016d5fe34251784507ec25756c909b5b38d4",
+      "data/raw/events/3890431.json": "24270905fa2dba5b358f7de35d7b731e914cf906dc19e64208c8b43c2d692ad2",
+      "data/raw/events/3890444.json": "9a63d2c3161493feaef3183abf84af66a617b7933651ce71cb2d6bf14328c79e",
+      "data/raw/events/3890456.json": "c3cc9c040c053f4b727f7c6df9272c67068d7b1909532858eae5d9618141911d",
+      "data/raw/events/3890463.json": "7e6e4d3b48500acc8a26611779903310c59e942d0982b57e75124915efdbac1e",
+      "data/raw/events/3890472.json": "1db9e9964aafa161578a148d977f5b36a44b6a4103e45271f8aa1452b7242861",
+      "data/raw/events/3890477.json": "94c5fc23845a7c33e7f07964e2905d3f51d16658394d5b080cd74146cd8e06e7",
+      "data/raw/events/3890492.json": "f9e3fa6fa98979c4e3f13b3d420dede297cae3e9d9f6a5780e4e751ba735976c",
+      "data/raw/events/3890500.json": "224705695df91512ada5fc3d478ab966b8e90520f609a73357d2734a611a8212",
+      "data/raw/events/3890502.json": "921104a5c2afd65b81a8ae9b6359989bd5b9719b1b5756d8b9a7dfbaab3c7596",
+      "data/raw/events/3890519.json": "ef38f74cd9772b642fbac3d3d8d013c8bf66601937da0eeb669f98dde67d482b",
+      "data/raw/events/3890521.json": "5d4cde57cb971be23c36f6088ab2f2afa16161467491147f54f29b4610223947",
+      "data/raw/events/3890534.json": "ea941539967ba5730167fb618244c384a6606c712f09a7f04e860f196056822e",
+      "data/raw/events/3890540.json": "709b257cf50e68d2a6bd8b4efde52706d589cb900709f358f966d4e99a1c0e1b",
+      "data/raw/events/3890550.json": "7c28ffad2ec82158bc2cb5b08e1fe8a479d9f4bd990e88ed79aa567d49768347",
+      "data/raw/events/3890563.json": "9d8ac226bd1d139f40f8b1ffcd356ce308070868e56afc079d08d9cd92912b8c",
       "data/raw/events/3895052.json": "d97f595e49f4200e657269ff48b3fa662f8932205cfdf94b2ea4428829820d92",
       "data/raw/events/3895060.json": "9f4dc7040495e69fd3d11300647d41f04847763d11c44a1dc37fbe2e8786e132",
       "data/raw/events/3895067.json": "ff06444f03abc6b4ebe06ed6cf758c5216950b96739a83902a404c9f274632d6",
@@ -100,24 +118,7 @@ Objective compliance: PARTIALLY
       "data/raw/events/3895210.json": "be8d674d1a11a27dd2ab4e1dc099ee1016e5b275c6282109f03d48bee8a45edb",
       "data/raw/events/3895220.json": "a6d7e7f31a78d43cc3669fb1c0923d73280a4a62c0ae89b78110f54ca4d3f615",
       "data/raw/events/3895232.json": "98c7e930439e77a06daad441039a1fd94966ecbe441ac2dba1cd133fde3d554f",
-      "data/raw/events/3895244.json": "2b8c554e7a6bdfd0e874ee2a66e3811e259f31417feb9592b2ef7b8d1b9bd2a4",
-      "data/raw/events/3895250.json": "16b3e4d5665c44843ef996ed9ab7cd7f5ec9f7783d8cf32813845451ebc92a0d",
-      "data/raw/events/3895258.json": "90478290e60b947dfda516c109e1481685426b8da264c78c252a9624ad4908d9",
-      "data/raw/events/3895266.json": "443720db758b021d44a86b4e8feaf07d30d34ea5dc5148401b382c55a92e053d",
-      "data/raw/events/3895275.json": "a2aa935e952622e47a91af50fd0f868708801f7482f977a14ee299dfaf68fdb9",
-      "data/raw/events/3895286.json": "49f8926be7d2769463a9758daee42356695e8418d78492385f5d8dd9c5e40005",
-      "data/raw/events/3895292.json": "ed0ee4380af172fe008c3ceff8019b1dd0d9458c3c092028bb9d28a8b7c6f406",
-      "data/raw/events/3895302.json": "24b696d55270b67cfe5b8c4e36075ec1632e9f83c3bd5c12f1d108c895814859",
-      "data/raw/events/3895309.json": "59259675bb95621acc1d6770de7e5e9a0831ca63eb899bef9cc306e9d7c168fd",
-      "data/raw/events/3895320.json": "9c36deb964f12e13099a4dbf59767e08fa7231b98fd072a6a7979b8e91870f6c",
-      "data/raw/events/3895333.json": "7151edf9364887077c0c0e357f9b25603dc38c569468d3e6afe9c209a5ff519a",
-      "data/raw/events/3895340.json": "aaec8808be161884e8d1c184497e6548b5de95c0adf64219c83c9665abc72e04",
-      "data/raw/events/3895348.json": "8034f3699ad0bc0f69c2165bed612e81737e9d2b3126174a241882b98f43186d",
-      "data/raw/events/900001.json": "c69f454f8ba5966c6b5149db27833dbee9d9cf998d6742ffb531c04bb8a15a15",
-      "data/raw/events/900002.json": "79b11a9f5e919a699020aca9beff5d0f9bb339a3653ff7134aae47a580388834",
-      "data/raw/lineups/3895052.json": "ca891fb98e4e5f6dae4cc049ea547315ac9b9ad17324287b3534590001a03524",
-      "data/raw/lineups/3895060.json": "dac989cd87777fb89ac51c0192c2d7641aa5500d7fa004f291bff76d821b0bee",
-      "data/raw/lineups/3895067.json": "86dcce121d3bdf0dad
+      "data/raw/events/3895244.json": "2b8c554e7a6bdfd0e874ee2a66e3811e259f31417feb9592b2ef7b8d1
 ```
 
 ## 3. Pipeline Health
@@ -127,7 +128,7 @@ Artifacts missing: 0
 ## 4. Leakage Audit
 ```json
 {
-  "generated_at": "2026-06-29T00:44:34.290979+00:00",
+  "generated_at": "2026-06-29T02:33:40.081737+00:00",
   "passed": true,
   "columns_audited": [
     "bucephalus_match_id",
@@ -296,28 +297,28 @@ Artifacts missing: 0
   "feature_timestamp_policy": "rolling features are generated before target match by construction",
   "split_dates": {
     "train": {
-      "rows": 21,
+      "rows": 31,
       "mi
 ```
 
 ## 5. Model Scorecard
 | Component | Status | Metric | Baseline | Advanced | Improvement % |
 |---|---:|---:|---:|---:|---:|
-| xG | experimental | log_loss | 0.3213323142669515 | 0.4061930560730603 | -26.40902829822756 |
-| hazard | champion | roc_auc | 0.5 | 0.725123832413023 | 45.024766482604605 |
-| EPV | candidate | mean_epv | None | 0.056780930018417115 | None |
-| sequence | champion | brier_score | 0.213189872734494 | 0.20323404669761658 | 4.669933852475429 |
-| MC Dropout | candidate | mean_epistemic_uncertainty | None | 0.05379996013827622 | None |
-| vectorized Monte Carlo | candidate | simulations_per_second | None | 4594891.409108099 | None |
-| pass network | candidate | graphs | None | 70 | None |
-| GNN | experimental | mae | 0.6365463653262958 | 0.6758408546447754 | -6.173075750473743 |
-| explainability | candidate | artifacts | None | 1.0 | None |
+| xG | experimental | log_loss | 0.30948087165085747 | 0.383800111537472 | -24.014162649269707 |
+| hazard | champion | roc_auc | 0.5 | 0.7222124199105082 | 44.44248398210164 |
+| EPV | experimental | mean_epv | None | 0.056327305438857625 | None |
+| sequence | candidate | brier_score | 0.21881605251218805 | 0.21254341304302216 | 2.866626738372639 |
+| MC Dropout | experimental | mean_epistemic_uncertainty | None | 0.04935392519459128 | None |
+| vectorized Monte Carlo | experimental | simulations_per_second | None | 4810092.738867187 | None |
+| pass network | experimental | graphs | None | 102 | None |
+| GNN | experimental | mae | 0.6386937499046326 | 0.7448492050170898 | -16.62071299872717 |
+| explainability | experimental | artifacts | None | 1.0 | None |
 
 ## 6. xG Model Results
 ```json
 {
   "status": "trained",
-  "rows": 922,
+  "rows": 1332,
   "features": [
     "location_x",
     "location_y",
@@ -328,6 +329,7 @@ Artifacts missing: 0
     "shot_one_on_one_int",
     "shot_aerial_won_int",
     "set_piece_proxy",
+    "shot_type_name__Corner",
     "shot_type_name__Free Kick",
     "shot_type_name__Open Play",
     "shot_type_name__Penalty",
@@ -342,12 +344,12 @@ Artifacts missing: 0
     "play_pattern_name_clean__Regular Play",
     "shot_body_part_name_clean__unknown"
   ],
-  "log_loss": 0.3213323142669515,
-  "brier_score": 0.0946199613261401,
-  "roc_auc": 0.7696774193548387,
-  "avg_predicted_xg": 0.1328276283925685,
-  "actual_goal_rate": 0.1341991341991342,
-  "baseline_global_log_loss": 0.39563023403469594
+  "log_loss": 0.30948087165085747,
+  "brier_score": 0.0885208865216806,
+  "roc_auc": 0.755429335115269,
+  "avg_predicted_xg": 0.12212291418853818,
+  "actual_goal_rate": 0.12312312312312312,
+  "baseline_global_log_loss": 0.3733368915262795
 }
 ```
 
@@ -355,13 +357,13 @@ Artifacts missing: 0
 ```json
 {
   "status": "trained",
-  "rows": 132288,
-  "positive_rate": 0.03118952588292211,
-  "roc_auc": 0.725123832413023,
-  "pr_auc": 0.07399455107984786,
-  "brier_score": 0.213189872734494,
-  "log_loss": 0.6168554983550255,
-  "calibration_error": 0.3945439350801861,
+  "rows": 182560,
+  "positive_rate": 0.03214833479404031,
+  "roc_auc": 0.7222124199105082,
+  "pr_auc": 0.07111621174491091,
+  "brier_score": 0.21881605251218805,
+  "log_loss": 0.6282061289495213,
+  "calibration_error": 0.40709273168708404,
   "horizon": "next_5_events_proxy",
   "hazard_time_mode": "event_horizon_proxy",
   "targets": [
@@ -376,9 +378,9 @@ Artifacts missing: 0
 ## 8. EPV Results
 ```json
 {
-  "generated_at": "2026-06-29T00:39:06.500373+00:00",
-  "rows": 33072,
-  "mean_epv": 0.056780930018417115,
+  "generated_at": "2026-06-29T02:36:34.459075+00:00",
+  "rows": 45640,
+  "mean_epv": 0.056327305438857625,
   "survival_bias_guard": true,
   "alignment_keys": [
     "match_id",
@@ -402,16 +404,16 @@ Artifacts missing: 0
 {
   "status": "trained",
   "model_type": "pytorch_gru_sequence_model",
-  "rows": 132288,
-  "train_rows": 84019,
-  "validation_rows": 26293,
-  "test_rows": 21976,
-  "log_loss": 0.6034179329872131,
-  "brier_score": 0.20323404669761658,
-  "roc_auc": 0.771775810436978,
-  "pr_auc": 0.09414704212253568,
-  "validation_brier_score": 0.25031381845474243,
-  "positive_rate": 0.03118952549993992,
+  "rows": 182560,
+  "train_rows": 109893,
+  "validation_rows": 39520,
+  "test_rows": 33147,
+  "log_loss": 0.6266864538192749,
+  "brier_score": 0.21254341304302216,
+  "roc_auc": 0.7555339039390919,
+  "pr_auc": 0.08307581624962895,
+  "validation_brier_score": 0.2310958057641983,
+  "positive_rate": 0.0321483351290226,
   "survival_bias_guard": true,
   "target_type": "shot_probability_sequence",
   "horizon_type": "event_horizon_proxy",
@@ -429,7 +431,7 @@ Calibration status: POOR
 ## 12. Simulation Results
 ```json
 {
-  "generated_at": "2026-06-29T00:46:27.657803+00:00",
+  "generated_at": "2026-06-29T02:35:42.746609+00:00",
   "status": "evaluated",
   "walk_forward": true,
   "models": [
@@ -442,20 +444,20 @@ Calibration status: POOR
   ],
   "metrics": {
     "model": "full_calibrated_team_strength",
-    "rows": 11,
-    "mae_home_goals": 1.1727272727272728,
-    "mae_away_goals": 0.7181818181818183,
-    "rmse": 1.2555105806729858,
-    "accuracy": 0.6363636363636364,
-    "log_loss": 0.952628457040485,
-    "brier_score": 0.5821590909090909,
-    "expected_calibration_error": 0.15909090909090906,
-    "interval_coverage": 0.7272727272727273,
-    "total_goals_distribution_error": 1.468181818181818,
-    "scoreline_distribution_error": 1.5681818181818181,
+    "rows": 13,
+    "mae_home_goals": 1.271153846153846,
+    "mae_away_goals": 0.7865384615384616,
+    "rmse": 1.3564837178982565,
+    "accuracy": 0.6923076923076923,
+    "log_loss": 0.8188152932634699,
+    "brier_score": 0.48576923076923073,
+    "expected_calibration_error": 0.22115384615384615,
+    "interval_coverage": 0.8461538461538461,
+    "total_goals_distribution_error": 1.2076923076923078,
+    "scoreline_distribution_error": 1.6000000000000003,
     "jensen_shannon_divergence": null
   },
-  "rows": 66
+  "rows": 78
 }
 ```
 
@@ -463,22 +465,22 @@ Calibration status: POOR
 ```json
 {
   "vectorized": {
-    "generated_at": "2026-06-29T00:40:16.622817+00:00",
+    "generated_at": "2026-06-29T02:38:01.723315+00:00",
     "n_simulations": 10000,
-    "seconds": 0.0021763299955637194,
-    "simulations_per_second": 4594891.409108099,
-    "home_win_probability": 0.3018,
-    "draw_probability": 0.415,
-    "away_win_probability": 0.2832,
-    "expected_home_goals": 0.6002,
-    "expected_away_goals": 0.5761,
-    "loop_expected_home_goals": 0.586,
-    "loop_expected_away_goals": 0.566,
-    "expected_goals_difference": 0.02429999999999999,
-    "home_probability_difference": 0.013800000000000034,
-    "draw_probability_difference": 0.029000000000000026,
-    "away_probability_difference": 0.015199999999999991,
-    "speedup_proxy_vs_loop_500": 9189.782818216197,
+    "seconds": 0.002078961995721329,
+    "simulations_per_second": 4810092.738867187,
+    "home_win_probability": 0.2804,
+    "draw_probability": 0.4149,
+    "away_win_probability": 0.3047,
+    "expected_home_goals": 0.5739,
+    "expected_away_goals": 0.6204,
+    "loop_expected_home_goals": 0.556,
+    "loop_expected_away_goals": 0.608,
+    "expected_goals_difference": 0.030299999999999883,
+    "home_probability_difference": 0.02839999999999998,
+    "draw_probability_difference": 0.027100000000000013,
+    "away_probability_difference": 0.0012999999999999678,
+    "speedup_proxy_vs_loop_500": 9620.185477734374,
     "memory_estimate_mb": 0.24,
     "uncertainty_sources": [
       "data_uncertainty",
@@ -490,12 +492,12 @@ Calibration status: POOR
     ],
     "model_uncertainty_std": 0.15875,
     "parameter_uncertainty_std": 0.05,
-    "simulation_uncertainty_std": 0.011240636948144887,
+    "simulation_uncertainty_std": 0.011339037657579234,
     "data_uncertainty_flag": true,
     "combined_interval": {
-      "p5": -0.16681700878207834,
+      "p5": -0.16682366820987962,
       "p50": 1.0,
-      "p95": 3.166817008782078
+      "p95": 3.16682366820988
     },
     "mode": "numpy_vectorized_empirical_anchor_poisson"
   },
@@ -513,22 +515,22 @@ Calibration status: POOR
 ## 14. Vectorized Simulation Benchmark
 ```json
 {
-  "generated_at": "2026-06-29T00:40:16.622817+00:00",
+  "generated_at": "2026-06-29T02:38:01.723315+00:00",
   "n_simulations": 10000,
-  "seconds": 0.0021763299955637194,
-  "simulations_per_second": 4594891.409108099,
-  "home_win_probability": 0.3018,
-  "draw_probability": 0.415,
-  "away_win_probability": 0.2832,
-  "expected_home_goals": 0.6002,
-  "expected_away_goals": 0.5761,
-  "loop_expected_home_goals": 0.586,
-  "loop_expected_away_goals": 0.566,
-  "expected_goals_difference": 0.02429999999999999,
-  "home_probability_difference": 0.013800000000000034,
-  "draw_probability_difference": 0.029000000000000026,
-  "away_probability_difference": 0.015199999999999991,
-  "speedup_proxy_vs_loop_500": 9189.782818216197,
+  "seconds": 0.002078961995721329,
+  "simulations_per_second": 4810092.738867187,
+  "home_win_probability": 0.2804,
+  "draw_probability": 0.4149,
+  "away_win_probability": 0.3047,
+  "expected_home_goals": 0.5739,
+  "expected_away_goals": 0.6204,
+  "loop_expected_home_goals": 0.556,
+  "loop_expected_away_goals": 0.608,
+  "expected_goals_difference": 0.030299999999999883,
+  "home_probability_difference": 0.02839999999999998,
+  "draw_probability_difference": 0.027100000000000013,
+  "away_probability_difference": 0.0012999999999999678,
+  "speedup_proxy_vs_loop_500": 9620.185477734374,
   "memory_estimate_mb": 0.24,
   "uncertainty_sources": [
     "data_uncertainty",
@@ -540,12 +542,12 @@ Calibration status: POOR
   ],
   "model_uncertainty_std": 0.15875,
   "parameter_uncertainty_std": 0.05,
-  "simulation_uncertainty_std": 0.011240636948144887,
+  "simulation_uncertainty_std": 0.011339037657579234,
   "data_uncertainty_flag": true,
   "combined_interval": {
-    "p5": -0.16681700878207834,
+    "p5": -0.16682366820987962,
     "p50": 1.0,
-    "p95": 3.166817008782078
+    "p95": 3.16682366820988
   },
   "mode": "numpy_vectorized_empirical_anchor_poisson"
 }
@@ -556,26 +558,26 @@ Does the GNN add value beyond graph metrics? NO
 ```json
 {
   "gnn_metrics": {
-    "rows": 18,
+    "rows": 26,
     "target": "xg_for",
-    "baseline_mae": 0.9771673679351807,
-    "tabular_graph_mae": 0.6365463653262958,
-    "gnn_mae": 0.6758408546447754,
-    "no_edge_mae": 0.674917459487915,
-    "permuted_edge_mae": 0.6846455335617065,
-    "gnn_rmse": 0.945137795942766,
+    "baseline_mae": 0.7910627126693726,
+    "tabular_graph_mae": 0.7290857168785101,
+    "gnn_mae": 0.7448492050170898,
+    "no_edge_mae": 0.733526349067688,
+    "permuted_edge_mae": 0.6386937499046326,
+    "gnn_rmse": 0.9097253327805886,
     "permuted_edges_sanity": "passed",
-    "status": "candidate"
+    "status": "experimental"
   },
   "gnn_validation": {
-    "generated_at": "2026-06-29T00:40:27.719996+00:00",
+    "generated_at": "2026-06-29T02:39:35.379297+00:00",
     "target": "xg_for",
-    "real_adjacency_mae": 0.6758408546447754,
-    "no_edge_mae": 0.674917459487915,
-    "permuted_edge_mae": 0.6846455335617065,
-    "tabular_graph_mae": 0.6365463653262958,
+    "real_adjacency_mae": 0.7448492050170898,
+    "no_edge_mae": 0.733526349067688,
+    "permuted_edge_mae": 0.6386937499046326,
+    "tabular_graph_mae": 0.7290857168785101,
     "within_graph_edge_shuffle": "approximated_by_permuted_edges",
-    "random_labels_mae": 1.0970515012741089,
+    "random_labels_mae": 1.0813417434692383,
     "random_labels_test": "passed",
     "overfit_small_batch_test": "passed",
     "does_gnn_add_value_beyond_graph_metrics": "NO",
@@ -593,12 +595,12 @@ Methods include permutation importance and local occlusion where model artifacts
 ## 17. Model Registry & Reproducibility
 ```json
 {
-  "generated_at": "2026-06-29T00:47:13.040804+00:00",
+  "generated_at": "2026-06-29T02:39:01.036246+00:00",
   "models": [
     {
       "model_id": "baseline_models_v0",
       "model_type": "baseline_models",
-      "created_at": "2026-06-29T00:47:13.036063+00:00",
+      "created_at": "2026-06-29T02:39:01.033134+00:00",
       "training_data_hash": "83ef0e18e59d6aae5bd5e160a913e0902cff03e488b18508638bdc1c35d40efe",
       "feature_set_version": "feature_store_v0",
       "train_period": null,
@@ -643,14 +645,14 @@ Methods include permutation importance and local occlusion where model artifacts
     {
       "model_id": "xg_model_v0",
       "model_type": "xg_model",
-      "created_at": "2026-06-29T00:47:13.037517+00:00",
-      "training_data_hash": "ba3043ec6ef6f94530771ef1da03f73f932c64bee2cb6352bcdd40355deabcab",
+      "created_at": "2026-06-29T02:39:01.034048+00:00",
+      "training_data_hash": "1c011160a33e3a4febb93c42987a34d9c7eef446612a5c2af56247e7afd9c912",
       "feature_set_version": "feature_store_v0",
       "train_period": null,
       "validation_period": null,
       "metrics": {
         "status": "trained",
-        "rows": 922,
+        "rows": 1332,
         "features": [
           "location_x",
           "location_y",
@@ -661,6 +663,7 @@ Methods include permutation importance and local occlusion where model artifacts
           "shot_one_on_one_int",
           "shot_aerial_won_int",
           "set_piece_proxy",
+          "shot_type_name__Corner",
           "shot_type_name__Free Kick",
           "shot_type_name__Open Play",
           "shot_type_name__Penalty",
@@ -675,12 +678,12 @@ Methods include permutation importance and local occlusion where model artifacts
           "play_pattern_name_clean__Regular Play",
           "shot_body_part_name_clean__unknown"
         ],
-        "log_loss": 0.3213323142669515,
-        "brier_score": 0.0946199613261401,
-        "roc_auc": 0.7696774193548387,
-        "avg_predicted_xg": 0.1328276283925685,
-        "actual_goal_rate": 0.1341991341991342,
-        "baseline_global_log_loss": 0.39563023403469594
+        "log_loss": 0.30948087165085747,
+        "brier_score": 0.0885208865216806,
+        "roc_auc": 0.755429335115269,
+        "avg_predicted_xg": 0.12212291418853818,
+        "actual_goal_rate": 0.12312312312312312,
+        "baseline_global_log_loss": 0.3733368915262795
       },
       "artifact_path": "/home/liam/Bucephalus/outputs/models/xg_model_registry.json",
       "status": "candidate",
@@ -690,15 +693,15 @@ Methods include permutation importance and local occlusion where model artifacts
     {
       "model_id": "team_strength_v0",
       "model_type": "team_strength",
-      "created_at": "2026-06-29T00:47:13.038504+00:00",
-      "training_data_hash": "7aa75305b0ca79c3f399bf30c6016583129fd2cd6ff127ce5cb7692db6502677",
+      "created_at": "2026-06-29T02:39:01.034689+00:00",
+      "training_data_hash": "606b31af46d1cacd4f5bc3d24c1f5467671835c557dcaf97e6a1a4aab298e588",
       "feature_set_version": "feature_store_v0",
       "train_period": null,
       "validation_period": null,
       "metrics": {
-        "generated_at": "2026-06-29T00:46:14.765538+00:00",
-        "rows": 72,
-        "mean_absolute_goal_error_per_team_match": 2.0880590164849266,
+        "generated_at": "2026-06-29T02:35:28.015114+00:00",
+        "rows": 104,
+        "mean_absolute_goal_error_per_team_match": 2.1235423990949824,
         "uses_pre_match_state": true
       },
       "artifact_path": "/home/liam/Bucephalus/outputs/models/team_strength_registry.json",
@@ -709,15 +712,15 @@ Methods include permutation importance and local occlusion where model artifacts
     {
       "model_id": "markov_matrix_v0",
       "model_type": "markov_matrix",
-      "created_at": "2026-06-29T00:47:13.039354+00:00",
-      "training_data_hash": "b9af648b971f7aa2a8368786e9ab44c6785270bb1a8a7ced6615b6a7fe996d47",
+      "created_at": "2026-06-29T02:39:01.035184+00:00",
+      "training_data_hash": "587ff184c4884acb0317e93ff343e65f81be8812ae9076b71a935c8210accf7d",
       "feature_set_version": "feature_store_v0",
       "train_period": null,
       "validation_period": null,
       "metrics": {
-        "generated_at": "2026-06-29T00:46:14.756121+00:00",
+        "generated_at": "2026-06-29T02:35:28.003939+00:00",
         "status": "calibrated",
-        "events": 137785,
+        "events": 191299,
         "states": [
           "OWN_THIRD",
           "BUILD_UP",
@@ -732,7 +735,7 @@ Methods include permutation importance and local occlusion where model artifacts
           "END_POSSESSION"
         ],
         "rows_sum_to_one": true,
-        "transition_counts": 137785,
+        "transition_counts": 191299,
         "warnings": [
           "by-style matrix omitted unless style coverage is sufficient"
         ]
@@ -745,48 +748,47 @@ Methods include permutation importance and local occlusion where model artifacts
     {
       "model_id": "calibrated_simulation_config_v0",
       "model_type": "calibrated_simulation_config",
-      "created_at": "2026-06-29T00:47:13.040055+00:00",
-      "training_data_hash": "c2ebe3d1ede44f0fa453e0030049aa1556d8b9dca23c4c363fa48ea5dc23a2cb",
+      "created_at": "2026-06-29T02:39:01.035718+00:00",
+      "training_data_hash": "7069fdb70b878cfe74bda56333250b5ad4257d5436556bb29d3ee6d2d3737c08",
       "feature_set_version": "feature_store_v0",
       "train_period": null,
-      "validation_period": null,
-      "metric
+      "
 ```
 
 ## 18. Performance & Scalability
 ```json
 {
-  "generated_at": "2026-06-29T00:46:27.668909+00:00",
+  "generated_at": "2026-06-29T02:35:42.756911+00:00",
   "timings": [
     {
       "step": "feature_build",
-      "seconds": 0.5144
+      "seconds": 0.5367
     },
     {
       "step": "xg_training",
-      "seconds": 0.418
+      "seconds": 0.4155
     },
     {
       "step": "markov_calibration",
-      "seconds": 3.7394
+      "seconds": 5.1559
     },
     {
       "step": "team_strength",
-      "seconds": 0.0079
+      "seconds": 0.0098
     },
     {
       "step": "bootstrap_tactical",
-      "seconds": 0.0238
+      "seconds": 0.0215
     },
     {
       "step": "simulation_backtest",
-      "seconds": 12.8742
+      "seconds": 14.7153
     }
   ],
   "row_counts": {
-    "events": 137785,
-    "team_match_features": 72,
-    "model_dataset_matches": 36
+    "events": 191299,
+    "team_match_features": 104,
+    "model_dataset_matches": 52
   },
   "memory_note": "memory is not sampled in this lightweight benchmark"
 }
