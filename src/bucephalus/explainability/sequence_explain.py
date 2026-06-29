@@ -18,7 +18,7 @@ def build_sequence_explanation(paths: ProjectPaths) -> dict:
         pred = pl.read_parquet(pred_path).head(1).to_dicts()[0]
         payload = {
             "generated_at": datetime.now(UTC).isoformat(),
-            "model": "sequence_numpy_encoder_v0",
+            "model": "sequence_gru_v1",
             "top_events": [
                 {"event_rank": 1, "contribution": float(pred.get("shot_probability", 0)) * 0.5, "method": "feature_occlusion_proxy"},
                 {"event_rank": 2, "contribution": float(pred.get("conditional_xg", 0)) * 0.3, "method": "feature_occlusion_proxy"},
@@ -26,5 +26,6 @@ def build_sequence_explanation(paths: ProjectPaths) -> dict:
             ],
             "warning": "Approximate occlusion proxy; no attention weights are claimed.",
         }
+    (out_dir / "sequence_event_attribution_sample.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
     (out_dir / "prediction_explanation_sample.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
     return payload

@@ -1,6 +1,6 @@
 # Bucephalus
 
-Bucephalus es la base de un motor de simulación futbolística basado en datos reales. El objetivo final es soportar Game Mode y Lab Mode, pero este repositorio llega hasta Fase 8: datos, entity resolution, EDA, feature store, modelos baseline, motor táctico, simulación Monte Carlo/Markov, hardening estadístico, motor probabilístico-temporal, incremental/MLOps foundation y ML avanzado inicial. La prioridad actual es reproducibilidad, trazabilidad, validación temporal sin leakage, calibración empírica, incertidumbre y explicabilidad. No hay frontend, backend API productivo, mercado, Game Mode completo ni chatbot/LLM.
+Bucephalus es la base de un motor de simulación futbolística basado en datos reales. El objetivo final es soportar Game Mode y Lab Mode, pero este repositorio llega hasta Fase 8: Advanced ML, Deep Learning, Graph Learning, Uncertainty & Explainability. La prioridad actual es reproducibilidad, trazabilidad, validación temporal sin leakage, calibración empírica, incertidumbre y explicabilidad. No hay frontend, backend API productivo, mercado, Game Mode completo ni chatbot/LLM.
 
 ## Setup
 
@@ -87,12 +87,17 @@ make train-sequence
 make evaluate-sequence
 make mc-dropout
 make vectorized-simulation
+make pass-network
+make train-gnn
+make evaluate-gnn
 make explainability
+make phase8-scorecard
+make phase8-summary
 make phase-8-check
 make all-phase-8
 ```
 
-Fase 8 incluye modelos tabulares avanzados, hazard model para controlar survival/look-ahead bias, EPV, sequence encoder inicial, MC Dropout, Monte Carlo vectorizado y explicabilidad ligera. Los modelos deep son iniciales y no definitivos; PyTorch/GRU queda reservado para una iteración posterior si se decide añadir esa dependencia.
+Fase 8 incluye modelos tabulares avanzados, hazard model para controlar survival/look-ahead bias, EPV alineado por claves, PyTorch GRU sequence model, MC Dropout real, Monte Carlo vectorizado, pass networks y GCN manual en PyTorch. Los modelos deep/GNN son iniciales y pueden quedar `experimental`, `candidate` o `champion` según scorecard.
 
 ## Research dataset
 
@@ -127,6 +132,10 @@ BUCEPHALUS_DATA_ROOT=/tmp/bucephalus-data python scripts/01_download_data.py --s
 - `outputs/evaluation/hazard_metrics.json`, `sequence_model_metrics.json`, `possession_value_metrics.json`: métricas ML Fase 8.
 - `outputs/evaluation/mc_dropout_summary.json`: incertidumbre por MC Dropout.
 - `outputs/quality/vectorized_simulation_benchmark.json`: benchmark Monte Carlo vectorizado.
+- `data/features/pass_network_*.parquet`: redes de pase por equipo-partido.
+- `outputs/evaluation/gnn_metrics.json`: evaluación de GNN manual PyTorch.
+- `outputs/evaluation/phase8_model_scorecard.*`: scorecard de modelos.
+- `outputs/reports/phase8_results_summary.md`: resumen humano de Fase 8.
 - `outputs/explainability/`: muestras de explicabilidad.
 - `data/processed/ingestion_manifest.parquet`: manifest incremental por partido.
 - `outputs/quality/incremental_feature_update_report.json`: reporte de actualización incremental.

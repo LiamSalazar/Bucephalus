@@ -5,49 +5,65 @@ from datetime import UTC, datetime
 
 import numpy as np
 import polars as pl
+import torch
 
+from bucephalus.deep.sequence_dataset import build_padded_sequence_dataset
+from bucephalus.deep.sequence_encoder import GRUSequenceModel
 from bucephalus.utils.paths import ProjectPaths
 
 
 def run_mc_dropout(paths: ProjectPaths, n_mc_samples: int = 50, dropout_rate: float = 0.25) -> dict:
-    artifact_path = paths.models_outputs / "sequence_model_artifact.json"
-    predictions_path = paths.evaluation_outputs / "sequence_predictions.parquet"
-    if not artifact_path.exists() or not predictions_path.exists():
-        return _write_skipped(paths, "sequence model artifact or predictions missing")
-    artifact = json.loads(artifact_path.read_text(encoding="utf-8"))
-    weights = np.asarray(artifact["weights"], dtype=float)
-    pred = pl.read_parquet(predictions_path).head(200)
-    if pred.is_empty():
-        return _write_skipped(paths, "sequence predictions empty")
-    base = np.column_stack(
+    artifact_path = paths.models_outputs / "sequence_model.pt"
+    events_path = paths.processed / "events.parquet"
+    if not artifact_path.exists() or not events_path.exists():
+        return _write_skipped(paths, "sequence model checkpoint or events missing")
+    checkpoint = torch.load(artifact_path, map_location="cpu", weights_only=False)
+    model = GRUSequenceModel(checkpoint["input_dim"], checkpoint["hidden_dim"], dropout_rate)
+    model.load_state_dict(checkpoint["state_dict"], strict=False)
+    x, _, mask, meta = build_padded_sequence_dataset(pl.read_parquet(events_path), max_events=12)
+    if len(x) == 0:
+        return _write_skipped(paths, "sequence dataset empty")
+    x_t = torch.tensor(x[:200], dtype=torch.float32)
+    m_t = torch.tensor(mask[:200], dtype=torch.float32)
+    samples = []
+    model.train()
+    with torch.no_grad():
+        for _ in range(n_mc_samples):
+            samples.append(torch.sigmoid(model(x_t, m_t)).numpy())
+    arr = np.vstack(samples)
+    out = pl.DataFrame(
         [
-            np.clip(pred["shot_probability"].to_numpy(), 0, 1),
-            np.full(pred.height, 0.5),
-            np.full(pred.height, 0.5),
-            np.full(pred.height, 0.2),
+            {
+                **meta_row,
+                "prediction_mean": float(mean),
+                "prediction_std": float(std),
+                "p5": float(p5),
+                "p50": float(p50),
+                "p95": float(p95),
+                "epistemic_uncertainty": float(std),
+                "n_mc_samples": n_mc_samples,
+                "dropout_rate": dropout_rate,
+                "model_id": "sequence_gru_v1",
+            }
+            for meta_row, mean, std, p5, p50, p95 in zip(
+                meta[:200],
+                arr.mean(axis=0),
+                arr.std(axis=0),
+                np.percentile(arr, 5, axis=0),
+                np.percentile(arr, 50, axis=0),
+                np.percentile(arr, 95, axis=0),
+                strict=False,
+            )
         ]
     )
-    rng = np.random.default_rng(42)
-    samples = []
-    for _ in range(n_mc_samples):
-        mask = rng.binomial(1, 1 - dropout_rate, size=base.shape) / max(1e-9, 1 - dropout_rate)
-        z = (base * mask) @ weights + float(artifact["bias"])
-        samples.append(1 / (1 + np.exp(-np.clip(z, -30, 30))))
-    arr = np.vstack(samples)
-    out = pred.with_columns(
-        pl.Series("prediction_mean", arr.mean(axis=0)),
-        pl.Series("prediction_std", arr.std(axis=0)),
-        pl.Series("p5", np.percentile(arr, 5, axis=0)),
-        pl.Series("p50", np.percentile(arr, 50, axis=0)),
-        pl.Series("p95", np.percentile(arr, 95, axis=0)),
-        pl.lit(n_mc_samples).alias("n_mc_samples"),
-    ).with_columns(pl.col("prediction_std").alias("epistemic_uncertainty"))
     out.write_parquet(paths.evaluation_outputs / "mc_dropout_uncertainty.parquet")
     summary = {
         "generated_at": datetime.now(UTC).isoformat(),
         "status": "completed",
         "rows": out.height,
         "n_mc_samples": n_mc_samples,
+        "dropout_rate": dropout_rate,
+        "model_id": "sequence_gru_v1",
         "mean_epistemic_uncertainty": float(out["epistemic_uncertainty"].mean()),
     }
     (paths.evaluation_outputs / "mc_dropout_summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")

@@ -117,8 +117,23 @@ mc-dropout:
 vectorized-simulation:
 	$(PYTHON) scripts/32_run_vectorized_simulation.py
 
+pass-network:
+	$(PYTHON) scripts/34_build_pass_networks.py
+
+train-gnn:
+	$(PYTHON) scripts/35_train_gnn_model.py
+
+evaluate-gnn:
+	$(PYTHON) scripts/36_evaluate_gnn_model.py
+
 explainability:
 	$(PYTHON) scripts/33_run_explainability_samples.py
+
+phase8-scorecard:
+	$(PYTHON) scripts/37_build_phase8_scorecard.py
+
+phase8-summary:
+	$(PYTHON) scripts/38_write_phase8_results_summary.py
 
 phase-8-check:
 	$(PYTHON) scripts/94_run_phase_8_check.py
@@ -153,6 +168,6 @@ all-phase-7-7: incremental-manifest incremental-features performance-benchmark m
 
 pre-phase-8: pre-phase-8-audit all-phase-7-5 all-phase-7-7 pre-phase-8-check
 
-all-phase-8: train-tabular evaluate-tabular train-hazard evaluate-hazard train-sequence evaluate-sequence mc-dropout vectorized-simulation explainability phase-8-check
+all-phase-8: train-tabular evaluate-tabular train-hazard evaluate-hazard train-sequence evaluate-sequence mc-dropout vectorized-simulation pass-network train-gnn evaluate-gnn explainability phase8-scorecard phase8-summary phase-8-check
 
 full-pipeline: all-phase-1-3 all-phase-4-5 all-phase-6-7 pre-phase-8 all-phase-8
